@@ -7,6 +7,9 @@ var source = require('vinyl-source-stream');
 var buffer = require('gulp-buffer');
 var uglify = require('gulp-uglify');
 var gulpif = require('gulp-if');
+var stylus = require('gulp-stylus');
+var autoprefixer = require('gulp-autoprefixer');
+var merge = require('merge-stream');
 var exorcist = require('exorcist');
 var babelify = require('babelify');
 var browserify = require('browserify');
@@ -64,8 +67,18 @@ function cleanBuild() {
  * Check out README.md for more info on the '/static' folder.
  */
 function copyStatic() {
-    return gulp.src(STATIC_PATH + '/**/*')
-        .pipe(gulp.dest(BUILD_PATH));
+    var tasks = [];
+    tasks.push(
+        gulp.src(STATIC_PATH + '/**/*')
+            .pipe(gulp.dest(BUILD_PATH)));
+    tasks.push(
+        gulp.src(STATIC_PATH + '/**/*.styl')
+            .pipe(stylus())
+            .pipe(autoprefixer('last 2 versions', { map: false }))
+            .pipe(gulp.dest(BUILD_PATH))
+    );
+    
+    return merge(tasks);    
 }
 
 /**
@@ -160,7 +173,5 @@ gulp.task('watch-static', ['copyPhaser'], browserSync.reload);
  * The tasks are executed in the following order:
  * 'cleanBuild' -> 'copyStatic' -> 'copyPhaser' -> 'build' -> 'serve'
  * 
- * Read more about task dependencies in Gulp: 
- * https://medium.com/@dave_lunny/task-dependencies-in-gulp-b885c1ab48f0
  */
 gulp.task('default', ['serve']);

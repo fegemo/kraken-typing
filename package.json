@@ -1,5 +1,5 @@
 {
-  "name": "Krakening Console",
+  "name": "krakening-console",
   "version": "1.0.0",
   "description": "A game to destroy all git commands on console and to stick with the kraken",
   "main": "src/index.js",
@@ -9,9 +9,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/belohlavek/phaser-es6-boilerplate"
+    "url": "https://bitbucket.org/fegemo/krakening-console"
   },
-  "author": "Daniel Belohlavek",
+  "author": "Flávio Coutinho",
   "license": "MIT",
   "devDependencies": {
     "babelify": "^6.1.3",
@@ -20,14 +20,17 @@
     "del": "^1.2.0",
     "exorcist": "^0.4.0",
     "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
     "gulp-buffer": "0.0.2",
     "gulp-if": "^1.2.5",
+    "gulp-stylus": "^2.3.1",
     "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.6",
+    "merge-stream": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "yargs": "^3.16.1"
   },
   "dependencies": {
-    "phaser": "^2.4.1"
+    "phaser": "^2.4.6"
   }
 }
