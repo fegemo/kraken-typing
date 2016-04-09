@@ -1,5 +1,5 @@
 import TweenParams from 'util/TweenParams';
-import Ball from 'objects/Ball';
+import Ball from 'objects/LogoBall';
 
 export default class SplashState extends Phaser.State {
 
