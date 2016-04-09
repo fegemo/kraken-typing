@@ -1,8 +1,8 @@
 export default class Enemy {
   
-  constructor(game, name, size) {
+  constructor(game, text, size) {
     this.game = game;
-    this.name = name;
+    this.text = text;
     this.size = size;
   }
   
@@ -10,8 +10,8 @@ export default class Enemy {
       
   }
   
-  create() {
-    
+  create(x, y) {
+    this.sprite = this.game.add.sprite(x, y, 'enemy-console.png');
   }
   
 }

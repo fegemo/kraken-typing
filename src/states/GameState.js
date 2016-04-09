@@ -1,6 +1,7 @@
 import KrakenPlayer from 'objects/KrakenPlayer';
 import Enemy from 'objects/Enemy';
 import Background from 'objects/GameBackground';
+import RandomSpawner from 'objects/RandomSpawner';
 
 export default class GameState extends Phaser.State {
 
@@ -10,6 +11,9 @@ export default class GameState extends Phaser.State {
     
     this.bg = new Background(this.game);
     this.bg.preload();
+
+    this.spawner = new RandomSpawner(this.game, this);
+    this.spawner.preload();
   }
 
 
@@ -24,15 +28,15 @@ export default class GameState extends Phaser.State {
     this.player.create();
     
     // creates the enemy spawner
-    
+    this.spawner.create();
   }
 
   render() {
-
+    this.spawner.render();
   }
 
   update() {
-
+    this.spawner.update();
   }
 
 }
