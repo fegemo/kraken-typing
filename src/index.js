@@ -1,6 +1,7 @@
 import MenuState from 'states/MenuState';
 import GameState from 'states/GameState';
 import SplashState from 'states/SplashState';
+import loadFonts from 'misc/fonts';
 
 class Game extends Phaser.Game {
 
@@ -13,4 +14,5 @@ class Game extends Phaser.Game {
   }
 }
 
-new Game();
+var game = new Game();
+loadFonts(window, game);

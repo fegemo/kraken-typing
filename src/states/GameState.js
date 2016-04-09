@@ -6,9 +6,12 @@ import RandomSpawner from 'objects/RandomSpawner';
 export default class GameState extends Phaser.State {
 
   preload() {
+    // fonts
+    this.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1/webfont.js');
+
     this.player = new KrakenPlayer(this.game);
     this.player.preload();
-    
+
     this.bg = new Background(this.game);
     this.bg.preload();
 
@@ -23,10 +26,10 @@ export default class GameState extends Phaser.State {
 
     // creates the gradient background
     this.bg.create();
-    
+
     // creates the player
     this.player.create();
-    
+
     // creates the enemy spawner
     this.spawner.create();
   }
