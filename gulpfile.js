@@ -32,7 +32,7 @@ var keepFiles = false;
  * Simple way to check for development/production mode.
  */
 function isProduction() {
-    return argv.production;
+  return argv.production;
 }
 
 /**
@@ -40,11 +40,11 @@ function isProduction() {
  */
 function logBuildMode() {
 
-    if (isProduction()) {
-        gutil.log(gutil.colors.green('Running production build...'));
-    } else {
-        gutil.log(gutil.colors.yellow('Running development build...'));
-    }
+  if (isProduction()) {
+    gutil.log(gutil.colors.green('Running production build...'));
+  } else {
+    gutil.log(gutil.colors.yellow('Running development build...'));
+  }
 
 }
 
@@ -55,11 +55,11 @@ function logBuildMode() {
  * Note: keepFiles is set to true by gulp.watch (see serve()) and reseted here to avoid conflicts.
  */
 function cleanBuild() {
-    if (!keepFiles) {
-        del(['build/**/*.*']);
-    } else {
-        keepFiles = false;
-    }
+  if (!keepFiles) {
+    del(['build/**/*.*']);
+  } else {
+    keepFiles = false;
+  }
 }
 
 /**
@@ -67,18 +67,18 @@ function cleanBuild() {
  * Check out README.md for more info on the '/static' folder.
  */
 function copyStatic() {
-    var tasks = [];
-    tasks.push(
-        gulp.src(STATIC_PATH + '/**/*')
-            .pipe(gulp.dest(BUILD_PATH)));
-    tasks.push(
-        gulp.src(STATIC_PATH + '/**/*.styl')
-            .pipe(stylus())
-            .pipe(autoprefixer('last 2 versions', { map: false }))
-            .pipe(gulp.dest(BUILD_PATH))
-    );
+  var tasks = [];
+  tasks.push(
+    gulp.src(STATIC_PATH + '/**/*')
+      .pipe(gulp.dest(BUILD_PATH)));
+  tasks.push(
+    gulp.src(STATIC_PATH + '/**/*.styl')
+      .pipe(stylus())
+      .pipe(autoprefixer('last 2 versions', { map: false }))
+      .pipe(gulp.dest(BUILD_PATH))
+  );
 
-    return merge(tasks);
+  return merge(tasks);
 }
 
 /**
@@ -87,18 +87,18 @@ function copyStatic() {
  */
 function copyPhaser() {
 
-    var srcList = ['phaser.min.js'];
+  var srcList = ['phaser.min.js'];
 
-    if (!isProduction()) {
-        srcList.push('phaser.map', 'phaser.js');
-    }
+  if (!isProduction()) {
+    srcList.push('phaser.map', 'phaser.js');
+  }
 
-    srcList = srcList.map(function(file) {
-        return PHASER_PATH + file;
-    });
+  srcList = srcList.map(function(file) {
+    return PHASER_PATH + file;
+  });
 
-    return gulp.src(srcList)
-        .pipe(gulp.dest(SCRIPTS_PATH));
+  return gulp.src(srcList)
+    .pipe(gulp.dest(SCRIPTS_PATH));
 
 }
 
@@ -113,19 +113,19 @@ function copyPhaser() {
  */
 function build() {
 
-    var sourcemapPath = SCRIPTS_PATH + '/' + OUTPUT_FILE + '.map';
-    logBuildMode();
+  var sourcemapPath = SCRIPTS_PATH + '/' + OUTPUT_FILE + '.map';
+  logBuildMode();
 
-    return browserify({
-        paths: [ path.join(__dirname, 'src') ],
-        entries: ENTRY_FILE,
-        debug: true
-    })
-    .transform(babelify, { presets: ['es2015'], extensions: ['.js']})
-    .bundle().on('error', function(error){
-        console.log(error);
-          gutil.log(gutil.colors.red('[Build Error]', error.message));
-          this.emit('end');
+  return browserify({
+    paths: [path.join(__dirname, 'src')],
+    entries: ENTRY_FILE,
+    debug: true
+  })
+    .transform(babelify, { presets: ['es2015'], extensions: ['.js'] })
+    .bundle().on('error', function(error) {
+      console.log(error);
+      gutil.log(gutil.colors.red('[Build Error]', error.message));
+      this.emit('end');
     })
     .pipe(gulpif(!isProduction(), exorcist(sourcemapPath)))
     .pipe(source(OUTPUT_FILE))
@@ -141,22 +141,22 @@ function build() {
  */
 function serve() {
 
-    var options = {
-        server: {
-            baseDir: BUILD_PATH
-        },
-        open: true // Change it to true if you wish to allow Browsersync to open a browser window.
-    };
+  var options = {
+    server: {
+      baseDir: BUILD_PATH
+    },
+    open: true // Change it to true if you wish to allow Browsersync to open a browser window.
+  };
 
-    browserSync(options);
+  browserSync(options);
 
-    // Watches for changes in files inside the './src' folder.
-    gulp.watch(SOURCE_PATH + '/**/*.js', ['watch-js']);
+  // Watches for changes in files inside the './src' folder.
+  gulp.watch(SOURCE_PATH + '/**/*.js', ['watch-js']);
 
-    // Watches for changes in files inside the './static' folder. Also sets 'keepFiles' to true (see cleanBuild()).
-    gulp.watch(STATIC_PATH + '/**/*', ['watch-static']).on('change', function() {
-        keepFiles = true;
-    });
+  // Watches for changes in files inside the './static' folder. Also sets 'keepFiles' to true (see cleanBuild()).
+  gulp.watch(STATIC_PATH + '/**/*', ['watch-static']).on('change', function() {
+    keepFiles = true;
+  });
 
 }
 
