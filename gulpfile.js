@@ -23,6 +23,7 @@ var BUILD_PATH = './build';
 var SCRIPTS_PATH = BUILD_PATH + '/scripts';
 var SOURCE_PATH = './src';
 var STATIC_PATH = './static';
+var LIB_PATH = './lib';
 var ENTRY_FILE = SOURCE_PATH + '/index.js';
 var OUTPUT_FILE = 'game.js';
 
@@ -99,7 +100,11 @@ function copyPhaser() {
 
   return gulp.src(srcList)
     .pipe(gulp.dest(SCRIPTS_PATH));
+}
 
+function copyLib() {
+  return gulp.src(LIB_PATH + '/**/*')
+    .pipe(gulp.dest(SCRIPTS_PATH));
 }
 
 /**
@@ -164,7 +169,8 @@ function serve() {
 gulp.task('cleanBuild', cleanBuild);
 gulp.task('copyStatic', ['cleanBuild'], copyStatic);
 gulp.task('copyPhaser', ['copyStatic'], copyPhaser);
-gulp.task('build', ['copyPhaser'], build);
+gulp.task('copyLib', copyLib);
+gulp.task('build', ['copyPhaser', 'copyLib'], build);
 gulp.task('fastBuild', build);
 gulp.task('serve', ['build'], serve);
 gulp.task('watch-js', ['fastBuild'], browserSync.reload); // Rebuilds and reloads the project when executed.
