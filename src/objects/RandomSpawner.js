@@ -1,7 +1,7 @@
 import EnemySpawner from 'objects/EnemySpawner';
 
-const INITIAL_INTERVAL = 2500;
-const FINAL_INTERVAL = 500;
+const INITIAL_INTERVAL = 1500;
+const FINAL_INTERVAL = 1400;
 const TYPICAL_NUMBER_OF_ENEMIES = 10;
 
 export default class RandomSpawner extends EnemySpawner {

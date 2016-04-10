@@ -9,6 +9,7 @@ export default class Enemy {
     this.game = game;
     this.state = state;
     this.originalText = text;
+    this.lives = text.replace(/ /g, '').length;
     this.size = size;
     this._indexOffirstAliveChar = 0;
   }
@@ -71,9 +72,17 @@ export default class Enemy {
       this.killChar();
     }
 
-    this.sprite.destroy();
     this.textContent.destroy();
+    // wanted to call this.sprite.destroy() instead of .kill(),
+    // but it was raising an exception
+    this.sprite.parent.remove(this.sprite, false);
+    this.sprite.kill();
   }
 
-
+  hitByTorpedo() {
+    this.lives--;
+    if (this.lives <= 0) {
+      this.destroy();
+    }
+  }
 }

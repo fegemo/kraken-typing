@@ -17,7 +17,6 @@ export default class KrakenPlayer {
       'imgs/kraken-sprite.png',
       KRAKEN_DIMENSIONS.width,
       KRAKEN_DIMENSIONS.height);
-
     this.lives.preload();
   }
 

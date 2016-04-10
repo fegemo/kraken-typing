@@ -2,6 +2,7 @@ import KrakenPlayer from 'objects/KrakenPlayer';
 import Enemy from 'objects/Enemy';
 import Background from 'objects/GameBackground';
 import RandomSpawner from 'objects/RandomSpawner';
+import Torpedo from 'objects/Torpedo';
 
 export default class GameState extends Phaser.State {
 
@@ -17,6 +18,8 @@ export default class GameState extends Phaser.State {
 
     this.spawner = new RandomSpawner(this.game, this);
     this.spawner.preload();
+
+    Torpedo.preload(this.game);
   }
 
 
@@ -38,16 +41,26 @@ export default class GameState extends Phaser.State {
 
     // typing to destroy!!
     this.game.input.keyboard.addCallbacks(this, null, null, this.keyPressed);
+
+    // torpedos
+    this.torpedos = this.game.add.physicsGroup();
   }
 
   render() {
     this.spawner.render();
 
 
+    //// debugs player and enemys
     // this.game.debug.body(this.player.sprite);
     // let e = this.enemies.getFirstAlive();
     // if (e) {
     //   this.game.debug.body(e);
+    // }
+
+    //// debugs a torpedo
+    // let first = this.torpedos.getFirstAlive();
+    // if (first) {
+    //   first.entity.render();
     // }
   }
 
@@ -61,6 +74,20 @@ export default class GameState extends Phaser.State {
         p.entity.hit();
         enemy.entity.destroy();
       });
+
+    // updates torpedos statuses
+    this.torpedos.forEachAlive(torpedo => {
+      torpedo.entity.update();
+    });
+
+    // configures enemy collision with torpedo
+    this.game.physics.arcade.overlap(
+      this.enemies, this.torpedos,
+      (enemy, torpedo) => {
+        enemy.entity.hitByTorpedo();
+        torpedo.entity.destroy();
+      }
+    );
   }
 
   keyPressed(key, e) {
@@ -82,10 +109,16 @@ export default class GameState extends Phaser.State {
     // new one, we shoot it
     if (spawner.currentEnemy) {
       let killed = spawner.currentEnemy.killChar();
+      this.shootTorpedo(spawner.currentEnemy);
 
       if (killed) {
         spawner.currentEnemy = null;
       }
     }
+  }
+
+  shootTorpedo(targetEnemy) {
+    var torpedo = new Torpedo(this.game, this.torpedos, this.player, targetEnemy);
+    torpedo.create();
   }
 }
