@@ -81,13 +81,17 @@ export default class GameState extends Phaser.State {
     });
 
     // configures enemy collision with torpedo
-    this.game.physics.arcade.overlap(
-      this.enemies, this.torpedos,
-      (enemy, torpedo) => {
+    this.enemies.forEachAlive(enemy => {
+      this.game.physics.arcade.overlap(enemy, this.torpedos,
+        // callback for when a torpedo target at this enemy hit it
+        (_, torpedo) => {
         enemy.entity.hitByTorpedo();
         torpedo.entity.destroy();
-      }
-    );
+        // callback to check if the current torpedo was target at this enemy
+      }, (_, torpedo) => {
+        return torpedo.entity.target === enemy.entity;
+      });
+    }, this);
   }
 
   keyPressed(key, e) {

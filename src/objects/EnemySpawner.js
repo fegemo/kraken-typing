@@ -27,7 +27,7 @@ export default class EnemySpawner {
 
   spawnEnemyAtRandom(text) {
     let xPosition = Math.random() * this.game.world.width;
-    let yPosition = 0;
+    let yPosition = -32;
 
     this.spawnEnemyAt(xPosition, yPosition, text);
   }
