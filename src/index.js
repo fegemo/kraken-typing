@@ -6,7 +6,7 @@ import loadFonts from 'misc/fonts';
 class Game extends Phaser.Game {
 
   constructor() {
-    super(400, 700, Phaser.AUTO, 'content', null);
+    super(350, 600, Phaser.AUTO, 'content', null);
     this.state.add('MenuState', MenuState, false);
     this.state.add('GameState', GameState, false);
     this.state.add('SplashState', SplashState, false);
