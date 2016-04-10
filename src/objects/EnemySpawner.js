@@ -5,6 +5,7 @@ export default class EnemySpawner {
   constructor(game, state) {
     this.game = game;
     this.state = state;
+    this.currentEnemy = null;
   }
 
   preload() {
@@ -19,20 +20,9 @@ export default class EnemySpawner {
   }
 
   spawnEnemyAt(x, y, text) {
-    var enemy = new Enemy(this.game, text);
+    var enemy = new Enemy(this.game, this.state, text);
+
     enemy.create(x, y);
-
-    let xDistanceToPlayer = this.state.player.x - x;
-    let yDistanceToPlayer = this.state.player.y - y;
-
-    let ySpeed = 20;
-    let timeToImpact = yDistanceToPlayer/ySpeed;
-    let xSpeed = xDistanceToPlayer / timeToImpact;
-
-    this.state.enemies.add(enemy.sprite);
-
-    enemy.sprite.body.velocity.x = xSpeed;
-    enemy.sprite.body.velocity.y = ySpeed;
   }
 
   spawnEnemyAtRandom(text) {
@@ -47,7 +37,10 @@ export default class EnemySpawner {
   }
 
   update() {
-
+    this.state.enemies.iterate('alive', true, Phaser.Group.RETURN_NONE,
+      enemy => {
+      enemy.update();
+    });
   }
 }
 
