@@ -54,9 +54,9 @@ export default class GameStateButtons {
           color: '0xFEFF49',
           offsetY: 40,
           offsetX: -70,
-          stroke: "0x000000",
+          stroke: '0x000000',
           strokeThickness: 9,
-          callback: replayCallback
+          callback: replayCallback.bind(context)
         },
         {
           type: 'text',
@@ -66,9 +66,9 @@ export default class GameStateButtons {
           color: '0xFEFF49',
           offsetY: 40,
           offsetX: 70,
-          stroke: "0x000000",
+          stroke: '0x000000',
           strokeThickness: 9,
-          callback: menuCallback
+          callback: menuCallback.bind(context)
         }
       ]
     });
@@ -117,14 +117,14 @@ export default class GameStateButtons {
           offsetX: 70,
           stroke: '0x000000',
           strokeThickness: 9,
-          callback: menuCallback
+          callback: menuCallback.bind(context)
         }
       ]
     });
 
     // hover on buttons
-    let textResume = this.modals.getModalItem('gameOver', 3);
-    let textMenu = this.modals.getModalItem('gameOver', 4);
+    let textResume = this.modals.getModalItem('gamePaused', 3);
+    let textMenu = this.modals.getModalItem('gamePaused', 4);
     textResume.inputEnabled = true;
     textMenu.inputEnabled = true;
 

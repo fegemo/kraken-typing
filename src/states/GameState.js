@@ -144,10 +144,18 @@ export default class GameState extends Phaser.State {
   }
 
   pauseGame() {
+    // pauses physics and the global timer
+    this.game.physics.arcade.isPaused = true;
+    this.game.time.events.pause();
+    // shows modal
     this.hud.modals.showModal('gamePaused');
   }
 
   resumeGame() {
+    // unpauses physics and the global timer
+    this.game.physics.arcade.isPaused = false;
+    this.game.time.events.resume();
+    // hides modal
     this.hud.modals.hideModal('gamePaused');
   }
 
