@@ -36,35 +36,8 @@ export default class GameState extends Phaser.State {
     // creates the enemy spawner
     this.spawner.create();
 
-    this.game.input.keyboard.addCallbacks(this, null, null, function(key, e) {
-      e.stopPropagation();
-      // if there is a current enemy, see if it's a hit
-      if (this.spawner.currentEnemy) {
-        if (this.spawner.currentEnemy.currentChar() === key) {
-          let killed = this.spawner.currentEnemy.killChar();
-
-          if (killed) {
-            this.spawner.currentEnemy = null;
-          }
-        }
-      }
-      // if not, get all enemies that are alive and see if any is hit
-      else {
-        this.enemies.iterate('alive', true, Phaser.Group.RETURN_NONE,
-          enemy => {
-            if (enemy.entity.currentChar() === key) {
-              this.spawner.currentEnemy = enemy.entity;
-              let killed = this.spawner.currentEnemy.killChar();
-
-              if (killed) {
-                this.spawner.currentEnemy = null;
-              }
-
-            }
-          }
-        );
-      }
-    });
+    // typing to destroy!!
+    this.game.input.keyboard.addCallbacks(this, null, null, this.keyPressed);
   }
 
   render() {
@@ -90,4 +63,29 @@ export default class GameState extends Phaser.State {
       });
   }
 
+  keyPressed(key, e) {
+    var spawner = this.spawner;
+
+    // if there is not a this.currentEnemy, look for one
+    if (!spawner.currentEnemy) {
+      // iterate over alive enemies,
+      // checking if their current letter equals `key`
+      this.enemies.iterate('alive', true, Phaser.Group.RETURN_NONE, enemy => {
+        if (spawner.currentEnemy) return;
+        if (enemy.entity.currentChar === key) {
+          spawner.currentEnemy = enemy.entity;
+        }
+      });
+    }
+
+    // if we have a spawner, either bc we had before or bc we just picked a
+    // new one, we shoot it
+    if (spawner.currentEnemy) {
+      let killed = spawner.currentEnemy.killChar();
+
+      if (killed) {
+        spawner.currentEnemy = null;
+      }
+    }
+  }
 }

@@ -42,11 +42,11 @@ export default class Enemy {
     this.sprite.body.velocity.y = ySpeed;
   }
 
-  hasMoreChars() {
+  get hasMoreChars() {
     return this._indexOffirstAliveChar < this.originalText.length;
   }
 
-  currentChar() {
+  get currentChar() {
     return this.originalText[this._indexOffirstAliveChar];
   }
 
@@ -62,10 +62,12 @@ export default class Enemy {
     // updates the colors so the first alive char has a different color
     this.textContent.addColor(COLOR_OF_CURRENT_CHARACTER, this._indexOffirstAliveChar);
     this.textContent.addColor(COLOR_OF_REGULAR_CHARACTER, this._indexOffirstAliveChar+1);
+
+    return !this.hasMoreChars;
   }
 
   destroy() {
-    while (this.hasMoreChars()) {
+    while (this.hasMoreChars) {
       this.killChar();
     }
 
