@@ -3,6 +3,7 @@ import Enemy from 'objects/Enemy';
 import Background from 'objects/GameBackground';
 import RandomSpawner from 'objects/RandomSpawner';
 import Torpedo from 'objects/Torpedo';
+import HUD from 'objects/GameStateHUD';
 
 export default class GameState extends Phaser.State {
 
@@ -20,6 +21,9 @@ export default class GameState extends Phaser.State {
     this.spawner.preload();
 
     Torpedo.preload(this.game);
+
+    this.hud = new HUD(this.game);
+    this.hud.preload();
   }
 
 
@@ -42,8 +46,16 @@ export default class GameState extends Phaser.State {
     // typing to destroy!!
     this.game.input.keyboard.addCallbacks(this, null, null, this.keyPressed);
 
-    // torpedos
+    // torpedoes
     this.torpedos = this.game.add.physicsGroup();
+
+    // buttons & hud
+    this.hud.create({
+      replayCallback: this.replayGame,
+      resumeCallback: this.resumeGame,
+      menuCallback: this.leaveToMenu,
+      pauseCallback: this.pauseGame
+    }, this);
   }
 
   render() {
@@ -70,8 +82,8 @@ export default class GameState extends Phaser.State {
     // configures player collision with enemy
     this.game.physics.arcade.overlap(
       this.player.sprite, this.enemies,
-      (p, enemy) => {
-        p.entity.hit();
+      (player, enemy) => {
+        player.entity.hit(this.gameOver, this);
         enemy.entity.destroy();
       });
 
@@ -124,5 +136,27 @@ export default class GameState extends Phaser.State {
   shootTorpedo(targetEnemy) {
     var torpedo = new Torpedo(this.game, this.torpedos, this.player, targetEnemy);
     torpedo.create();
+  }
+
+  gameOver() {
+    this.hud.modals.hideModal('gamePaused');
+    this.hud.modals.showModal('gameOver');
+  }
+
+  pauseGame() {
+    this.hud.modals.showModal('gamePaused');
+  }
+
+  resumeGame() {
+    this.hud.modals.hideModal('gamePaused');
+  }
+
+  replayGame() {
+    console.log('replay game');
+  }
+
+  leaveToMenu() {
+    console.log('left to menu');
+
   }
 }

@@ -61,8 +61,10 @@ export default class KrakenPlayer {
     this.sprite.animations.play('goingToSwim');
   }
 
-  hit() {
-    this.lives.value--;
+  hit(gameOverCallback, context) {
+    if (--this.lives.value <= 0) {
+      gameOverCallback.call(context);
+    }
   }
 }
 
