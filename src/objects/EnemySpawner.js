@@ -16,7 +16,7 @@ export default class EnemySpawner {
     const worldWidth = this.game.world.width;
     const worldHeight = this.game.world.height;
 
-    this.state.enemies = this.state.enemies || this.game.add.physicsGroup();
+    this.state.enemies = this.game.add.physicsGroup();
   }
 
   spawnEnemyAt(x, y, text) {

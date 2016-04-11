@@ -70,6 +70,12 @@ export default class SplashState extends Phaser.State {
 
 
     this.createBalls();
+
+    this.game.time.events.add(5000, this.goToMenu, this);
+  }
+
+  render() {
+
   }
 
   update() {
@@ -78,7 +84,7 @@ export default class SplashState extends Phaser.State {
     });
   }
 
-  render() {
-
+  goToMenu() {
+    this.game.state.start('menu');
   }
 };

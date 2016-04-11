@@ -7,10 +7,10 @@ class Game extends Phaser.Game {
 
   constructor() {
     super(350, 600, Phaser.AUTO, 'content', null);
-    this.state.add('MenuState', MenuState, false);
-    this.state.add('GameState', GameState, false);
-    this.state.add('SplashState', SplashState, false);
-    this.state.start('GameState');
+    this.state.add('menu', MenuState, false);
+    this.state.add('game', GameState, false);
+    this.state.add('splash', SplashState, false);
+    this.state.start('splash');
   }
 }
 

@@ -160,11 +160,10 @@ export default class GameState extends Phaser.State {
   }
 
   replayGame() {
-    console.log('replay game');
+    this.game.state.start('game');
   }
 
   leaveToMenu() {
-    console.log('left to menu');
-
+    this.game.state.start('menu');
   }
 }
