@@ -1,7 +1,7 @@
 const DISTANCE_FROM_SPRITE_TO_TEXT = 5;
 const COLOR_OF_CURRENT_CHARACTER = '#ff00ff';
 const COLOR_OF_REGULAR_CHARACTER = '#000000';
-const DEFAULT_Y_SPEED = 250;
+const DEFAULT_Y_SPEED = 90;
 
 export default class Enemy {
 

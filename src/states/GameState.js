@@ -28,9 +28,6 @@ export default class GameState extends Phaser.State {
 
 
   create() {
-    const worldWidth = this.game.world.width;
-    const worldHeight = this.game.world.height;
-
     // configures "arcade" type of physics
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -83,8 +80,15 @@ export default class GameState extends Phaser.State {
     this.game.physics.arcade.overlap(
       this.player.sprite, this.enemies,
       (player, enemy) => {
+        // damages the player
         player.entity.hit(this.gameOver, this);
+        // destroys the enemy
         enemy.entity.destroy();
+        // if the enemy was the current target, free it so other enemies
+        // can be shot at
+        if (this.spawner.currentEnemy === enemy.entity) {
+          this.spawner.currentEnemy = null;
+        }
       });
 
     // updates torpedos statuses
@@ -121,14 +125,16 @@ export default class GameState extends Phaser.State {
       });
     }
 
-    // if we have a spawner, either bc we had before or bc we just picked a
-    // new one, we shoot it
+    // if we have a current enemy, either bc we had before or bc we just picked
+    // a new one, we shoot it
     if (spawner.currentEnemy) {
-      let killed = spawner.currentEnemy.killChar();
-      this.shootTorpedo(spawner.currentEnemy);
+      if (spawner.currentEnemy.currentChar === key) {
+        let killed = spawner.currentEnemy.killChar();
+        this.shootTorpedo(spawner.currentEnemy);
 
-      if (killed) {
-        spawner.currentEnemy = null;
+        if (killed) {
+          spawner.currentEnemy = null;
+        }
       }
     }
   }
