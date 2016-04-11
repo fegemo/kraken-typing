@@ -39,6 +39,7 @@ export default class GameState extends Phaser.State {
 
     // creates the enemy spawner
     this.spawner.create();
+    this.spawner.onSpawningProgress.add(this.progress, this);
 
     // typing to destroy!!
     this.game.input.keyboard.addCallbacks(this, null, null, this.keyPressed);
@@ -58,6 +59,7 @@ export default class GameState extends Phaser.State {
   render() {
     this.spawner.render();
 
+    this.player.render();
 
     //// debugs player and enemys
     // this.game.debug.body(this.player.sprite);
@@ -101,8 +103,16 @@ export default class GameState extends Phaser.State {
       this.game.physics.arcade.overlap(enemy, this.torpedos,
         // callback for when a torpedo target at this enemy hit it
         (_, torpedo) => {
-        enemy.entity.hitByTorpedo();
-        torpedo.entity.destroy();
+          // tells enemy it was hit so it can lose its HP and destroys the torpedo
+          enemy.entity.hitByTorpedo();
+          torpedo.entity.destroy();
+          // check if all enemies are destroyed so we can go to next level:
+          // if the spawner has finished and there are no more alive enemies
+          if (this.finishedSpawning && !this.enemies.countLiving()) {
+            // go to the next level
+            this.nextLevel();
+          }
+
         // callback to check if the current torpedo was target at this enemy
       }, (_, torpedo) => {
         return torpedo.entity.target === enemy.entity;
@@ -142,6 +152,19 @@ export default class GameState extends Phaser.State {
   shootTorpedo(targetEnemy) {
     var torpedo = new Torpedo(this.game, this.torpedos, this.player, targetEnemy);
     torpedo.create();
+  }
+
+  progress(e) {
+    console.log(`progress: ${e.progress*100}%`);
+    this.finishedSpawning = true;
+    // if (e.finished) {
+    //   console.log('finished!');
+    //   this.player.playSwimming();
+    // }
+  }
+
+  nextLevel() {
+    this.player.playSwimming();
   }
 
   gameOver() {

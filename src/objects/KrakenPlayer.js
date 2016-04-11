@@ -17,6 +17,11 @@ export default class KrakenPlayer {
       'imgs/kraken-sprite.png',
       KRAKEN_DIMENSIONS.width,
       KRAKEN_DIMENSIONS.height);
+    this.game.load.spritesheet(
+      'kraken-particles',
+      'imgs/kraken-particles.png',
+      1,
+      1);
     this.lives.preload();
   }
 
@@ -40,25 +45,64 @@ export default class KrakenPlayer {
     var swimming = this.sprite.animations.add('swimming', [4, 5], 5, true);
     var stoppingToSwim = this.sprite.animations.add('stoppingToSwim', [4, 5, 1, 0], 20, false);
 
-    goingToSwim.onComplete.add((sprite, animation) => {
-      sprite.animations.play('swimming');
-    });
-    swimming.onLoop.add((sprite, animation) => {
-      if (animation.loopCount === 5) {
-        sprite.animations.play('stoppingToSwim');
-      }
-    });
-
     // y yoyo movement
     this.floatingTween = this.game.add.tween(this.sprite);
     this.floatingTween.to({ y: this.sprite.y-5 }, 350, Phaser.Easing.Quadratic.InOut, true, 0, -1, true);
 
     // life icons
     this.lives.create();
+
+    // particles
+    this.emitter = this.game.add.emitter(0, 0, 250);
+    this.emitter.makeParticles('kraken-particles', [0,1,2,3,4]);
+    this.sprite.addChild(this.emitter);
+    this.emitter.gravity = 400;
+    this.emitter.x = 0;
+    this.emitter.y = this.sprite.height*0.25;
+    this.emitter.alpha = 0.7;
+    this.emitter.width = this.sprite.width*0.5;
+    this.emitter.minParticleSpeed = new Phaser.Point(-30, 10);
+    this.emitter.maxParticleSpeed = new Phaser.Point(+30, 10);
+  }
+
+  render() {
   }
 
   playSwimming() {
-    this.sprite.animations.play('goingToSwim');
+    let duration = 1800;
+    let timeBegin = this.game.time.time;
+
+    // particles - start emitting
+    this.emitter.start(false, 1000, 10);
+
+    // movement - going up in 2 steps
+    this.floatingTween.pause();
+    let tween1 = this.game.add.tween(this.sprite);
+    let tween2 = this.game.add.tween(this.sprite);
+    let tween3 = this.game.add.tween(this.sprite);
+    tween1.to({ y: this.game.world.height*0.5 }, duration/3, Phaser.Easing.Quadratic.Out, true);
+    tween2.to({ y: -0.5*this.sprite.height }, duration/4, Phaser.Easing.Quadratic.Out, false);
+    tween3.to({ y: this.game.world.height - 50 }, duration/5, Phaser.Easing.Quadratic.Out, false);
+
+    tween2.onComplete.addOnce(() => {
+      this.sprite.y = this.game.world.height + this.sprite.height/2;
+    }, this);
+    tween3.onComplete.addOnce(() => {
+      this.floatingTween.resume();
+    }, this);
+    tween1.chain(tween2.chain(tween3));
+
+    // animation - playing 3 anims in sequence
+    let emitter = this.emitter;
+    this.sprite.animations.play('goingToSwim').onComplete.addOnce(sprite => {
+      sprite.animations.play('swimming').onLoop.add(sprite => {
+        let timeNow = this.game.time.time;
+        if (timeNow >= timeBegin + duration) {
+          sprite.animations.play('stoppingToSwim');
+          emitter.on = false;
+        }
+      });
+    });
   }
 
   hit(gameOverCallback, context) {

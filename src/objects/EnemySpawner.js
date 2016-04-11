@@ -6,6 +6,7 @@ export default class EnemySpawner {
     this.game = game;
     this.state = state;
     this.currentEnemy = null;
+    this.onSpawningProgress = new Phaser.Signal();
   }
 
   preload() {

@@ -32,5 +32,10 @@ export default class RandomSpawner extends EnemySpawner {
       let next = Phaser.Math.linear(INITIAL_INTERVAL, FINAL_INTERVAL, this.spawned/TYPICAL_NUMBER_OF_ENEMIES);
       this.game.time.events.add(next * (Math.random()*0.2+0.9), this.randSpawn, this);
     }
+
+    this.onSpawningProgress.dispatch({
+      progress: this.spawned/TYPICAL_NUMBER_OF_ENEMIES,
+      finished: this.spawned === TYPICAL_NUMBER_OF_ENEMIES
+    });
   }
 }
