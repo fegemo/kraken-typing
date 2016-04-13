@@ -8,9 +8,6 @@ import HUD from 'objects/GameStateHUD';
 export default class GameState extends Phaser.State {
 
   preload() {
-    // fonts
-    this.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1/webfont.js');
-
     this.player = new KrakenPlayer(this.game);
     this.player.preload();
 

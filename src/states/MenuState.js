@@ -28,6 +28,7 @@ export default class MenuState extends Phaser.State {
     this.logo.fill = grd;
     this.logo.strokeThickness = 15;
     this.logo.stroke = '#111';
+    this.logo.margin = new Phaser.Point(0,20);
 
     // tried to make the logo be a mask for the bubbles, but it didnt show up
     // let bmd = this.game.make.bitmapData(this.logo.width, this.logo.height);

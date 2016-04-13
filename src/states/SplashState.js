@@ -71,6 +71,11 @@ export default class SplashState extends Phaser.State {
 
     this.createBalls();
 
+    // creates an invisible text with each webfont so it preloads them here
+    this.game.make.text(-100, -100, 'a', { font: 'Erica One' });
+    this.game.make.text(-100, -100, 'b', { font: 'Chango' });
+    this.game.make.text(-100, -100, 'c', { font: 'Ubuntu Mono' });
+
     this.game.time.events.add(5000, this.goToMenu, this);
   }
 
