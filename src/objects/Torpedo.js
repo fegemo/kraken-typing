@@ -13,6 +13,7 @@ const TORPEDO_INITIAL_VELOCITY = {
   }
 };
 const TORPEDO_SPEED = 120;
+const TORPEDO_STEER_RATE = 100;
 const State = {
   // stays in this for TORPEDO_TIME_TO_PURSUIT mili...
   JUST_SHOT: 'JUST_SHOT',
@@ -51,6 +52,7 @@ export default class Torpedo {
       TORPEDO_INITIAL_VELOCITY.y.min, TORPEDO_INITIAL_VELOCITY.y.variation);
     this.sprite.body.drag.x = 0.4;
     this.sprite.body.drag.y = 0.1;
+    this.sprite.tint = 0xff3366;
     this.born = this.game.time.time;
 
     // animation
@@ -69,6 +71,11 @@ export default class Torpedo {
 
     this.checkState();
 
+    let targetBottom = {
+      x: this.target.sprite.x,
+      y: Phaser.Math.linear(this.target.sprite.y, this.target.sprite.bottom, 0.75)
+    };
+
     switch(this.state) {
       case State.JUST_SHOT:
         let angleToTarget = Math.atan2(this.target.sprite.y-this.sprite.y, this.target.sprite.x-this.sprite.x);
@@ -86,7 +93,10 @@ export default class Torpedo {
 
         break;
       case State.PURSUING:
-        this.sprite.rotation = this.game.physics.arcade.moveToObject(this.sprite, this.target.sprite, TORPEDO_SPEED) + Math.PI/2;
+        if (this.game.time.time > this.lastSteer + TORPEDO_STEER_RATE) {
+          this.sprite.rotation = this.game.physics.arcade.moveToObject(this.sprite, targetBottom, TORPEDO_SPEED) + Math.PI/2;
+          this.lastSteer = this.game.time.time;
+        }
 
         break;
       case State.ADRIFT:
@@ -105,16 +115,18 @@ export default class Torpedo {
       this.sprite.play('turnedOff');
     }
     else if (this.state === State.JUST_SHOT &&
-      this.game.time.time > this.born + TORPEDO_TIME_TO_PURSUIT/3 &&
-      this.sprite.animations.currentAnim !== 'pursuing') {
+      this.game.time.time > this.born + TORPEDO_TIME_TO_PURSUIT/4 &&
+      this.sprite.animations.currentAnim.name !== 'pursuing') {
+      this.sprite.tint = 0xffffff;
       this.sprite.play('pursuing');
     }
     else if (this.state === State.JUST_SHOT &&
       this.game.time.time > this.born + TORPEDO_TIME_TO_PURSUIT) {
-        this.sprite.body.drag.x = 0;
-        this.sprite.body.drag.y = 0;
+      this.sprite.body.drag.x = 0;
+      this.sprite.body.drag.y = 0;
+      this.lastSteer = this.game.time.time-1;
 
-        this.state = State.PURSUING;
+      this.state = State.PURSUING;
     }
   }
 

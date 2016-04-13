@@ -108,7 +108,9 @@ export default class KrakenPlayer {
   hit(gameOverCallback, context) {
     if (--this.lives.value <= 0) {
       gameOverCallback.call(context);
+      return true;
     }
+    return false;
   }
 }
 

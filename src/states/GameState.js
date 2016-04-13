@@ -21,6 +21,8 @@ export default class GameState extends Phaser.State {
 
     this.hud = new HUD(this.game);
     this.hud.preload();
+
+    this.currentLevel = 1;
   }
 
 
@@ -80,13 +82,17 @@ export default class GameState extends Phaser.State {
       this.player.sprite, this.enemies,
       (player, enemy) => {
         // damages the player
-        player.entity.hit(this.gameOver, this);
+        let gameOvered = player.entity.hit(this.gameOver, this);
         // destroys the enemy
         enemy.entity.destroy();
         // if the enemy was the current target, free it so other enemies
         // can be shot at
         if (this.spawner.currentEnemy === enemy.entity) {
           this.spawner.currentEnemy = null;
+        }
+        if (this.finishedSpawning && !gameOvered && !this.enemies.countLiving()) {
+          // go to the next level
+          this.nextLevel();
         }
       });
 
@@ -162,6 +168,10 @@ export default class GameState extends Phaser.State {
 
   nextLevel() {
     this.player.playSwimming();
+    var duration = this.hud.showNextLevelMessage(++this.currentLevel);
+    this.game.time.events.add(duration, () => {
+      this.spawner.nextLevel(this.currentLevel);
+    }, this);
   }
 
   gameOver() {

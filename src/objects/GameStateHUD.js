@@ -1,5 +1,6 @@
 const PAUSE_BUTTON_DIMENSIONS = { width: 35, height: 33 };
 const PAUSE_BUTTON_MARGINS = { bottom: 10, left: 5 };
+const nextLevelTweensDuration = [120, 800, 200];
 
 export default class GameStateButtons {
 
@@ -34,6 +35,7 @@ export default class GameStateButtons {
     );
     pauseButton.anchor.setTo(0, 1);
 
+    this.createNextLevelMessage();
   }
 
   createGameOverModal({ resumeCallback, replayCallback, menuCallback }, context) {
@@ -79,10 +81,10 @@ export default class GameStateButtons {
     textReplay.inputEnabled = true;
     textMenu.inputEnabled = true;
 
-    textReplay.events.onInputOver.add(this.hoverText, this, 0, textReplay);
-    textMenu.events.onInputOver.add(this.hoverText, this, 0, textMenu);
-    textReplay.events.onInputOut.add(this.outText, this, 0, textReplay);
-    textMenu.events.onInputOut.add(this.outText, this, 0, textMenu);
+    textReplay.events.onInputOver.add(this.hoverTextButton, this, 0, textReplay);
+    textMenu.events.onInputOver.add(this.hoverTextButton, this, 0, textMenu);
+    textReplay.events.onInputOut.add(this.outTextButton, this, 0, textReplay);
+    textMenu.events.onInputOut.add(this.outTextButton, this, 0, textMenu);
   }
 
   createGamePausedModal({ resumeCallback, replayCallback, menuCallback }, context) {
@@ -128,17 +130,79 @@ export default class GameStateButtons {
     textResume.inputEnabled = true;
     textMenu.inputEnabled = true;
 
-    textResume.events.onInputOver.add(this.hoverText, this, 0, textResume);
-    textMenu.events.onInputOver.add(this.hoverText, this, 0, textMenu);
-    textResume.events.onInputOut.add(this.outText, this, 0, textResume);
-    textMenu.events.onInputOut.add(this.outText, this, 0, textMenu);
+    textResume.events.onInputOver.add(this.hoverTextButton, this, 0, textResume);
+    textMenu.events.onInputOver.add(this.hoverTextButton, this, 0, textMenu);
+    textResume.events.onInputOut.add(this.outTextButton, this, 0, textResume);
+    textMenu.events.onInputOut.add(this.outTextButton, this, 0, textMenu);
   }
 
-  hoverText(text) {
+  createNextLevelMessage() {
+    const worldWidth = this.game.world.width;
+    const worldHeight = this.game.world.height;
+
+    this.nextLevelTexts = [];
+    // 'Next Level!'
+    this.nextLevelTexts.push(
+      this.game.add.text(
+        worldWidth,
+        worldHeight*0.4,
+        'Next level!',
+        {
+          font: '20px Chango',
+          color: '#333333'
+        }
+      )
+    );
+
+    // # (number of new level)
+    this.nextLevelTexts.push(
+      this.game.add.text(
+        0,
+        worldHeight*0.5,
+        '2',
+        {
+          font: '55px Erica One',
+          color: '#333333'
+        }
+      )
+    );
+    this.nextLevelTexts[0].anchor.setTo(0, 0.5);
+    this.nextLevelTexts[1].anchor.setTo(1, 0.5);
+
+    let tweensTargetX = [
+      [worldWidth*(3/5), worldWidth*(2/5), -this.nextLevelTexts[0].width, worldWidth],
+      [worldWidth*(2/5), worldWidth*(3/5), worldWidth, this.nextLevelTexts[1].widdth]
+    ];
+
+    this.nextLevelTweens = [];
+    this.nextLevelTweens = this.nextLevelTexts.map((text, i) => {
+      var tweenIn = this.game.add.tween(text),
+        tweenMiddle = this.game.add.tween(text),
+        tweenOut = this.game.add.tween(text);
+
+      tweenIn.to({ x: tweensTargetX[i][0] }, nextLevelTweensDuration[0], Phaser.Easing.Quadratic.Out, false, 0);
+      tweenMiddle.to({ x: tweensTargetX[i][1] }, nextLevelTweensDuration[1], Phaser.Easing.Linear.None, false, 0);
+      tweenOut.to({ x: tweensTargetX[i][2] }, nextLevelTweensDuration[2], Phaser.Easing.Quadratic.In, false, 0);
+      tweenOut.onComplete.add(() => {
+        text.x = tweensTargetX[i][3];
+      });
+
+      tweenIn.chain(tweenMiddle.chain(tweenOut));
+      return tweenIn;
+    });
+  }
+
+  hoverTextButton(text) {
     text.fill = '#FF9649';
   }
 
-  outText(text) {
+  outTextButton(text) {
     text.fill = '#FEFF49';
+  }
+
+  showNextLevelMessage(level) {
+    this.nextLevelTexts[1].text = ''+level;
+    this.nextLevelTweens.forEach(tween => tween.start());
+    return nextLevelTweensDuration.reduce((acum, curr) => acum+curr, 0);
   }
 }

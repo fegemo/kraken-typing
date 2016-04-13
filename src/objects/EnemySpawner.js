@@ -20,6 +20,17 @@ export default class EnemySpawner {
     this.state.enemies = this.game.add.physicsGroup();
   }
 
+  render() {
+
+  }
+
+  update() {
+    this.state.enemies.iterate('alive', true, Phaser.Group.RETURN_NONE,
+      enemy => {
+      enemy.update();
+    });
+  }
+
   spawnEnemyAt(x, y, text) {
     var enemy = new Enemy(this.game, this.state, text);
 
@@ -33,15 +44,8 @@ export default class EnemySpawner {
     this.spawnEnemyAt(xPosition, yPosition, text);
   }
 
-  render() {
+  nextLevel() {
 
-  }
-
-  update() {
-    this.state.enemies.iterate('alive', true, Phaser.Group.RETURN_NONE,
-      enemy => {
-      enemy.update();
-    });
   }
 }
 
