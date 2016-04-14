@@ -119,7 +119,15 @@ class ConsoleSpawner extends WaveSpawner {
     if (!!git &&
       !this.hasSpawnedGitEnemy && this.progressConsoleOnly >= git.atProgress) {
         this.hasSpawnedGitEnemy = true;
-        this.spawn(GitEnemy);
+        let {enemy, enemyDescription} = this.spawn(GitEnemy);
+
+        enemy.uponDeath = function() {
+          switch(enemyDescription.unlocks) {
+            case '#anim-git-init':
+              document.querySelector('.git-kraken-image#gkui-topbar').classList.add('faded-in');
+              break;
+          }
+        }.bind(enemy);
       }
   }
 
@@ -139,6 +147,8 @@ class ConsoleSpawner extends WaveSpawner {
 
     // reschedules spawning
     this.start();
+
+    return {enemy, enemyDescription};
   }
 
   nextEnemy() {

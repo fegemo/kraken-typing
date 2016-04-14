@@ -13,6 +13,7 @@ export default class Enemy {
     this.position = new Phaser.Point(x, y);
     this.lives = text.replace(/ /g, '').length;
     this._indexOffirstAliveChar = 0;
+    this.uponDeath = function() {};
   }
 
   preload() {
@@ -78,8 +79,11 @@ export default class Enemy {
     while (this.hasMoreChars) {
       this.killChar();
     }
-
     this.textContent.destroy();
+
+    // the enemy might have something to do upon its death
+    this.uponDeath();
+
     // wanted to call this.sprite.destroy() instead of .kill(),
     // but it was raising an exception
     this.sprite.parent.remove(this.sprite, false);
