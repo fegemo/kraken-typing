@@ -1,20 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <title>Krakenite</title>
-  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu+Mono|Chewy|Chango">
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu+Mono|Chewy|Chango|Overlock">
   <link rel="stylesheet" href="styles/main.css">
 </head>
-
 <body>
   <!-- <span class="preload-erica-one">a</span> -->
   <span class="preload-chewy">a</span>
   <span class="preload-chango">b</span>
   <!-- <span class="preload-overlock">b</span> -->
   <span class="preload-ubuntu-mono">c</span>
-  <div id="content"></div>
+
+  <div id="container">
+    <main class="piece">
+      <h1 id="game-title">Krack-the-<br>Terminal</h1>
+      <!-- <h1>Krakening the Terminal</h1> -->
+      <div id="game" class="box"></div>
+    </main>
+    <div id="lateral">
+      <section id="git-kraken-ui" class="piece">
+        <h2 id="your-gk-title">Your<br>GitKraken</h2>
+        <figure class="box" id="git-kraken-figure">
+          <img src="imgs/gkui/empty" class="git-kraken-image" alt="GitKraken's empty user interface">
+          <figcaption id="git-kraken-log">adfadsfas</figcaption>
+        </figure>
+      </section>
+      <section id="team" class="piece">
+        <h2>Credits</h2>
+        <div class="box">
+          <h3>Team</h3>
+          <dl class="clearfix">
+            <dt><a href="mailto:fegemo@gmail.com">Flávio Coutinho</a></dt>
+            <dd><span class="tag orange">Programmer</span><span class="tag oceanblue">Game Designer</span></dd>
+            <dt><a href="mailto:marcelleturismo@gmail.com">Marcelle Silva</a></dt>
+            <dd><span class="tag golden">Sound Fx Designer</span></dd>
+            <dt><a href="mailto:coutinho.elder@gmail.com">Elder Coutinho</a></dt>
+            <dd><span class="tag weakred">Playtester</span><span class="tag hotpink">Music Picker</span></dd>
+            <dt>Ismael Silva</dt>
+            <dd><span class="tag oceanblue">Tech Lead</span><span class="tag weakred">Playtester</span></dd>
+            <dt>Glivia Barbosa</dt>
+            <dd><span class="tag lightgreen">UI Engineer</span><span class="tag weakred">Playtester</span></dd>
+          </dl>
+          <h3>Attributions</h3>
+          <dl class="clearfix">
+            <dt><a href="mailto:fegemo@gmail.com">Song</a></dt>
+            <dd><span class="tag orange">Programmer</span><span class="tag oceanblue">Game Designer</span></dd>
+            <dt><a href="mailto:marcelleturismo@gmail.com">Fonts</a></dt>
+            <dd><span class="tag golden">Sound Fx Designer</span></dd>
+            <dt><a href="mailto:coutinho.elder@gmail.com">Elder Coutinho</a></dt>
+            <dd><span class="tag weakred">Playtester</span><span class="tag hotpink">Music Picker</span></dd>
+          </dl>
+        </div>
+      </section>
+    </div>
+  </div>
+  <footer id="frameworks-footer">
+    <h2>Thanks to these awesome guys:</h2>
+    <ul>
+      <li><img src="imgs/site/logo-html5.svg" alt="Logo of HTML5"></li>
+      <li><img src="imgs/site/logo-css3.svg" alt="Logo of CSS3"></li>
+      <li><img src="imgs/site/logo-phaser.png" alt="Logo of the game framework Phaser"></li>
+      <li><img src="imgs/site/logo-gitkraken.png" alt="Logo of GitKraken"></li>
+    </ul>
+  </footer>
   <script src="scripts/phaser.js"></script>
   <script src="scripts/phaser_modals.js"></script>
   <script src="scripts/game.js"></script>

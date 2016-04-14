@@ -5,7 +5,7 @@ import SplashState from 'states/SplashState';
 class Game extends Phaser.Game {
 
   constructor() {
-    super(350, 600, Phaser.AUTO, 'content', null);
+    super(350, 600, Phaser.AUTO, 'game', null);
     this.state.add('splash', SplashState, false);
     this.state.add('menu', MenuState, false);
     this.state.add('game', GameState, false);

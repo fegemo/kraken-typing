@@ -75,7 +75,10 @@ function copyStatic() {
   tasks.push(
     gulp.src(STATIC_PATH + '/**/*.styl')
       .pipe(stylus())
-      .pipe(autoprefixer('last 2 versions', { map: false }))
+      .pipe(autoprefixer({
+  			browsers: ['last 2 versions'],
+  			cascade: false
+		  }))
       .pipe(gulp.dest(BUILD_PATH))
   );
 

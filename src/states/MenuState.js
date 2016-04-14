@@ -15,13 +15,14 @@ export default class MenuState extends Phaser.State {
       this.game.world.centerX, this.game.world.centerY * 0.8,
       'Krack-the-\nTerminal');
     this.logo.anchor.setTo(0.5, 0.5);
-    this.logo.fontSize = 60;
-    this.logo.lineSpacing = -52;
+    this.logo.fontSize = 42;
+    this.logo.lineSpacing = -33;
     this.logo.align = 'center';
-    this.logo.font = 'Chewy';
+    this.logo.font = 'Chango';
     this.logo.fontWeight = 'normal';
 
-    let grd = this.logo.context.createLinearGradient(0, 0, this.logo.width*0.75, this.logo.height*0.9);
+    // let grd = this.logo.context.createLinearGradient(0, 0, this.logo.width*0.75, this.logo.height*0.9);
+    let grd = this.logo.context.createLinearGradient(0, 0, 0, this.logo.height);
     grd.addColorStop(0, '#00FFFF');
     grd.addColorStop(1, '#B200FF');
 

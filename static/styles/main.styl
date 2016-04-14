@@ -1,20 +1,161 @@
 html
-  width: 100%
-  height: 100%
-  margin: 0px
-  padding: 0px
-  overflow hidden
+  width 100%
+  height 100%
+  margin 0
+  padding 0
+  overflow-x hidden
+  font-family 'Overlock', sans-serif
 
 body
-  height: inherit
-  width: inherit
-  margin: 0px
-  display: flex
-  justify-content: center
-  align-items: center
+  height inherit
+  width inherit
+  margin 0
 
-canvas
+#container
+  display flex
+  justify-content space-around
+  align-items flex-start
+  background-image linear-gradient(to bottom right, #C5CAE9, #9E9E9E)
+  height auto
+  padding-bottom 3em
+  box-shadow 0 3px 5px rgba(0,0,0,0.25)
+  border-bottom 1px solid rgba(0,0,0,0.25)
+
+#game
+  height 602px
+
+#lateral
+  display flex
+  flex-direction column
+  justify-content space-between
+  height 100%
+
+.piece
+  width 352px
+  box-sizing border-box
+
+.box
   border 1px solid black
+  width 100%
+  box-sizing border-box
+
+h1, h2
+  font-family 'Chango', sans-serif
+  margin-bottom 1rem
+  height 3rem
+  box-sizing border-box
+  text-align center
+  background-image -webkit-linear-gradient(#2AC2FF, #B200FF 90%)
+  -webkit-background-clip text
+  -webkit-text-fill-color transparent
+  -webkit-text-stroke: 2px #111
+  padding: 0em 0 1.6em
+
+h1
+  font-size 2rem
+  margin-top 0.5rem
+h2
+  font-size 1.5rem
+  margin-top 1.0rem
+h1#game-title
+  line-height 0.8em
+h2#your-gk-title
+  font-size 2rem
+  margin-top 0.5rem
+  line-height 0.8em
+  background-image -webkit-linear-gradient(#02F13D, #ddd 60%, #F06980 90%)
+
+h3
+  margin-top 0.25em
+  margin-bottom 0.25em
+  &:not(:first-of-type)
+    margin-top 0.75em
+    border-top 1px dashed gray
+
+#frameworks-footer
+  //background-color #52636B
+  background-color white
+  color #fff
+  margin-top 0.5em
+  padding 0.25em 1em
+  width 100%
+
+
+#git-kraken-figure
+  margin 0
+  width 100%
+
+.git-kraken-image
+  width 100%
+  border-bottom 1px dotted gray
+
+#git-kraken-log
+  //height 2em
+  max-height 5em
+  line-height 1em
+  margin 0
+  padding 0.25em
+  overflow-y auto
+  background-color white
+
+#team
+  > .box
+    padding 1em
+  > h2
+    height auto
+    padding 0
+  dl
+    margin 0
+  dt
+    float left
+    clear both
+  dd
+    float right
+
+.clearfix
+  zoom 1
+  &:after, &:before
+    content ""
+    display table
+  &:after
+    clear both
+
+.tag
+  background-color #ddd
+  border-radius 0.25em
+  padding 0 0.25em
+  margin-right 0.25em
+  font-size 0.75em
+  box-shadow 2px 2px 2px gray
+  /*
+  &.orange
+    background-color #E2B054
+  &.green
+    background-color #0BC301
+  &.blue
+    background-color #01C3BC
+  &.golden
+    background-color #BEC301
+  &.hotpink
+    background-color #B001C3
+  &.weakred
+    background-color #EA2A2A
+  &.oceanblue
+    background-color #372AEA
+  &.lightgreen
+    background-color #75F17A
+  */
+
+#frameworks-footer
+  &> ul
+    display flex
+    justify-content space-around
+    align-items center
+    margin 0
+    padding 0
+    list-style-type none
+  img
+    height 80px
 
 [class^="preload-"]
   position absolute
