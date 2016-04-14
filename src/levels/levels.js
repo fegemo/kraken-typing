@@ -1,5 +1,43 @@
 import database from 'levels/database';
 
+var level0 = {
+  initialMinInterval: 500,
+  finalMinInterval: 300,
+
+  initialMaxInterval: 300,
+  finalMaxInterval: 500,
+
+  initialSpeedMultiplier: 1,
+  finalSpeedMultiplier: 1.2,
+
+  waves: [
+    {
+      type: 'console',
+      delayAfter: 0,
+      enemies: {
+        fromPool: database.regular.mid,
+        quantity: 2,
+        git: {
+          cmd: 'git init',
+          atProgress: 0.4
+        }
+      }
+    },
+    {
+      type: 'console',
+      delayAfter: 0,
+      enemies: {
+        fromPool: database.regular.large,
+        quantity: 2,
+        git: {
+          cmd: 'git clone',
+          atProgress: 0.4
+        }
+      }
+    }
+  ]
+};
+
 var level1 = {
   initialMinInterval: 1500,
   finalMinInterval: 1300,
@@ -11,35 +49,30 @@ var level1 = {
   finalSpeedMultiplier: 1.2,
 
   waves: [
-    // {
-    //   type: 'instructions',
-    //   delayAfter: 200,
-    //   enemies: {
-    //     exactly: [
-    //       'type', 'each', 'word', 'to', 'shoot', 'at', 'us'
-    //     ]
-    //   }
-    // },
-    // {
-    //   type: 'instructions',
-    //   delayAfter: 100,
-    //   enemies: {
-    //     exactly: [
-    //       'foes', 'are', 'coming...', 'kill', 'them', 'all!'
-    //     ]
-    //   }
-    // },
+    {
+      type: 'instructions',
+      delayAfter: 200,
+      enemies: {
+        exactly: [
+          'type', 'each', 'word', 'to', 'shoot', 'at', 'us'
+        ]
+      }
+    },
+    {
+      type: 'instructions',
+      delayAfter: 100,
+      enemies: {
+        exactly: [
+          'foes', 'are', 'coming...', 'kill', 'them', 'all!'
+        ]
+      }
+    },
     {
       type: 'console',
       delayAfter: 0,
       enemies: {
         fromPool: database.regular.mid,
-        quantity: 2,
-        git: {
-          cmd: 'git init',
-          atProgress: 0.6,
-          unlocks: database.git['git init']
-        }
+        quantity: 2
       }
     },
     {
@@ -106,8 +139,7 @@ var level2 = {
         exactly: ['yay'],
         git: {
           cmd: 'git clone',
-          atProgress: 0.4,
-          unlocks: database.git['git clone']
+          atProgress: 0.4
         }
       }
     },
@@ -133,6 +165,7 @@ var level2 = {
 
 
 export default [
+  level0,
   level1,
   level2
 ];

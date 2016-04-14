@@ -1,14 +1,54 @@
+//
+// .fade
+//   transition all 1s linear
+//   opacity 0
+//   &.faded-in
+//     opacity 1
 
-.fade
+// images
+.git-kraken-image
   transition all 1s linear
   opacity 0
-  &.faded-in
+  &.base
     opacity 1
 
-/*
-@keyframes fade-in
-  from
-    opacity 0
-  to
-    opacity 1
-*/
+// log
+#git-kraken-log
+  p
+    transition all 500ms linear
+    // opacity 1
+    color black
+    &.aged
+      color silver
+
+// arrows
+.gkui-arrow
+  position: relative;
+  display: inline-block;
+  width: 8em;
+  padding: 0.25em;
+  border-bottom: 2px solid #E53935;
+  opacity 0
+  transition all 1s ease-out
+// arrow left
+#gkui-arrow-1
+  margin-right: 3em;
+  border-radius: 0 0.5em;
+// arrow right
+#gkui-arrow-2
+  border-radius: 0.5em 0;
+  margin-left: 3em;
+
+#git-kraken-figure
+  &.git-init,
+  &.git-clone
+    #gkui-arrow-1
+      left: -7em
+      top: -1em
+      opacity 1
+    #gkui-topbar
+      opacity 1
+  &.git-clone
+    #gkui-arrow-1
+      left: -9em
+      width 10em

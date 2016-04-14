@@ -81,10 +81,5 @@ export default {
       { cmd: 'copy ../ .', os: 'windows' },
       { cmd: 'cd ..', os: 'osx' }
     ]
-  },
-  git: {
-    'git init': '#anim-git-init',
-    'git clone': '#anim-git-clone',
-    'git branch': '#anim-git-branch'
   }
 };

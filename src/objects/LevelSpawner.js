@@ -4,6 +4,7 @@ import EnemySpawner, {
   ENEMY_GIT_DIMENSIONS } from 'objects/EnemySpawner';
 import Enemy, { InstructionEnemy, ConsoleEnemy, GitEnemy } from 'objects/Enemy';
 import levels from 'levels/levels';
+import gkui from 'gkui/gkui';
 
 const INSTRUCTIONS_INTERVAL = 600;
 
@@ -119,15 +120,19 @@ class ConsoleSpawner extends WaveSpawner {
     if (!!git &&
       !this.hasSpawnedGitEnemy && this.progressConsoleOnly >= git.atProgress) {
         this.hasSpawnedGitEnemy = true;
-        let {enemy, enemyDescription} = this.spawn(GitEnemy);
+        let enemy = this.spawn(GitEnemy);
+
+        // enemy.uponDeath = function() {
+        //   switch(enemyDescription.unlocks) {
+        //     case '#anim-git-init':
+        //       document.querySelector('.git-kraken-image#gkui-topbar').classList.add('faded-in');
+        //       break;
+        //   }
+        // }.bind(enemy);
 
         enemy.uponDeath = function() {
-          switch(enemyDescription.unlocks) {
-            case '#anim-git-init':
-              document.querySelector('.git-kraken-image#gkui-topbar').classList.add('faded-in');
-              break;
-          }
-        }.bind(enemy);
+          gkui.animate.call(this.spawner.state, enemy.originalText);
+        }.bind(this);
       }
   }
 
@@ -148,7 +153,7 @@ class ConsoleSpawner extends WaveSpawner {
     // reschedules spawning
     this.start();
 
-    return {enemy, enemyDescription};
+    return enemy;
   }
 
   nextEnemy() {
