@@ -5,27 +5,14 @@ const FINAL_INTERVAL = 1400;
 const TYPICAL_NUMBER_OF_ENEMIES = 1;
 
 export default class RandomSpawner extends EnemySpawner {
-  constructor(game, state) {
-    super(game, state);
-  }
 
-  preload() {
-    super.preload();
-    this.spawned = 0;
-  }
-
-  create() {
-    super.create();
-
+  start() {
     this.game.time.events.add(INITIAL_INTERVAL, this.randSpawn, this);
   }
 
-  update() {
-    super.update();
-  }
-
   randSpawn() {
-    this.spawnEnemyAtRandom('git clone');
+    var enemy  =this.spawnEnemyAtRandom('git clone');
+    enemy.create();
     this.spawned++;
 
     if (this.spawned < TYPICAL_NUMBER_OF_ENEMIES) {
@@ -40,7 +27,7 @@ export default class RandomSpawner extends EnemySpawner {
   }
 
   nextLevel() {
-    this.spawned = 0;
-    this.game.time.events.add(INITIAL_INTERVAL, this.randSpawn, this);
+    super.nextLevel();
+    this.start();
   }
 }

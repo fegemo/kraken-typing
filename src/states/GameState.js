@@ -2,6 +2,7 @@ import KrakenPlayer from 'objects/KrakenPlayer';
 import Enemy from 'objects/Enemy';
 import Background from 'objects/GameBackground';
 import RandomSpawner from 'objects/RandomSpawner';
+import LevelSpawner from 'objects/LevelSpawner';
 import Torpedo from 'objects/Torpedo';
 import HUD from 'objects/GameStateHUD';
 
@@ -14,7 +15,9 @@ export default class GameState extends Phaser.State {
     this.bg = new Background(this.game);
     this.bg.preload();
 
-    this.spawner = new RandomSpawner(this.game, this);
+    this.onDestroyingProgress = new Phaser.Signal();
+    this.spawner = new LevelSpawner(this.game, this);
+    // this.spawner = new RandomSpawner(this.game, this);
     this.spawner.preload();
 
     Torpedo.preload(this.game);
@@ -53,6 +56,10 @@ export default class GameState extends Phaser.State {
       menuCallback: this.leaveToMenu,
       pauseCallback: this.pauseGame
     }, this);
+
+
+    // starts the game (spawner)
+    this.spawner.start();
   }
 
   render() {
@@ -83,17 +90,12 @@ export default class GameState extends Phaser.State {
       (player, enemy) => {
         // damages the player
         let gameOvered = player.entity.hit(this.gameOver, this);
-        // destroys the enemy
-        enemy.entity.destroy();
-        // if the enemy was the current target, free it so other enemies
-        // can be shot at
-        if (this.spawner.currentEnemy === enemy.entity) {
-          this.spawner.currentEnemy = null;
-        }
-        if (this.finishedSpawning && !gameOvered && !this.enemies.countLiving()) {
-          // go to the next level
-          this.nextLevel();
-        }
+        // destroys the enemy and checks if should go next lvl
+        this.destroyEnemy(enemy, gameOvered);
+
+      }, (player, enemy) => {
+        // the 'instruction' enemy does not collide with the player
+        return enemy.entity.type !== 'instruction';
       });
 
     // updates torpedos statuses
@@ -101,26 +103,53 @@ export default class GameState extends Phaser.State {
       torpedo.entity.update();
     });
 
-    // configures enemy collision with torpedo
+    // for each enemy alive, does:
+    // (a) checks if alive enemies have exceeded the bottom of the world (usually the 'instruction' type)
+    // (b) checks enemy collision with torpedo
     this.enemies.forEachAlive(enemy => {
+      if (enemy.top > this.game.world.height) {
+        console.log('destroy enmy bc out of world bounds');
+        this.destroyEnemy(enemy, false);
+      }
+
       this.game.physics.arcade.overlap(enemy, this.torpedos,
-        // callback for when a torpedo target at this enemy hit it
+        // callback for when a torpedo targeted at this enemy hit it
         (_, torpedo) => {
           // tells enemy it was hit so it can lose its HP and destroys the torpedo
-          enemy.entity.hitByTorpedo();
+          let destroyed = enemy.entity.hitByTorpedo();
           torpedo.entity.destroy();
-          // check if all enemies are destroyed so we can go to next level:
-          // if the spawner has finished and there are no more alive enemies
-          if (this.finishedSpawning && !this.enemies.countLiving()) {
-            // go to the next level
-            this.nextLevel();
-          }
 
-        // callback to check if the current torpedo was target at this enemy
+          if (destroyed) {
+            this.destroyEnemy(enemy, false);
+          }
+          // // check if all enemies are destroyed so we can go to next level:
+          // // if the spawner has finished and there are no more alive enemies
+          // if (this.finishedSpawning && !this.enemies.countLiving()) {
+          //   // go to the next level
+          //   this.nextLevel();
+          // }
+
+        // callback to check if the current torpedo was targeted at this enemy
       }, (_, torpedo) => {
         return torpedo.entity.target === enemy.entity;
       });
     }, this);
+  }
+
+  destroyEnemy(enemy, gameOvered) {
+    // destroys the enemy
+    enemy.entity.destroy();
+    // tells the spawner that an enemy was destroyed
+    this.onDestroyingProgress.dispatch();
+    // if the enemy was the current target, free it so other enemies
+    // can be shot at
+    if (this.spawner.currentEnemy === enemy.entity) {
+      this.spawner.currentEnemy = null;
+    }
+    if (this.finishedSpawning && !gameOvered && !this.enemies.countLiving()) {
+      // go to the next level
+      this.nextLevel();
+    }
   }
 
   keyPressed(key, e) {
@@ -154,12 +183,14 @@ export default class GameState extends Phaser.State {
 
   shootTorpedo(targetEnemy) {
     var torpedo = new Torpedo(this.game, this.torpedos, this.player, targetEnemy);
-    torpedo.create();
+    torpedo.create(targetEnemy.torpedoType);
   }
 
   progress(e) {
-    console.log(`progress: ${e.progress*100}%`);
-    this.finishedSpawning = true;
+    // console.log(`progress: ${e.progress*100}%`);
+    if (e.finished) {
+      this.finishedSpawning = true;
+    }
     // if (e.finished) {
     //   console.log('finished!');
     //   this.player.playSwimming();
@@ -167,6 +198,7 @@ export default class GameState extends Phaser.State {
   }
 
   nextLevel() {
+    this.finishedSpawning = false;
     this.player.playSwimming();
     var duration = this.hud.showNextLevelMessage(++this.currentLevel);
     this.game.time.events.add(duration, () => {

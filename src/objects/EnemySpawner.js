@@ -1,4 +1,8 @@
-import Enemy from 'objects/Enemy';
+import Enemy, { InstructionEnemy, ConsoleEnemy } from 'objects/Enemy';
+
+export const ENEMY_CONSOLE_DIMENSIONS = { width: 30, height: 30 };
+export const ENEMY_INSTRUCTIONS_DIMENSIONS = { width: 30, height: 30 };
+export const ENEMY_GIT_DIMENSIONS = { width: 30, height: 30 };
 
 export default class EnemySpawner {
 
@@ -6,17 +10,16 @@ export default class EnemySpawner {
     this.game = game;
     this.state = state;
     this.currentEnemy = null;
+    this.spawned = 0;
     this.onSpawningProgress = new Phaser.Signal();
   }
 
   preload() {
     this.game.load.image('enemy-console', 'imgs/enemy-console.png');
+    this.game.load.image('enemy-instruction', 'imgs/enemy-instruction.png');
   }
 
   create() {
-    const worldWidth = this.game.world.width;
-    const worldHeight = this.game.world.height;
-
     this.state.enemies = this.game.add.physicsGroup();
   }
 
@@ -27,53 +30,23 @@ export default class EnemySpawner {
   update() {
     this.state.enemies.iterate('alive', true, Phaser.Group.RETURN_NONE,
       enemy => {
-      enemy.update();
+      enemy.entity.update();
     });
   }
 
-  spawnEnemyAt(x, y, text) {
-    var enemy = new Enemy(this.game, this.state, text);
-
-    enemy.create(x, y);
+  spawnEnemyAt(x, y, text, type) {
+    var enemyType = type === 'instruction' ? InstructionEnemy : ConsoleEnemy;
+    return new enemyType(this.game, this.state, text, x, y);
   }
 
-  spawnEnemyAtRandom(text) {
+  spawnEnemyAtRandom(text, type = 'console') {
     let xPosition = Math.random() * this.game.world.width;
     let yPosition = -32;
 
-    this.spawnEnemyAt(xPosition, yPosition, text);
+    return this.spawnEnemyAt(xPosition, yPosition, text, type);
   }
 
   nextLevel() {
-
+    this.spawned = 0;
   }
 }
-
-
-
-
-// class LevelSpawner extends EnemySpawner {
-//   constructor(game, state) {
-//     super(game, state);
-//     this.levels = [
-//       {
-//         name: 'Level 1',
-//         waves: [
-//           ['git', 'is', 'awesome'],
-//           ['let', 'us', 'start'],
-//           ['git init'],
-//           ['or'],
-//           ['git clone https://repo.git']
-//         ]
-//       }
-//     ];
-//   }
-
-//   create() {
-//     //this.game.time.events.add(1000, );
-//   }
-
-//   update() {
-
-//   }
-// }

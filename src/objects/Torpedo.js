@@ -12,7 +12,7 @@ const TORPEDO_INITIAL_VELOCITY = {
     variation: -15
   }
 };
-const TORPEDO_SPEED = 120;
+const TORPEDO_SPEED = 320;
 const TORPEDO_STEER_RATE = 100;
 const State = {
   // stays in this for TORPEDO_TIME_TO_PURSUIT mili...
@@ -39,10 +39,16 @@ export default class Torpedo {
       TORPEDO_DIMENSIONS.width,
       TORPEDO_DIMENSIONS.height
     );
+    game.load.spritesheet(
+      'laser',
+      'imgs/laser.png',
+      TORPEDO_DIMENSIONS.width,
+      TORPEDO_DIMENSIONS.height
+    );
   }
 
-  create() {
-    this.sprite = this.game.add.sprite(this.player.sprite.x, this.player.sprite.top, 'torpedo');
+  create(type = 'torpedo') {
+    this.sprite = this.game.add.sprite(this.player.sprite.x, this.player.sprite.top, type);
     this.group.add(this.sprite);
     this.sprite.entity = this;
     this.sprite.anchor.setTo(0.5, 0.5);
@@ -120,6 +126,7 @@ export default class Torpedo {
       this.sprite.tint = 0xffffff;
       this.sprite.play('pursuing');
     }
+    // commenting this out improves perf. at mostly no cost to the game
     else if (this.state === State.JUST_SHOT &&
       this.game.time.time > this.born + TORPEDO_TIME_TO_PURSUIT) {
       this.sprite.body.drag.x = 0;

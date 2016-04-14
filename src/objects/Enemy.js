@@ -1,29 +1,31 @@
-const DISTANCE_FROM_SPRITE_TO_TEXT = 5;
+const DISTANCE_FROM_SPRITE_TO_TEXT = 8;
 const COLOR_OF_CURRENT_CHARACTER = '#ff00ff';
 const COLOR_OF_REGULAR_CHARACTER = '#000000';
-const DEFAULT_Y_SPEED = 90;
+const BASE_Y_SPEED = 30;
+const CONSTANT_SPEED_INSTRUCTION_ENEMY = 30;
 
 export default class Enemy {
 
-  constructor(game, state, text, size) {
+  constructor(game, state, text, x, y) {
     this.game = game;
     this.state = state;
     this.originalText = text;
+    this.position = new Phaser.Point(x, y);
     this.lives = text.replace(/ /g, '').length;
-    this.size = size;
     this._indexOffirstAliveChar = 0;
   }
 
   preload() {
   }
 
-  create(x, y) {
-    this.sprite = this.game.add.sprite(x, y, 'enemy-console');
+  create() {
+    this.sprite = this.game.add.sprite(this.position.x, this.position.y, this.spriteImage);
+    this.sprite.anchor.setTo(0.5, 1);
     this.sprite.entity = this;
     this.state.enemies.add(this.sprite);
 
     this.textContent = this.game.add.text(
-      this.sprite.width/2, this.sprite.height + DISTANCE_FROM_SPRITE_TO_TEXT,
+      0, DISTANCE_FROM_SPRITE_TO_TEXT,
       this.originalText);
     this.textContent.anchor.setTo(0.5, 0.5);
     this.sprite.addChild(this.textContent);
@@ -32,15 +34,20 @@ export default class Enemy {
     this.textContent.fontSize = 12;
     this.textContent.fill = COLOR_OF_REGULAR_CHARACTER;
 
-    // speed towards player
-    let xDistanceToPlayer = this.state.player.sprite.x - x;
-    let yDistanceToPlayer = this.state.player.sprite.y - y;
+    this.defineSpeed();
+  }
 
-    let ySpeed = DEFAULT_Y_SPEED;
-    let timeToImpact = yDistanceToPlayer/ySpeed;
-    let xSpeed = xDistanceToPlayer / timeToImpact;
-    this.sprite.body.velocity.x = xSpeed;
-    this.sprite.body.velocity.y = ySpeed;
+  update() {
+
+  }
+
+  defineSpeed() {
+    // abstract method
+  }
+
+  get spriteImage() {
+    // abstract method
+    return 'null';
   }
 
   get hasMoreChars() {
@@ -79,10 +86,69 @@ export default class Enemy {
     this.sprite.kill();
   }
 
-  hitByTorpedo() {
+  hitByTorpedo(destroyedCallback, context) {
     this.lives--;
-    if (this.lives <= 0) {
-      this.destroy();
+    return this.lives <= 0;
+  }
+}
+
+
+export class InstructionEnemy extends Enemy {
+  defineSpeed() {
+    this.sprite.body.velocity.x = 0;
+    this.sprite.body.velocity.y = CONSTANT_SPEED_INSTRUCTION_ENEMY*4;
+  }
+
+  update() {
+    super.update();
+    if (this.sprite.body.velocity.y > CONSTANT_SPEED_INSTRUCTION_ENEMY) {
+      this.sprite.body.velocity.y--;
     }
+  }
+
+  get spriteImage() {
+    return 'enemy-instruction';
+  }
+
+  get type() {
+    return 'instruction';
+  }
+
+  get torpedoType() {
+    return 'laser';
+  }
+}
+
+export class ConsoleEnemy extends Enemy {
+  defineSpeed() {
+    // speed towards player
+    let xDistanceToPlayer = this.state.player.sprite.x - this.position.x;
+    let yDistanceToPlayer = this.state.player.sprite.y - this.position.y;
+
+    let ySpeed = BASE_Y_SPEED * this.speedMultiplier;
+    let timeToImpact = yDistanceToPlayer/ySpeed;
+    let xSpeed = xDistanceToPlayer / timeToImpact;
+    this.sprite.body.velocity.x = xSpeed;
+    this.sprite.body.velocity.y = ySpeed;
+  }
+
+  get spriteImage() {
+    return 'enemy-console';
+  }
+
+  get type() {
+    return 'console';
+  }
+
+  get torpedoType() {
+    return 'torpedo';
+  }
+
+  get speedMultiplier() {
+    return this._speedMultiplier || 1;
+  }
+
+  set speedMultiplier(mul) {
+    this._speedMultiplier = mul;
   }
 }
