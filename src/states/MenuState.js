@@ -13,12 +13,12 @@ export default class MenuState extends Phaser.State {
 
     this.logo = this.game.add.text(
       this.game.world.centerX, this.game.world.centerY * 0.8,
-      'Krak-D-Term');
+      'Krack-the-\nTerminal');
     this.logo.anchor.setTo(0.5, 0.5);
-    this.logo.fontSize = 40;
-    this.logo.lineSpacing = -25;
+    this.logo.fontSize = 60;
+    this.logo.lineSpacing = -52;
     this.logo.align = 'center';
-    this.logo.font = 'Erica One';
+    this.logo.font = 'Chewy';
     this.logo.fontWeight = 'normal';
 
     let grd = this.logo.context.createLinearGradient(0, 0, this.logo.width*0.75, this.logo.height*0.9);
@@ -34,9 +34,9 @@ export default class MenuState extends Phaser.State {
     // let bmd = this.game.make.bitmapData(this.logo.width, this.logo.height);
     // bmd.alphaMask(this.bubbleField2, this.logo);
     // this.game.add.image(this.logo.x, this.logo.y+100, bmd).anchor.setTo(0.5, 0.5);
-    this.playGameText = this.createMenuItem('play', this.game.world.centerY * 1.1, this.startGame);
-    this.optionsText = this.createMenuItem('options', this.game.world.centerY * 1.3, this.options);
-    this.creditsText = this.createMenuItem('credits', this.game.world.centerY * 1.5, this.credits);
+    this.playGameText = this.createMenuItem('play', this.game.world.centerY * 1.2, this.startGame);
+    this.optionsText = this.createMenuItem('options', this.game.world.centerY * 1.4, this.options);
+    this.creditsText = this.createMenuItem('credits', this.game.world.centerY * 1.6, this.credits);
   }
 
   render() {
@@ -64,10 +64,13 @@ export default class MenuState extends Phaser.State {
     t.events.onInputDown.add(actionCallback, this);
     t.events.onInputOver.add(() => {
       t.fill = '#FF9649';
-    }, t);
+      this.game.canvas.style.cursor = 'pointer';
+    }, this);
     t.events.onInputOut.add(() => {
       t.fill = '#FEFF49';
-    }, t);
+      this.game.canvas.style.cursor = 'initial';
+    }, this);
+    t.cursor = 'pointer';
   }
 
   startGame() {

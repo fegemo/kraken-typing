@@ -45,6 +45,12 @@ export default class Torpedo {
       TORPEDO_DIMENSIONS.width,
       TORPEDO_DIMENSIONS.height
     );
+    game.load.spritesheet(
+      'big-boy',
+      'imgs/big-boy.png',
+      TORPEDO_DIMENSIONS.width,
+      TORPEDO_DIMENSIONS.height
+    );
   }
 
   create(type = 'torpedo') {

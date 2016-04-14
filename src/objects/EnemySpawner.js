@@ -1,4 +1,4 @@
-import Enemy, { InstructionEnemy, ConsoleEnemy } from 'objects/Enemy';
+import Enemy, { InstructionEnemy, ConsoleEnemy, GitEnemy } from 'objects/Enemy';
 
 export const ENEMY_CONSOLE_DIMENSIONS = { width: 30, height: 30 };
 export const ENEMY_INSTRUCTIONS_DIMENSIONS = { width: 30, height: 30 };
@@ -17,6 +17,8 @@ export default class EnemySpawner {
   preload() {
     this.game.load.image('enemy-console', 'imgs/enemy-console.png');
     this.game.load.image('enemy-instruction', 'imgs/enemy-instruction.png');
+    this.game.load.image('enemy-git', 'imgs/enemy-git.png');
+    this.game.load.spritesheet('star-particles', 'imgs/star-particles.png', 20, 24);
   }
 
   create() {
@@ -34,9 +36,9 @@ export default class EnemySpawner {
     });
   }
 
-  spawnEnemyAt(x, y, text, type) {
-    var enemyType = type === 'instruction' ? InstructionEnemy : ConsoleEnemy;
-    return new enemyType(this.game, this.state, text, x, y);
+  spawnEnemyAt(x, y, text, typeConstr = ConsoleEnemy) {
+    // var enemyType = type === 'instruction' ? InstructionEnemy : ConsoleEnemy;
+    return new typeConstr(this.game, this.state, text, x, y);
   }
 
   spawnEnemyAtRandom(text, type = 'console') {

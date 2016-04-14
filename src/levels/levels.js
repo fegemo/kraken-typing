@@ -2,39 +2,44 @@ import database from 'levels/database';
 
 var level1 = {
   initialMinInterval: 1500,
-  finalMinInterval: 1000,
+  finalMinInterval: 1300,
 
-  initialMaxInterval: 2300,
-  finalMaxInterval: 1500,
+  initialMaxInterval: 3300,
+  finalMaxInterval: 2500,
 
   initialSpeedMultiplier: 1,
-  finalSpeedMultiplier: 1.5,
+  finalSpeedMultiplier: 1.2,
 
   waves: [
-    {
-      type: 'instructions',
-      delayAfter: 200,
-      enemies: {
-        exactly: [
-          'type', 'each', 'word', 'to', 'shoot', 'at', 'us'
-        ]
-      }
-    },
-    {
-      type: 'instructions',
-      delayAfter: 100,
-      enemies: {
-        exactly: [
-          'foes', 'are', 'coming...', 'kill', 'them', 'all!'
-        ]
-      }
-    },
+    // {
+    //   type: 'instructions',
+    //   delayAfter: 200,
+    //   enemies: {
+    //     exactly: [
+    //       'type', 'each', 'word', 'to', 'shoot', 'at', 'us'
+    //     ]
+    //   }
+    // },
+    // {
+    //   type: 'instructions',
+    //   delayAfter: 100,
+    //   enemies: {
+    //     exactly: [
+    //       'foes', 'are', 'coming...', 'kill', 'them', 'all!'
+    //     ]
+    //   }
+    // },
     {
       type: 'console',
       delayAfter: 0,
       enemies: {
         fromPool: database.regular.mid,
-        quantity: 2
+        quantity: 2,
+        git: {
+          cmd: 'git init',
+          atProgress: 0.6,
+          unlocks: database.git['git init']
+        }
       }
     },
     {
@@ -43,15 +48,6 @@ var level1 = {
       enemies: {
         exactly: [
           'see', 'how', 'easy', 'that', 'was?', ':D'
-        ]
-      }
-    },
-    {
-      type: 'instructions',
-      delayAfter: 300,
-      enemies: {
-        exactly: [
-          'there', 'they', 'come', 'so', 'take', 'care'
         ]
       }
     },
@@ -107,10 +103,11 @@ var level2 = {
       type: 'console',
       delayAfter: 800,
       enemies: {
-        exactly: [],
+        exactly: ['yay'],
         git: {
-          cmd: '#anim-git-clone',
-          progress: 0
+          cmd: 'git clone',
+          atProgress: 0.4,
+          unlocks: database.git['git clone']
         }
       }
     },

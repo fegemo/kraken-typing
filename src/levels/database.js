@@ -83,7 +83,8 @@ export default {
     ]
   },
   git: {
-    '#anim-git-clone': 'git clone',
-    '#anim-git-branch': 'git branch'
+    'git init': '#anim-git-init',
+    'git clone': '#anim-git-clone',
+    'git branch': '#anim-git-branch'
   }
 };

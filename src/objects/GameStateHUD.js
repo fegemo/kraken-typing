@@ -4,13 +4,16 @@ const nextLevelTweensDuration = [120, 800, 200];
 
 export default class GameStateButtons {
 
-  constructor(game) {
+  constructor(game, state) {
     this.game = game;
+    this.state = state;
+    // this.state.spawner.onSpawningProgress.add(this.updateProgressBar, this);
   }
 
   preload() {
     this.game.load.image('text-game-over', 'imgs/text-game-over.png');
     this.game.load.image('text-game-paused', 'imgs/text-game-paused.png');
+    this.game.load.image('progress-bar', 'imgs/progress-bar.png');
     this.game.load.spritesheet(
       'button-pause',
       'imgs/button-pause.png',
@@ -36,6 +39,8 @@ export default class GameStateButtons {
     pauseButton.anchor.setTo(0, 1);
 
     this.createNextLevelMessage();
+
+    // this.createLevelProgressBar();
   }
 
   createGameOverModal({ resumeCallback, replayCallback, menuCallback }, context) {
@@ -148,7 +153,7 @@ export default class GameStateButtons {
         worldHeight*0.4,
         'Next level!',
         {
-          font: '20px Chango',
+          font: '40px Chewy',
           color: '#333333'
         }
       )
@@ -158,11 +163,11 @@ export default class GameStateButtons {
     this.nextLevelTexts.push(
       this.game.add.text(
         0,
-        worldHeight*0.5,
+        worldHeight*0.55,
         '2',
         {
-          font: '55px Erica One',
-          color: '#333333'
+          font: '55px Chewy',
+          color: '#000000'
         }
       )
     );
@@ -205,4 +210,16 @@ export default class GameStateButtons {
     this.nextLevelTweens.forEach(tween => tween.start());
     return nextLevelTweensDuration.reduce((acum, curr) => acum+curr, 0);
   }
+
+  // createLevelProgressBar() {
+  //   this.progressBar = this.game.add.sprite(0, 0, 'progress-bar');
+  //   this.progressBar.width = 0;
+  //   this.progressBar.height = 5;
+  //   this.progressBarTween = this.game.add.tween(this.progressBar, 100, Phaser.Easing.Quadratic.Out);
+  // }
+  //
+  // updateProgressBar(e) {
+  //   let newWidth = this.game.world.width *e.progress;
+  //   this.progressBarTween.to({width: newWidth}).start();
+  // }
 }

@@ -22,7 +22,7 @@ export default class GameState extends Phaser.State {
 
     Torpedo.preload(this.game);
 
-    this.hud = new HUD(this.game);
+    this.hud = new HUD(this.game, this);
     this.hud.preload();
 
     this.currentLevel = 1;
@@ -35,9 +35,6 @@ export default class GameState extends Phaser.State {
 
     // creates the gradient background
     this.bg.create();
-
-    // creates the player
-    this.player.create();
 
     // creates the enemy spawner
     this.spawner.create();
@@ -57,6 +54,8 @@ export default class GameState extends Phaser.State {
       pauseCallback: this.pauseGame
     }, this);
 
+    // creates the player
+    this.player.create();
 
     // starts the game (spawner)
     this.spawner.start();
@@ -122,12 +121,6 @@ export default class GameState extends Phaser.State {
           if (destroyed) {
             this.destroyEnemy(enemy, false);
           }
-          // // check if all enemies are destroyed so we can go to next level:
-          // // if the spawner has finished and there are no more alive enemies
-          // if (this.finishedSpawning && !this.enemies.countLiving()) {
-          //   // go to the next level
-          //   this.nextLevel();
-          // }
 
         // callback to check if the current torpedo was targeted at this enemy
       }, (_, torpedo) => {
@@ -187,14 +180,9 @@ export default class GameState extends Phaser.State {
   }
 
   progress(e) {
-    // console.log(`progress: ${e.progress*100}%`);
     if (e.finished) {
       this.finishedSpawning = true;
     }
-    // if (e.finished) {
-    //   console.log('finished!');
-    //   this.player.playSwimming();
-    // }
   }
 
   nextLevel() {
@@ -228,10 +216,12 @@ export default class GameState extends Phaser.State {
   }
 
   replayGame() {
+    this.resumeGame();
     this.game.state.start('game');
   }
 
   leaveToMenu() {
+    this.resumeGame();
     this.game.state.start('menu');
   }
 }

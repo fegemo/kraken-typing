@@ -2,6 +2,7 @@ import EnemySpawner, {
   ENEMY_CONSOLE_DIMENSIONS,
   ENEMY_INSTRUCTIONS_DIMENSIONS,
   ENEMY_GIT_DIMENSIONS } from 'objects/EnemySpawner';
+import Enemy, { InstructionEnemy, ConsoleEnemy, GitEnemy } from 'objects/Enemy';
 import levels from 'levels/levels';
 
 const INSTRUCTIONS_INTERVAL = 600;
@@ -22,10 +23,10 @@ class WaveSpawner {
   spawn() {
     this.spawned++;
     this.spawner.spawned++;
-    let progress = this.spawner.spawned/this.spawner.totalEnemies
+
     this.spawner.onSpawningProgress.dispatch({
-      progress: progress,
-      finished: progress === 1
+      progress: this.progressTotal,
+      finished: this.progressTotal === 1
     });
   }
 
@@ -36,16 +37,17 @@ class WaveSpawner {
     }
   }
 
+  get progressTotal() {
+    return this.spawner.spawned/this.spawner.totalEnemies;
+  }
 }
 
 class InstructionsSpawner extends WaveSpawner {
   constructor(wave, level, spawner) {
     super(wave, level, spawner);
-    // console.log('instruction wave spawner criado');
   }
 
   start() {
-    // console.log('started instructions wave spawner');
     this.spawner.game.time.events.repeat(
       INSTRUCTIONS_INTERVAL,
       this.totalEnemies,
@@ -60,7 +62,7 @@ class InstructionsSpawner extends WaveSpawner {
       this.spawner.game.world.width,
       this.spawned/this.totalEnemies);
     let enemyCommand = this.wave.enemies.exactly[this.spawned];
-    let enemy = this.spawner.spawnEnemyAt(xEnemy, 0, enemyCommand, 'instruction');
+    let enemy = this.spawner.spawnEnemyAt(xEnemy, 0, enemyCommand, InstructionEnemy);
     enemy.create();
     super.spawn();
   }
@@ -73,35 +75,35 @@ class InstructionsSpawner extends WaveSpawner {
 class ConsoleSpawner extends WaveSpawner {
   constructor(wave, level, spawner) {
     super(wave, level, spawner);
-    // console.log('console wave spawner criado');
 
     // lerps to see what should be the min and max intervals of this wave
-    let consoleWaves = this.level.waves.filter(w => w.type === 'console');
-    let howManyConsoleWaves = consoleWaves.length;
-    // let consoleWavesWithEnemyQtys = consoleWaves.map(w => {
-    //   return {
-    //     w,
-    //     w.reduce((accum, curr) => {
-    //       return accum+(curr.enemies.quantity || 0)+((curr.enemies.exactly||[]).length)+(curr.enemies.git?1:0)}, 0)
-    //     }
-    //   });
+    let consoleWaves = this.spawner.consoleWaves;
     let indexOfThisWave = this.level.waves.indexOf(wave);
-    let percentageOfThisWave = indexOfThisWave/howManyConsoleWaves;
+    let percentageOfThisWave = indexOfThisWave/consoleWaves.length;
     this.minInterval = Phaser.Math.linear(this.level.initialMinInterval, this.level.finalMinInterval, percentageOfThisWave);
     this.maxInterval = Phaser.Math.linear(this.level.initialMaxInterval, this.level.finalMaxInterval, percentageOfThisWave);
     this.speedMultiplier = Phaser.Math.linear(this.level.initialSpeedMultiplier, this.level.finalSpeedMultiplier, percentageOfThisWave);
   }
 
   get totalEnemies() {
-    return 0 +
-      (this.wave.enemies.quantity || 0) +
-      (this.wave.enemies.exactly || []).length +
-      (this.wave.enemies.git ? 1 : 0);
+    if (!this._totalEnemies) {
+      this._totalEnemies =  this.totalConsoleEnemies + (this.wave.enemies.git ? 1 : 0);
+    }
+    return this._totalEnemies;
+  }
+
+  get totalConsoleEnemies() {
+    if (!this._totalConsoleEnemies) {
+      this._totalConsoleEnemies =  0 +
+        (this.wave.enemies.quantity || 0) +
+        (this.wave.enemies.exactly || []).length;
+    }
+    return this._totalConsoleEnemies;
   }
 
   start() {
-    // console.log('started console wave spawner');
-    if (this.spawned < this.totalEnemies) {
+    // regular console enemies
+    if (this.spawned < this.totalConsoleEnemies) {
       this.spawner.game.time.events.add(
         this.spawner.game.rnd.between(
           this.minInterval,
@@ -111,17 +113,28 @@ class ConsoleSpawner extends WaveSpawner {
         this
       );
     }
+
+    // special (shiny) git enemy
+    const git = this.wave.enemies.git;
+    if (!!git &&
+      !this.hasSpawnedGitEnemy && this.progressConsoleOnly >= git.atProgress) {
+        this.hasSpawnedGitEnemy = true;
+        this.spawn(GitEnemy);
+      }
   }
 
-  spawn() {
+  spawn(type = ConsoleEnemy) {
     // spawns
-    const enemyDescription = this.nextEnemy();
+    const enemyDescription = type === ConsoleEnemy ? this.nextEnemy() : this.wave.enemies.git;
     const xEnemy = this.spawner.game.rnd.between(
-      -ENEMY_INSTRUCTIONS_DIMENSIONS.width, this.spawner.game.world.width+ENEMY_INSTRUCTIONS_DIMENSIONS.width);
-    let enemy = this.spawner.spawnEnemyAt(xEnemy, 0, enemyDescription.cmd, 'console');
+      -ENEMY_INSTRUCTIONS_DIMENSIONS.width,
+      this.spawner.game.world.width+ENEMY_INSTRUCTIONS_DIMENSIONS.width
+    );
+    let enemy = this.spawner.spawnEnemyAt(xEnemy, 0, enemyDescription.cmd, type);
     enemy.speedMultiplier = this.speedMultiplier;
     enemy.create();
 
+    // updates this.spawned etc.
     super.spawn();
 
     // reschedules spawning
@@ -137,6 +150,10 @@ class ConsoleSpawner extends WaveSpawner {
       return this.wave.enemies.exactly[this.spawned];
     }
     return 'null';
+  }
+
+  get progressConsoleOnly() {
+    return (this.spawned - (this.hasSpawnedGitEnemy ? 1 : 0)) / this.totalConsoleEnemies;
   }
 }
 
@@ -195,7 +212,7 @@ export default class LevelSpawner extends EnemySpawner {
 
   get consoleWaves() {
     if (!this._consoleWaves) {
-      this._consoleWaves = this.level.waves.filter(w => w.type === 'console');
+      this._consoleWaves = this.currentLevel.waves.filter(w => w.type === 'console');
     }
     return this._consoleWaves;
   }

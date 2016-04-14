@@ -152,3 +152,39 @@ export class ConsoleEnemy extends Enemy {
     this._speedMultiplier = mul;
   }
 }
+
+export class GitEnemy extends ConsoleEnemy {
+
+  create() {
+    super.create();
+    this.sprite.scale.setTo(1.25, 1.25);
+    this.stars = this.game.add.emitter(0, 0, 30);
+    this.sprite.addChild(this.stars);
+    this.stars.makeParticles('star-particles', [0,1,2,3,4,5,6,7]);
+    this.stars.setAlpha(0.55, 0, 700);
+    this.stars.minParticleScale = 0.5;
+    this.stars.maxParticleScale = 1.0;
+    this.stars.minParticleSpeed.setTo(0, -80);
+    this.stars.maxParticleSpeed.setTo(0, -120);
+
+    this.stars.start(false, 700, 100, 0);
+  }
+
+  get spriteImage() {
+    return 'enemy-git';
+  }
+
+  get torpedoType() {
+    return 'big-boy';
+  }
+
+  get speedMultiplier() {
+    // it is always 1 for git enemies
+    return 1;
+  }
+
+  set speedMultiplier(mul) {
+    // it is always 1 for git enemies
+    this._speedMultiplier = 1;
+  }
+}
