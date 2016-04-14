@@ -12,6 +12,13 @@ function insertNewDescriptionInLog(logEl, html) {
   descriptionEl.style.opacity = 1;
 }
 
+function tutorial(gameState) {
+  gameState.pauseGame();
+  tutorialAppeared = true;
+}
+
+let tutorialAppeared = false;
+
 export default {
   animate: function(command) {
     var figureEl = document.querySelector('#git-kraken-figure'),
@@ -19,6 +26,9 @@ export default {
       leftArrowEl = document.querySelector('#gkui-arrow-1'),
       rightArrowEl = document.querySelector('#gkui-arrow-2');
 
+    if (!tutorialAppeared) {
+      tutorial(this);
+    }
 
     command = command.replace(/\s/g, '-');
 
