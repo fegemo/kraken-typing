@@ -42,8 +42,10 @@ export default class MenuState extends Phaser.State {
 
     // sound effects
     this.fx = this.game.add.audio('sfx');
+    this.fx = this.game.add.audio('sfx');
     this.fx.allowMultiple = true;
-    this.fx.addMarker('error', 0, 0.4);
+    this.fx.addMarker('blip', 6.0, 0.5);
+    this.fx.addMarker('star', 10.0, 0.4);
   }
 
   render() {
@@ -81,6 +83,7 @@ export default class MenuState extends Phaser.State {
   }
 
   startGame() {
+    this.fx.play('star');
     this.game.state.start('game');
   }
 

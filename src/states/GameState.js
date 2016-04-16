@@ -68,7 +68,24 @@ export default class GameState extends Phaser.State {
     // sound effects
     this.fx = this.game.add.audio('sfx');
     this.fx.allowMultiple = true;
-    this.fx.addMarker('error', 0, 0.4);
+    this.fx.addMarker('explosion1', 0.0, 0.4);
+    this.fx.addMarker('explosion2', 0.5, 0.4);
+    this.fx.addMarker('explosion3', 1.0, 0.4);
+    this.fx.addMarker('laser1', 1.5, 0.1);
+    this.fx.addMarker('laser2', 2.0, 0.35);
+    this.fx.addMarker('laser3', 2.5, 0.32);
+    this.fx.addMarker('torpedo1', 3.0, 0.64);
+    this.fx.addMarker('torpedo2', 4.0, 0.64);
+    this.fx.addMarker('torpedo3', 5.0, 0.6);
+    this.fx.addMarker('blip', 6.0, 0.5);
+    this.fx.addMarker('error', 6.5, 0.4);
+    this.fx.addMarker('hit1', 7.0, 0.21);
+    this.fx.addMarker('hit2', 7.5, 0.22);
+    this.fx.addMarker('hit3', 8.0, 0.35);
+    this.fx.addMarker('disappearing1', 8.5, 0.18);
+    this.fx.addMarker('disappearing2', 9.0, 0.18);
+    this.fx.addMarker('disappearing3', 9.5, 0.25);
+    this.fx.addMarker('star', 10.0, 0.4);
   }
 
   render() {
@@ -112,9 +129,13 @@ export default class GameState extends Phaser.State {
           // tells enemy it was hit so it can lose its HP and destroys the torpedo
           let destroyed = enemy.entity.hitByTorpedo();
           torpedo.entity.destroy();
+          // plays sound of torpedo hit
+          this.fx.play('hit' + this.game.rnd.between(1,3));
 
           if (destroyed) {
             this.destroyEnemy(enemy, false);
+            // plays sound of enemy destroyed
+            this.fx.play(enemy.entity.explosionSoundSprite.replace('X', this.game.rnd.between(1,3)));
           }
 
         // callback to check if the current torpedo was targeted at this enemy
@@ -178,7 +199,6 @@ export default class GameState extends Phaser.State {
     this.fx.play('error');
     this.player.wrongKeyPressed();
     if (this.spawner.currentEnemy) {
-      console.log('called wrongkeupress on enemy')
       this.spawner.currentEnemy.wrongKeyPressed();
     }
   }
@@ -186,6 +206,8 @@ export default class GameState extends Phaser.State {
   shootTorpedo(targetEnemy) {
     var torpedo = new Torpedo(this.game, this.torpedos, this.player, targetEnemy);
     torpedo.create(targetEnemy.torpedoType);
+    // play sound of launching torpedo
+    this.fx.play(targetEnemy.torpedoSoundSprite.replace('X', this.game.rnd.between(1,3)));
   }
 
   progress(e) {
@@ -216,6 +238,7 @@ export default class GameState extends Phaser.State {
   }
 
   pauseGame() {
+    this.fx.play('blip');
     // pauses physics and the global timer
     this.game.physics.arcade.isPaused = true;
     this.game.time.events.pause();
@@ -224,6 +247,7 @@ export default class GameState extends Phaser.State {
   }
 
   resumeGame() {
+    this.fx.play('blip');
     // unpauses physics and the global timer
     this.game.physics.arcade.isPaused = false;
     this.game.time.events.resume();
@@ -232,6 +256,7 @@ export default class GameState extends Phaser.State {
   }
 
   replayGame() {
+    this.fx.play('blip');
     // resets the gkui
     gkui.reset();
 

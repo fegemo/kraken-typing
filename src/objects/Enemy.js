@@ -53,6 +53,16 @@ export default class Enemy {
     return 'null';
   }
 
+  get torpedoSoundSprite() {
+    // abstract
+    return 'null';
+  }
+
+  get explosionSoundSprite() {
+    // abstract
+    return 'null';
+  }
+
   wrongKeyPressed() {
     this.game.add.tween(this.textContent.scale)
       .from({ x: 1.45, y: 1.45 }, 100, Phaser.Easing.Quadratic.Out, 0)
@@ -129,6 +139,14 @@ export class InstructionEnemy extends Enemy {
   get torpedoType() {
     return 'laser';
   }
+
+  get torpedoSoundSprite() {
+    return 'laserX';
+  }
+
+  get explosionSoundSprite() {
+    return 'disappearingX';
+  }
 }
 
 export class ConsoleEnemy extends Enemy {
@@ -154,6 +172,14 @@ export class ConsoleEnemy extends Enemy {
 
   get torpedoType() {
     return 'torpedo';
+  }
+
+  get torpedoSoundSprite() {
+    return 'torpedoX';
+  }
+
+  get explosionSoundSprite() {
+    return 'explosionX';
   }
 
   get speedMultiplier() {
@@ -188,6 +214,15 @@ export class GitEnemy extends ConsoleEnemy {
 
   get torpedoType() {
     return 'big-boy';
+  }
+
+  get torpedoSoundSprite() {
+    return 'torpedoX';
+  }
+
+  get explosionSoundSprite() {
+    // abstract
+    return 'star';
   }
 
   get speedMultiplier() {
