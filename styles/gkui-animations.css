@@ -1,0 +1,186 @@
+.git-kraken-image {
+  transition: all 1s linear;
+  opacity: 0;
+}
+.git-kraken-image.base {
+  opacity: 0.5;
+}
+.git-kraken-image#gkui-init {
+  transition-delay: 1s;
+}
+#git-kraken-log p {
+  transition: all 500ms linear;
+  color: #000;
+}
+#git-kraken-log p.aged {
+  color: #c0c0c0;
+}
+.gkui-arrow {
+  position: absolute;
+  display: inline-block;
+  width: 8em;
+  padding: 0.25em;
+  border-bottom: 2px solid #e53935;
+  opacity: 0;
+  font-weight: bold;
+  color: #02f13d;
+  text-shadow: 1px 1px 0 #111;
+  transition: all 1s ease-out;
+}
+#gkui-arrow-1 {
+  margin-right: 3em;
+  border-radius: 0 0.5em;
+}
+#gkui-arrow-2 {
+  border-radius: 0.5em 0;
+  margin-left: 3em;
+  text-align: right;
+}
+#git-kraken-figure.git-init #gkui-arrow-1,
+#git-kraken-figure.git-clone #gkui-arrow-1 {
+  left: -7em;
+  top: -1em;
+  opacity: 1;
+  -webkit-animation: yoyo 2s ease-in-out 0s 3 alternate-reverse;
+  animation: yoyo 2s ease-in-out 0s 3 alternate-reverse;
+}
+#git-kraken-figure.git-init #gkui-topbar,
+#git-kraken-figure.git-clone #gkui-topbar {
+  opacity: 1;
+}
+#git-kraken-figure.git-init #gkui-init {
+  opacity: 1;
+}
+#git-kraken-figure.git-clone #gkui-clone {
+  opacity: 1;
+}
+#git-kraken-figure.git-clone #gkui-arrow-1 {
+  left: -9em;
+  width: 10em;
+}
+#git-kraken-figure.git-tag #gkui-init,
+#git-kraken-figure.git-tag #gkui-clone {
+  opacity: 0;
+}
+#git-kraken-figure.git-tag #gkui-arrow-1 {
+  left: -8.5em;
+  top: 3em;
+}
+#git-kraken-figure.git-tag #gkui-tag {
+  opacity: 1;
+}
+#git-kraken-figure.git-tag #gkui-topbar,
+#git-kraken-figure.git-tag #gkui-empty {
+  opacity: 0.5;
+}
+#git-kraken-figure.git-checkout #gkui-arrow-1 {
+  left: -5.5em;
+  top: 3em;
+}
+#git-kraken-figure.git-checkout #gkui-checkout {
+  opacity: 1;
+}
+#git-kraken-figure.git-checkout #gkui-tag {
+  opacity: 0.5;
+}
+#git-kraken-figure.git-show #gkui-arrow-1 {
+  opacity: 0;
+}
+#git-kraken-figure.git-show #gkui-arrow-2 {
+  opacity: 1;
+  right: -4em;
+  top: 0.5em;
+}
+#git-kraken-figure.git-show #gkui-show {
+  opacity: 1;
+}
+#git-kraken-figure.git-show #gkui-checkout {
+  opacity: 0.5;
+}
+#git-kraken-figure.git-commit #gkui-arrow-2 {
+  right: -5.5em;
+  top: 2em;
+}
+#git-kraken-figure.git-commit #gkui-commit {
+  opacity: 1;
+}
+#git-kraken-figure.git-commit #gkui-show {
+  opacity: 0.5;
+}
+#git-kraken-figure.git-remote #gkui-arrow-2 {
+  opacity: 0;
+}
+#git-kraken-figure.git-remote #gkui-arrow-1 {
+  opacity: 1;
+  left: -7em;
+  top: 2em;
+}
+#git-kraken-figure.git-remote #gkui-remote {
+  opacity: 1;
+}
+#git-kraken-figure.git-remote #gkui-commit {
+  opacity: 0.5;
+}
+#git-kraken-figure.git-log #gkui-arrow-1 {
+  opacity: 0;
+}
+#git-kraken-figure.git-log #gkui-arrow-2 {
+  opacity: 1;
+  right: -1em;
+  width: 10em;
+  top: 2em;
+}
+#git-kraken-figure.git-log #gkui-log,
+#git-kraken-figure.git-log #gkui-commit,
+#git-kraken-figure.git-log #gkui-remote,
+#git-kraken-figure.git-log #gkui-show,
+#git-kraken-figure.git-log #gkui-checkout,
+#git-kraken-figure.git-log #gkui-tag {
+  opacity: 1;
+}
+#gk-download {
+  box-shadow: 0 1px 3px #141422;
+  color: #141422;
+  background-color: #d8c13a;
+  border-color: #d8c13a;
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1em;
+  line-height: 1;
+  padding: 0.75em 1.15em;
+  text-align: center;
+  font-weight: 400;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 0.2em;
+  cursor: pointer;
+  border-width: 1px;
+  border-style: solid;
+  transition: 0.4s color ease, 0.4s border-color ease, 0.4s background-color ease;
+}
+#gk-download:hover {
+  color: #141422;
+  background-color: #b7a224;
+  border-color: #b7a224;
+}
+@-webkit-keyframes yoyo {
+  0% {
+    -webkit-transform: translate3d(0.5, 0, 0);
+    transform: translate3d(0.5, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(-0.5em, 0, 0);
+    transform: translate3d(-0.5em, 0, 0);
+  }
+}
+@keyframes yoyo {
+  0% {
+    -webkit-transform: translate3d(0.5, 0, 0);
+    transform: translate3d(0.5, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(-0.5em, 0, 0);
+    transform: translate3d(-0.5em, 0, 0);
+  }
+}

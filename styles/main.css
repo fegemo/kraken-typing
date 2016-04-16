@@ -1,0 +1,450 @@
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: 'Overlock', sans-serif;
+}
+body {
+  height: inherit;
+  width: inherit;
+  margin: 0;
+}
+#container {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  background-image: linear-gradient(to bottom right, #c5cae9, #9e9e9e);
+  height: auto;
+  padding-bottom: 3em;
+  box-shadow: 0 3px 5px rgba(0,0,0,0.25);
+  border-bottom: 1px solid rgba(0,0,0,0.25);
+}
+#game {
+  height: 602px;
+}
+#lateral {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  height: 100%;
+}
+.piece {
+  width: 352px;
+  box-sizing: border-box;
+}
+.box {
+  border: 1px solid #000;
+  width: 100%;
+  box-sizing: border-box;
+}
+h1,
+h2 {
+  font-family: 'Chango', sans-serif;
+  margin-bottom: 1rem;
+  height: 3rem;
+  box-sizing: border-box;
+  text-align: center;
+  background-image: -webkit-linear-gradient(#2ac2ff, #b200ff 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2px #111;
+  padding: 0em 0 1.6em;
+}
+h1 {
+  font-size: 2rem;
+  margin-top: 0.5rem;
+}
+h2 {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+}
+h1#game-title {
+  line-height: 0.7em;
+}
+h2#your-gk-title {
+  font-size: 2rem;
+  margin-top: 0.5rem;
+  line-height: 0.8em;
+  background-image: -webkit-linear-gradient(#02f13d, #ddd 60%, #f06980 90%);
+}
+h3 {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+h3:not(:first-of-type) {
+  margin-top: 0.75em;
+  border-top: 1px dashed #808080;
+}
+#frameworks-footer {
+  background-color: #fff;
+  color: #fff;
+  margin-top: 0.5em;
+  padding: 0.25em 1em;
+  width: 100%;
+}
+#git-kraken-figure {
+  margin: 0;
+  width: 100%;
+}
+.git-kraken-images {
+  position: relative;
+  border-bottom: 1px solid #808080;
+  min-height: 200px;
+  box-shadow: 0 2px 2px rgba(0,0,0,0.25);
+}
+.git-kraken-image {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#git-kraken-log {
+  max-height: 5em;
+  line-height: 1em;
+  margin: 0;
+  padding: 0.25em;
+  overflow-y: auto;
+  text-align: center;
+  background-color: #e6e6e6;
+}
+#team {
+  position: relative;
+}
+#team > .box {
+  min-height: 250px;
+  background-color: #fff;
+}
+#team .note {
+  cursor: pointer;
+  transition: all 200ms ease-out;
+  text-align: right;
+  margin-right: 1em;
+  font-size: 75%;
+}
+#team .note:hover {
+  color: #639;
+}
+#team .back {
+  padding: 1em;
+  box-sizing: border-box;
+}
+#team > h2 {
+  height: auto;
+  padding: 0;
+}
+#team dl {
+  margin: 0;
+}
+#team dt {
+  float: left;
+  clear: both;
+}
+#team dd {
+  float: right;
+}
+.clearfix {
+  zoom: 1;
+}
+.clearfix:after,
+.clearfix:before {
+  content: "";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
+.tag {
+  background-color: #ddd;
+  border-radius: 0.25em;
+  padding: 0 0.25em;
+  margin-right: 0.25em;
+  font-size: 0.75em;
+  box-shadow: 2px 2px 2px #808080;
+/*
+  &.orange
+    background-color #E2B054
+  &.green
+    background-color #0BC301
+  &.blue
+    background-color #01C3BC
+  &.golden
+    background-color #BEC301
+  &.hotpink
+    background-color #B001C3
+  &.weakred
+    background-color #EA2A2A
+  &.oceanblue
+    background-color #372AEA
+  &.lightgreen
+    background-color #75F17A
+  */
+}
+#frameworks-footer> ul {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+#frameworks-footer img {
+  height: 80px;
+}
+[class^="preload-"] {
+  position: absolute;
+  top: -1000px;
+  left: -1000px;
+}
+.preload-erica-one {
+  font-family: 'Erica One';
+}
+.preload-chewy {
+  font-family: 'Chewy';
+}
+.preload-chango {
+  font-family: 'Chango';
+}
+.preload-overlock {
+  font-family: 'Overlock';
+}
+.preload-ubuntu-mono {
+  font-family: 'Ubuntu Mono';
+}
+.git-kraken-image {
+  transition: all 1s linear;
+  opacity: 0;
+}
+.git-kraken-image.base {
+  opacity: 0.5;
+}
+.git-kraken-image#gkui-init {
+  transition-delay: 1s;
+}
+#git-kraken-log p {
+  transition: all 500ms linear;
+  color: #000;
+}
+#git-kraken-log p.aged {
+  color: #c0c0c0;
+}
+.gkui-arrow {
+  position: absolute;
+  display: inline-block;
+  width: 8em;
+  padding: 0.25em;
+  border-bottom: 2px solid #e53935;
+  opacity: 0;
+  font-weight: bold;
+  color: #02f13d;
+  text-shadow: 1px 1px 0 #111;
+  transition: all 1s ease-out;
+}
+#gkui-arrow-1 {
+  margin-right: 3em;
+  border-radius: 0 0.5em;
+}
+#gkui-arrow-2 {
+  border-radius: 0.5em 0;
+  margin-left: 3em;
+  text-align: right;
+}
+#git-kraken-figure.git-init #gkui-arrow-1,
+#git-kraken-figure.git-clone #gkui-arrow-1 {
+  left: -7em;
+  top: -1em;
+  opacity: 1;
+  -webkit-animation: yoyo 2s ease-in-out 0s 3 alternate-reverse;
+  animation: yoyo 2s ease-in-out 0s 3 alternate-reverse;
+}
+#git-kraken-figure.git-init #gkui-topbar,
+#git-kraken-figure.git-clone #gkui-topbar {
+  opacity: 1;
+}
+#git-kraken-figure.git-init #gkui-init {
+  opacity: 1;
+}
+#git-kraken-figure.git-clone #gkui-clone {
+  opacity: 1;
+}
+#git-kraken-figure.git-clone #gkui-arrow-1 {
+  left: -9em;
+  width: 10em;
+}
+#git-kraken-figure.git-tag #gkui-init,
+#git-kraken-figure.git-tag #gkui-clone {
+  opacity: 0;
+}
+#git-kraken-figure.git-tag #gkui-arrow-1 {
+  left: -8.5em;
+  top: 3em;
+}
+#git-kraken-figure.git-tag #gkui-tag {
+  opacity: 1;
+}
+#git-kraken-figure.git-tag #gkui-topbar,
+#git-kraken-figure.git-tag #gkui-empty {
+  opacity: 0.5;
+}
+#git-kraken-figure.git-checkout #gkui-arrow-1 {
+  left: -5.5em;
+  top: 3em;
+}
+#git-kraken-figure.git-checkout #gkui-checkout {
+  opacity: 1;
+}
+#git-kraken-figure.git-checkout #gkui-tag {
+  opacity: 0.5;
+}
+#git-kraken-figure.git-show #gkui-arrow-1 {
+  opacity: 0;
+}
+#git-kraken-figure.git-show #gkui-arrow-2 {
+  opacity: 1;
+  right: -4em;
+  top: 0.5em;
+}
+#git-kraken-figure.git-show #gkui-show {
+  opacity: 1;
+}
+#git-kraken-figure.git-show #gkui-checkout {
+  opacity: 0.5;
+}
+#git-kraken-figure.git-commit #gkui-arrow-2 {
+  right: -5.5em;
+  top: 2em;
+}
+#git-kraken-figure.git-commit #gkui-commit {
+  opacity: 1;
+}
+#git-kraken-figure.git-commit #gkui-show {
+  opacity: 0.5;
+}
+#git-kraken-figure.git-remote #gkui-arrow-2 {
+  opacity: 0;
+}
+#git-kraken-figure.git-remote #gkui-arrow-1 {
+  opacity: 1;
+  left: -7em;
+  top: 2em;
+}
+#git-kraken-figure.git-remote #gkui-remote {
+  opacity: 1;
+}
+#git-kraken-figure.git-remote #gkui-commit {
+  opacity: 0.5;
+}
+#git-kraken-figure.git-log #gkui-arrow-1 {
+  opacity: 0;
+}
+#git-kraken-figure.git-log #gkui-arrow-2 {
+  opacity: 1;
+  right: -1em;
+  width: 10em;
+  top: 2em;
+}
+#git-kraken-figure.git-log #gkui-log,
+#git-kraken-figure.git-log #gkui-commit,
+#git-kraken-figure.git-log #gkui-remote,
+#git-kraken-figure.git-log #gkui-show,
+#git-kraken-figure.git-log #gkui-checkout,
+#git-kraken-figure.git-log #gkui-tag {
+  opacity: 1;
+}
+#gk-download {
+  box-shadow: 0 1px 3px #141422;
+  color: #141422;
+  background-color: #d8c13a;
+  border-color: #d8c13a;
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1em;
+  line-height: 1;
+  padding: 0.75em 1.15em;
+  text-align: center;
+  font-weight: 400;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 0.2em;
+  cursor: pointer;
+  border-width: 1px;
+  border-style: solid;
+  transition: 0.4s color ease, 0.4s border-color ease, 0.4s background-color ease;
+}
+#gk-download:hover {
+  color: #141422;
+  background-color: #b7a224;
+  border-color: #b7a224;
+}
+@-webkit-keyframes yoyo {
+  0% {
+    -webkit-transform: translate3d(0.5, 0, 0);
+    transform: translate3d(0.5, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(-0.5em, 0, 0);
+    transform: translate3d(-0.5em, 0, 0);
+  }
+}
+@keyframes yoyo {
+  0% {
+    -webkit-transform: translate3d(0.5, 0, 0);
+    transform: translate3d(0.5, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(-0.5em, 0, 0);
+    transform: translate3d(-0.5em, 0, 0);
+  }
+}
+.container {
+  position: relative;
+  -webkit-perspective: 800px;
+  perspective: 800px;
+}
+.card {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transition: -webkit-transform 1s;
+  transition: transform 1s;
+  transition: transform 1s, -webkit-transform 1s;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transform-origin: 50% 50%;
+}
+.card div {
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.card .back {
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+.card.flipped {
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
