@@ -115,23 +115,15 @@ class ConsoleSpawner extends WaveSpawner {
       );
     }
 
-    // special (shiny) git enemy
+    // special (shiny) git enemyit
     const git = this.wave.enemies.git;
     if (!!git &&
       !this.hasSpawnedGitEnemy && this.progressConsoleOnly >= git.atProgress) {
         this.hasSpawnedGitEnemy = true;
         let enemy = this.spawn(GitEnemy);
 
-        // enemy.uponDeath = function() {
-        //   switch(enemyDescription.unlocks) {
-        //     case '#anim-git-init':
-        //       document.querySelector('.git-kraken-image#gkui-topbar').classList.add('faded-in');
-        //       break;
-        //   }
-        // }.bind(enemy);
-
         enemy.uponDeath = function() {
-          gkui.animate.call(this.spawner.state, enemy.originalText);
+          gkui.animate.call(this.spawner.state, enemy.name);
         }.bind(this);
       }
   }
@@ -143,7 +135,7 @@ class ConsoleSpawner extends WaveSpawner {
       -ENEMY_INSTRUCTIONS_DIMENSIONS.width,
       this.spawner.game.world.width+ENEMY_INSTRUCTIONS_DIMENSIONS.width
     );
-    let enemy = this.spawner.spawnEnemyAt(xEnemy, 0, enemyDescription.cmd, type);
+    let enemy = this.spawner.spawnEnemyAt(xEnemy, 0, enemyDescription.cmd, type, enemyDescription.name);
     enemy.speedMultiplier = this.speedMultiplier;
     enemy.create();
 

@@ -6,12 +6,14 @@ const CONSTANT_SPEED_INSTRUCTION_ENEMY = 30;
 
 export default class Enemy {
 
-  constructor(game, state, text, x, y) {
+  constructor(game, state, text, x, y, name) {
     this.game = game;
     this.state = state;
     this.originalText = text;
     this.position = new Phaser.Point(x, y);
+    this.name = name;
     this.lives = text.replace(/ /g, '').length;
+    this.baseYSpeed = BASE_Y_SPEED / Math.max(1,Math.floor(this.lives/3))
     this._indexOffirstAliveChar = 0;
     this.uponDeath = function() {};
   }
@@ -129,7 +131,7 @@ export class ConsoleEnemy extends Enemy {
     let xDistanceToPlayer = this.state.player.sprite.x - this.position.x;
     let yDistanceToPlayer = this.state.player.sprite.y - this.position.y;
 
-    let ySpeed = BASE_Y_SPEED * this.speedMultiplier;
+    let ySpeed = this.baseYSpeed * this.speedMultiplier;
     let timeToImpact = yDistanceToPlayer/ySpeed;
     let xSpeed = xDistanceToPlayer / timeToImpact;
     this.sprite.body.velocity.x = xSpeed;

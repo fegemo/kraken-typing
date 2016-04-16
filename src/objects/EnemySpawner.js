@@ -36,9 +36,9 @@ export default class EnemySpawner {
     });
   }
 
-  spawnEnemyAt(x, y, text, typeConstr = ConsoleEnemy) {
+  spawnEnemyAt(x, y, text, typeConstr = ConsoleEnemy, name) {
     // var enemyType = type === 'instruction' ? InstructionEnemy : ConsoleEnemy;
-    return new typeConstr(this.game, this.state, text, x, y);
+    return new typeConstr(this.game, this.state, text, x, y, name);
   }
 
   spawnEnemyAtRandom(text, type = 'console') {

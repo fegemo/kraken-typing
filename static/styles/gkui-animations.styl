@@ -1,16 +1,23 @@
-//
-// .fade
-//   transition all 1s linear
-//   opacity 0
-//   &.faded-in
-//     opacity 1
+@keyframes yoyo
+  0%
+    transform translate3d(0.5,0,0)
+  100%
+    transform translate3d(-0.5em,0,0)
+
+// .yoyo
+//     animation yoyo 2s ease-in-out 0s 2 alternate-reverse
+
 
 // images
 .git-kraken-image
   transition all 1s linear
   opacity 0
   &.base
-    opacity 1
+    opacity 0.5
+  &#gkui-init
+    transition-delay 1s
+
+
 
 // log
 #git-kraken-log
@@ -23,21 +30,25 @@
 
 // arrows
 .gkui-arrow
-  position: relative;
-  display: inline-block;
-  width: 8em;
-  padding: 0.25em;
-  border-bottom: 2px solid #E53935;
+  position absolute
+  display inline-block
+  width 8em
+  padding 0.25em
+  border-bottom 2px solid #E53935
   opacity 0
+  font-weight bold
+  color #02f13d
+  text-shadow 1px 1px 0 #111
   transition all 1s ease-out
 // arrow left
 #gkui-arrow-1
-  margin-right: 3em;
-  border-radius: 0 0.5em;
+  margin-right 3em
+  border-radius 0 0.5em
 // arrow right
 #gkui-arrow-2
-  border-radius: 0.5em 0;
-  margin-left: 3em;
+  border-radius 0.5em 0
+  margin-left 3em
+  text-align right
 
 #git-kraken-figure
   &.git-init,
@@ -46,9 +57,105 @@
       left: -7em
       top: -1em
       opacity 1
+      animation yoyo 2s ease-in-out 0s 3 alternate-reverse
     #gkui-topbar
       opacity 1
+  &.git-init
+    #gkui-init
+      opacity 1
   &.git-clone
+    #gkui-clone
+      opacity 1
     #gkui-arrow-1
       left: -9em
       width 10em
+  &.git-tag
+    #gkui-init,
+    #gkui-clone
+      opacity 0
+    #gkui-arrow-1
+      left -8.5em
+      top 3em
+    #gkui-tag
+      opacity 1
+    #gkui-topbar,
+    #gkui-empty
+      opacity 0.5
+  &.git-checkout
+    #gkui-arrow-1
+      left -5.5em
+      top 3em
+    #gkui-checkout
+      opacity 1
+    #gkui-tag
+      opacity 0.5
+  &.git-show
+    #gkui-arrow-1
+      opacity 0
+    #gkui-arrow-2
+      opacity 1
+      right -4em
+      top 0.5em
+    #gkui-show
+      opacity 1
+    #gkui-checkout
+      opacity 0.5
+  &.git-commit
+    #gkui-arrow-2
+      right -5.5em
+      top 2em
+    #gkui-commit
+      opacity 1
+    #gkui-show
+      opacity 0.5
+  &.git-remote
+    #gkui-arrow-2
+      opacity 0
+    #gkui-arrow-1
+      opacity 1
+      left -7em
+      top 2em
+    #gkui-remote
+      opacity 1
+    #gkui-commit
+      opacity 0.5
+  &.git-log
+    #gkui-arrow-1
+      opacity 0
+    #gkui-arrow-2
+      opacity 1
+      right -1em
+      width 10em
+      top 2em
+    #gkui-log,
+    #gkui-commit,
+    #gkui-remote,
+    #gkui-show,
+    #gkui-checkout,
+    #gkui-tag
+      opacity 1
+
+#gk-download
+  box-shadow 0 1px 3px #141422
+  color #141422
+  background-color #d8c13a
+  border-color #d8c13a
+  display: inline-block
+  width 100%
+  box-sizing border-box
+  font-size: 1em;
+  line-height: 1;
+  padding: 0.75em 1.15em;
+  text-align: center;
+  font-weight: 400;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 0.2em;
+  cursor: pointer;
+  border-width: 1px;
+  border-style: solid;
+  transition: 0.4s color ease, 0.4s border-color ease, 0.4s background-color ease;
+  &:hover
+    color: #141422;
+    background-color: #b7a224;
+    border-color: #b7a224;

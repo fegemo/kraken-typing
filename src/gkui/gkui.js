@@ -20,7 +20,7 @@ function tutorial(gameState) {
 let tutorialAppeared = false;
 
 export default {
-  animate: function(command) {
+  animate: function(name) {
     var figureEl = document.querySelector('#git-kraken-figure'),
       logEl = document.querySelector('#git-kraken-log'),
       leftArrowEl = document.querySelector('#gkui-arrow-1'),
@@ -30,15 +30,15 @@ export default {
       tutorial(this);
     }
 
-    command = command.replace(/\s/g, '-');
+    // command = command.replace(/\s/g, '-');
 
     // puts a class with the name as the command on the figure element (top-most)
-    figureEl.classList.add(command);
+    figureEl.classList.add(name);
 
     // makes current paragraphs gray
     agePreviousDescriptions(logEl);
 
-    switch (command) {
+    switch (name) {
       case 'git-init':
         leftArrowEl.innerText = 'Init a repo here!';
         rightArrowEl.innerText = '';
@@ -53,10 +53,49 @@ export default {
         insertNewDescriptionInLog(logEl, 'Connect to GitHub &amp; BitBucket to clone straight from them. No keyboard expertise required.')
         break;
 
-      case 'git-branch':
+      case 'git-tag':
+        leftArrowEl.innerText = 'See/create tags here';
+        rightArrowEl.innerText = '';
+        // inserts the new guy
+        insertNewDescriptionInLog(logEl, 'Create, delete and check for tags here.')
+        break;
+
+      case 'git-checkout':
+        leftArrowEl.innerText = 'Switch branches here';
+        rightArrowEl.innerText = '';
+        // inserts the new guy
+        insertNewDescriptionInLog(logEl, 'Change the current branch, delete or create new ones here.')
+        break;
+
+      case 'git-show':
+        leftArrowEl.innerText = '';
+        rightArrowEl.innerText = 'Inspect a commit';
+        // inserts the new guy
+        insertNewDescriptionInLog(logEl, 'See the details of a previous commit here.')
+        break;
+
+      case 'git-commit':
+        leftArrowEl.innerText = '';
+        rightArrowEl.innerText = 'Add stuff and commit';
+        // inserts the new guy
+        insertNewDescriptionInLog(logEl, 'View the diff, add files and commit, everything here!')
+        break;
+
+      case 'git-remote':
+        leftArrowEl.innerText = 'Remote repos';
+        rightArrowEl.innerText = '';
+        // inserts the new guy
+        insertNewDescriptionInLog(logEl, 'Set up and view remote repos easily.')
+        break;
+
+      case 'git-log':
+        leftArrowEl.innerText = '';
+        rightArrowEl.innerText = 'Graphical logs';
+        // inserts the new guy
+        insertNewDescriptionInLog(logEl, 'See what\'s going on the repo through logs showing commits and branches.')
+        insertNewDescriptionInLog(logEl, '<a href="http://gitkraken.com" target="_blank">Unleash the Kraken</a>')
         break;
     }
-
   },
 
   start: function() {

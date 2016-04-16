@@ -16,8 +16,9 @@ var level0 = {
       delayAfter: 0,
       enemies: {
         fromPool: database.regular.mid,
-        quantity: 2,
+        quantity: 5,
         git: {
+          name: 'git-init',
           cmd: 'git init',
           atProgress: 0.4
         }
@@ -27,10 +28,89 @@ var level0 = {
       type: 'console',
       delayAfter: 0,
       enemies: {
-        fromPool: database.regular.large,
+        fromPool: database.regular.short,
         quantity: 2,
         git: {
+          name: 'git-clone',
           cmd: 'git clone',
+          atProgress: 0.4
+        }
+      }
+    },
+    {
+      type: 'console',
+      delayAfter: 0,
+      enemies: {
+        fromPool: database.regular.short,
+        quantity: 2,
+        git: {
+          name: 'git-tag',
+          cmd: 'git tag',
+          atProgress: 0.4
+        }
+      }
+    },
+    {
+      type: 'console',
+      delayAfter: 0,
+      enemies: {
+        fromPool: database.regular.short,
+        quantity: 2,
+        git: {
+          name: 'git-checkout',
+          cmd: 'git checkout',
+          atProgress: 0.4
+        }
+      }
+    },
+    {
+      type: 'console',
+      delayAfter: 0,
+      enemies: {
+        fromPool: database.regular.short,
+        quantity: 2,
+        git: {
+          name: 'git-show',
+          cmd: 'git show HEAD~4',
+          atProgress: 0.4
+        }
+      }
+    },
+    {
+      type: 'console',
+      delayAfter: 0,
+      enemies: {
+        fromPool: database.regular.short,
+        quantity: 2,
+        git: {
+          name: 'git-commit',
+          cmd: 'git commit -am "yikes"',
+          atProgress: 0.4
+        }
+      }
+    },
+    {
+      type: 'console',
+      delayAfter: 0,
+      enemies: {
+        fromPool: database.regular.short,
+        quantity: 2,
+        git: {
+          name: 'git-remote',
+          cmd: 'git remote add origin bitbucket.org',
+          atProgress: 0.4
+        }
+      }
+    },
+    {
+      type: 'console',
+      delayAfter: 0,
+      enemies: {
+        fromPool: database.regular.short,
+        quantity: 2,
+        git: {
+          name: 'git-log',
+          cmd: 'git log --graph --all --oneline',
           atProgress: 0.4
         }
       }
