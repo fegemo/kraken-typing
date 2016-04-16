@@ -1,7 +1,7 @@
 {
-  "name": "krakening-console",
+  "name": "kraken-typing",
   "version": "1.0.0",
-  "description": "A game to destroy all git commands on console and to stick with the kraken",
+  "description": "Unleash the kraken by killing terminal commands #GKContest.",
   "main": "src/index.js",
   "scripts": {
     "start": "gulp",
