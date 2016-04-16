@@ -107,8 +107,21 @@ h3
   background-color darken(white, 10%)
 
 #team
+  position: relative;
   > .box
+    min-height 250px
+    background-color: white
+  .note
+    cursor: pointer;
+    transition all 200ms ease-out
+    text-align right
+    margin-right 1em
+    font-size 75%
+    &:hover
+      color rebeccapurple
+  .back
     padding 1em
+    box-sizing: border-box;
   > h2
     height auto
     padding 0
@@ -187,3 +200,4 @@ h3
 
 
 @import gkui-animations
+@import flip-card
