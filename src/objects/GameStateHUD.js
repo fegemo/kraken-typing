@@ -1,5 +1,7 @@
-const PAUSE_BUTTON_DIMENSIONS = { width: 35, height: 33 };
+const PAUSE_BUTTON_DIMENSIONS = { width: 25, height: 25 };
 const PAUSE_BUTTON_MARGINS = { bottom: 10, left: 5 };
+const MUSIC_BUTTON_DIMENSIONS = { width: 25, height: 25 };
+const MUSIC_BUTTON_MARGINS = { bottom: 10, left: PAUSE_BUTTON_DIMENSIONS.width + 5 + 5 };
 const nextLevelTweensDuration = [120, 800, 200];
 
 export default class GameStateButtons {
@@ -20,11 +22,17 @@ export default class GameStateButtons {
       PAUSE_BUTTON_DIMENSIONS.width,
       PAUSE_BUTTON_DIMENSIONS.height
     );
+    this.game.load.spritesheet(
+      'button-music',
+      'imgs/button-music.png',
+      MUSIC_BUTTON_DIMENSIONS.width,
+      MUSIC_BUTTON_DIMENSIONS.height
+    );
 
     this.modals = new gameModal(this.game);
   }
 
-  create({ resumeCallback, pauseCallback, replayCallback, menuCallback }, context) {
+  create({ resumeCallback, pauseCallback, replayCallback, menuCallback, musicCallback }, context) {
     this.createGameOverModal(arguments[0], context);
     this.createGamePausedModal(arguments[0], context);
     this.createEndGameModal(arguments[0], context);
@@ -38,6 +46,15 @@ export default class GameStateButtons {
       1, 0, 1, 0
     );
     pauseButton.anchor.setTo(0, 1);
+    var musicButton = this.game.add.button(
+      MUSIC_BUTTON_MARGINS.left,
+      this.game.world.height - MUSIC_BUTTON_MARGINS.bottom,
+      'button-music',
+      musicCallback,
+      context,
+      1, 0, 1, 0
+    );
+    musicButton.anchor.setTo(0, 1);
 
     this.createNextLevelMessage();
 

@@ -26,6 +26,7 @@ export default class GameState extends Phaser.State {
     this.hud.preload();
 
     this.game.load.audio('sfx', 'sounds/audio-sprite.ogg');
+    this.game.load.audio('silver-ocean', 'sounds/siliver-ocean-by-mathgrant.ogg');
 
     this.currentLevel = 1;
   }
@@ -53,7 +54,10 @@ export default class GameState extends Phaser.State {
       replayCallback: this.replayGame,
       resumeCallback: this.resumeGame,
       menuCallback: this.leaveToMenu,
-      pauseCallback: this.pauseGame
+      pauseCallback: this.pauseGame,
+      musicCallback: () => {
+        this.game.sound.mute = !this.game.sound.mute;
+      }
     }, this);
 
     // creates the player
@@ -86,6 +90,9 @@ export default class GameState extends Phaser.State {
     this.fx.addMarker('disappearing2', 9.0, 0.18);
     this.fx.addMarker('disappearing3', 9.5, 0.25);
     this.fx.addMarker('star', 10.0, 0.4);
+    // music
+    this.music = this.game.add.audio('silver-ocean', 0.7, true);
+    this.music.play();
   }
 
   render() {
@@ -265,6 +272,7 @@ export default class GameState extends Phaser.State {
   }
 
   leaveToMenu() {
+    this.music.stop();
     this.resumeGame();
     this.game.state.start('menu');
   }

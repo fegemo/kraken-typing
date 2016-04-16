@@ -3,6 +3,7 @@ export default class MenuState extends Phaser.State {
     this.game.load.image('bubble-bg', 'imgs/bubble-bg.png');
     this.game.load.image('bubble-bg-smaller', 'imgs/bubble-bg-smaller.png');
     this.game.load.audio('sfx', 'sounds/audio-sprite.ogg');
+    this.game.load.audio('sweet-water', 'sounds/sweet-water-by-david-szesztay.ogg');
   }
 
   create() {
@@ -46,6 +47,9 @@ export default class MenuState extends Phaser.State {
     this.fx.allowMultiple = true;
     this.fx.addMarker('blip', 6.0, 0.5);
     this.fx.addMarker('star', 10.0, 0.4);
+    // music
+    this.music = this.game.add.audio('sweet-water', 0.7, true);
+    this.music.play();
   }
 
   render() {
@@ -83,6 +87,7 @@ export default class MenuState extends Phaser.State {
   }
 
   startGame() {
+    this.music.stop();
     this.fx.play('star');
     this.game.state.start('game');
   }
