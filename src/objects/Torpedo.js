@@ -12,7 +12,7 @@ const TORPEDO_INITIAL_VELOCITY = {
     variation: -15
   }
 };
-const TORPEDO_SPEED = 320;
+const TORPEDO_SPEED = 390;
 const TORPEDO_STEER_RATE = 100;
 const State = {
   // stays in this for TORPEDO_TIME_TO_PURSUIT mili...

@@ -5,6 +5,7 @@ import RandomSpawner from 'objects/RandomSpawner';
 import LevelSpawner from 'objects/LevelSpawner';
 import Torpedo from 'objects/Torpedo';
 import HUD from 'objects/GameStateHUD';
+import gkui from 'gkui/gkui';
 
 export default class GameState extends Phaser.State {
 
@@ -17,7 +18,6 @@ export default class GameState extends Phaser.State {
 
     this.onDestroyingProgress = new Phaser.Signal();
     this.spawner = new LevelSpawner(this.game, this);
-    // this.spawner = new RandomSpawner(this.game, this);
     this.spawner.preload();
 
     Torpedo.preload(this.game);
@@ -59,25 +59,14 @@ export default class GameState extends Phaser.State {
 
     // starts the game (spawner)
     this.spawner.start();
+
+    // resets the gkui
+    gkui.reset();
   }
 
   render() {
     this.spawner.render();
-
     this.player.render();
-
-    //// debugs player and enemys
-    // this.game.debug.body(this.player.sprite);
-    // let e = this.enemies.getFirstAlive();
-    // if (e) {
-    //   this.game.debug.body(e);
-    // }
-
-    //// debugs a torpedo
-    // let first = this.torpedos.getFirstAlive();
-    // if (first) {
-    //   first.entity.render();
-    // }
   }
 
   update() {
@@ -107,7 +96,6 @@ export default class GameState extends Phaser.State {
     // (b) checks enemy collision with torpedo
     this.enemies.forEachAlive(enemy => {
       if (enemy.top > this.game.world.height) {
-        console.log('destroy enmy bc out of world bounds');
         this.destroyEnemy(enemy, false);
       }
 
@@ -141,6 +129,7 @@ export default class GameState extends Phaser.State {
     }
     if (this.finishedSpawning && !gameOvered && !this.enemies.countLiving()) {
       // go to the next level
+
       this.nextLevel();
     }
   }
@@ -187,11 +176,18 @@ export default class GameState extends Phaser.State {
 
   nextLevel() {
     this.finishedSpawning = false;
-    this.player.playSwimming();
-    var duration = this.hud.showNextLevelMessage(++this.currentLevel);
-    this.game.time.events.add(duration, () => {
-      this.spawner.nextLevel(this.currentLevel);
-    }, this);
+    let hasNextLevel = this.spawner.hasNextLevel();
+    this.player.playSwimming(hasNextLevel);
+    if (hasNextLevel) {
+      // goes to next level
+      let duration = this.hud.showNextLevelMessage(++this.currentLevel);
+      this.game.time.events.add(duration, () => {
+        this.spawner.nextLevel(this.currentLevel);
+      }, this);
+    } else {
+      // goes to finish game screen
+      this.hud.modals.showModal('endGame');
+    }
   }
 
   gameOver() {
@@ -216,6 +212,9 @@ export default class GameState extends Phaser.State {
   }
 
   replayGame() {
+    // resets the gkui
+    gkui.reset();
+
     this.resumeGame();
     this.game.state.start('game');
   }

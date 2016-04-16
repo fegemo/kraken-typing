@@ -18,6 +18,18 @@ function tutorial(gameState) {
 }
 
 let tutorialAppeared = false;
+let originalFigureElClasses;
+let originalLogContent;
+
+document.addEventListener('DOMContentLoaded', function(event) {
+  var figureEl = document.querySelector('#git-kraken-figure'),
+    logEl = document.querySelector('#git-kraken-log');
+    
+  // saves the class names initially added to the figureEl
+  originalFigureElClasses = figureEl.className;
+  // and the content of the log
+  originalLogContent = logEl.innerHTML;
+});
 
 export default {
   animate: function(name) {
@@ -29,8 +41,6 @@ export default {
     if (!tutorialAppeared) {
       tutorial(this);
     }
-
-    // command = command.replace(/\s/g, '-');
 
     // puts a class with the name as the command on the figure element (top-most)
     figureEl.classList.add(name);
@@ -93,12 +103,22 @@ export default {
         rightArrowEl.innerText = 'Graphical logs';
         // inserts the new guy
         insertNewDescriptionInLog(logEl, 'See what\'s going on the repo through logs showing commits and branches.')
-        insertNewDescriptionInLog(logEl, '<a href="http://gitkraken.com" target="_blank">Unleash the Kraken</a>')
+        insertNewDescriptionInLog(logEl, '<a id="gk-download" href="http://gitkraken.com" target="_blank">Unleash the Kraken</a>')
         break;
     }
   },
 
-  start: function() {
+  reset: function() {
+    var figureEl = document.querySelector('#git-kraken-figure'),
+      logEl = document.querySelector('#git-kraken-log'),
+      leftArrowEl = document.querySelector('#gkui-arrow-1'),
+      rightArrowEl = document.querySelector('#gkui-arrow-2');
 
+    // puts its original class back to it, removing all others
+    figureEl.className = originalFigureElClasses;
+    logEl.innerHTML = originalLogContent;
+
+    leftArrowEl.innerHTML = '';
+    rightArrowEl.innerHTML = '';
   }
 }

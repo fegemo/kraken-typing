@@ -27,6 +27,7 @@ export default class GameStateButtons {
   create({ resumeCallback, pauseCallback, replayCallback, menuCallback }, context) {
     this.createGameOverModal(arguments[0], context);
     this.createGamePausedModal(arguments[0], context);
+    this.createEndGameModal(arguments[0], context);
 
     var pauseButton = this.game.add.button(
       PAUSE_BUTTON_MARGINS.left,
@@ -138,6 +139,60 @@ export default class GameStateButtons {
     textResume.events.onInputOver.add(this.hoverTextButton, this, 0, textResume);
     textMenu.events.onInputOver.add(this.hoverTextButton, this, 0, textMenu);
     textResume.events.onInputOut.add(this.outTextButton, this, 0, textResume);
+    textMenu.events.onInputOut.add(this.outTextButton, this, 0, textMenu);
+  }
+
+  createEndGameModal({ resumeCallback, replayCallback, menuCallback }, context) {
+    this.modals.createModal({
+      type: 'endGame',
+      includeBackground: true,
+      itemsArr: [
+        {
+          type: 'text',
+          content: 'Congratulations!!\n\nGo Unleash \nYour Kraken Now',
+          fontFamily: 'Chango',
+          fontSize: 28,
+          offsetY: -80,
+          color: '0x9A22FF',
+          stroke: '0x000000',
+          strokeThickness: 9
+        },
+        {
+          type: 'text',
+          content: 'replay',
+          fontFamily: 'Chango',
+          fontSize: 28,
+          color: '0xFEFF49',
+          offsetY: 40,
+          offsetX: -70,
+          stroke: '0x000000',
+          strokeThickness: 9,
+          callback: replayCallback.bind(context)
+        },
+        {
+          type: 'text',
+          content: 'menu',
+          fontFamily: 'Chango',
+          fontSize: 28,
+          color: '0xFEFF49',
+          offsetY: 40,
+          offsetX: 70,
+          stroke: '0x000000',
+          strokeThickness: 9,
+          callback: menuCallback.bind(context)
+        }
+      ]
+    });
+
+    // hover on buttons
+    let textReplay = this.modals.getModalItem('endGame', 3);
+    let textMenu = this.modals.getModalItem('endGame', 4);
+    textReplay.inputEnabled = true;
+    textMenu.inputEnabled = true;
+
+    textReplay.events.onInputOver.add(this.hoverTextButton, this, 0, textReplay);
+    textMenu.events.onInputOver.add(this.hoverTextButton, this, 0, textMenu);
+    textReplay.events.onInputOut.add(this.outTextButton, this, 0, textReplay);
     textMenu.events.onInputOut.add(this.outTextButton, this, 0, textMenu);
   }
 

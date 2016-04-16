@@ -27,7 +27,7 @@ class WaveSpawner {
 
     this.spawner.onSpawningProgress.dispatch({
       progress: this.progressTotal,
-      finished: this.progressTotal === 1
+      finished: this.progressTotal >= 1
     });
   }
 
@@ -131,10 +131,16 @@ class ConsoleSpawner extends WaveSpawner {
   spawn(type = ConsoleEnemy) {
     // spawns
     const enemyDescription = type === ConsoleEnemy ? this.nextEnemy() : this.wave.enemies.git;
-    const xEnemy = this.spawner.game.rnd.between(
-      -ENEMY_INSTRUCTIONS_DIMENSIONS.width,
-      this.spawner.game.world.width+ENEMY_INSTRUCTIONS_DIMENSIONS.width
-    );
+
+    const xEnemy = type === ConsoleEnemy ?
+      this.spawner.game.rnd.between(
+        -ENEMY_INSTRUCTIONS_DIMENSIONS.width,
+        this.spawner.game.world.width+ENEMY_INSTRUCTIONS_DIMENSIONS.width
+      ) :
+      this.spawner.game.rnd.between(
+        this.spawner.game.world.width/3,
+        (this.spawner.game.world.width/3)*2
+      );
     let enemy = this.spawner.spawnEnemyAt(xEnemy, 0, enemyDescription.cmd, type, enemyDescription.name);
     enemy.speedMultiplier = this.speedMultiplier;
     enemy.create();
@@ -172,6 +178,7 @@ export default class LevelSpawner extends EnemySpawner {
     super(game, state);
     this.levels = levels;
     this.currentLevelIndex = 0;
+    this._totalEnemies = [];
     this.state.onDestroyingProgress.add(this.enemyWasDestroyed, this);
   }
 
@@ -188,7 +195,6 @@ export default class LevelSpawner extends EnemySpawner {
   }
 
   nextWave() {
-    // console.log('going ot load a new wave now with index ' + (this.currentWaveIndex+1));
     let previousWave = this.currentWave;
     this.currentWaveIndex++;
     if (this.currentWave) {
@@ -197,8 +203,11 @@ export default class LevelSpawner extends EnemySpawner {
     }
   }
 
+  hasNextLevel() {
+    return this.currentLevelIndex+1 < this.levels.length;
+  }
+
   nextLevel() {
-    // console.log('LevelSpawner: nextLevel was called');
     super.nextLevel();
 
     this.currentLevelIndex++;
@@ -206,6 +215,9 @@ export default class LevelSpawner extends EnemySpawner {
   }
 
   enemyWasDestroyed() {
+    if (!this.currentWave) {
+      console.error('tried to tell a wave spawner that an enemy was destroyed, but there were no more currentWave');
+    }
     this.currentWave.enemyWasDestroyed(this.nextWave, this);
   }
 
@@ -225,11 +237,11 @@ export default class LevelSpawner extends EnemySpawner {
   }
 
   get totalEnemies() {
-    if (!this._totalEnemies) {
-      this._totalEnemies = this.waves.reduce(
+    if (!this._totalEnemies[this.currentLevelIndex]) {
+      this._totalEnemies[this.currentLevelIndex] = this.waves.reduce(
         (accum, curr) => accum + curr.totalEnemies
       , 0);
     }
-    return this._totalEnemies;
+    return this._totalEnemies[this.currentLevelIndex];
   }
 }
