@@ -14,7 +14,7 @@ var exorcist = require('exorcist');
 var babelify = require('babelify');
 var browserify = require('browserify');
 var browserSync = require('browser-sync');
-
+var ghPages = require('gulp-gh-pages');
 /**
  * Using different folders/file names? Change these constants:
  */
@@ -168,6 +168,10 @@ function serve() {
 
 }
 
+gulp.task('deploy', function() {
+  return gulp.src('./build/**/*')
+    .pipe(ghPages());
+});
 
 gulp.task('cleanBuild', cleanBuild);
 gulp.task('copyStatic', ['cleanBuild'], copyStatic);
