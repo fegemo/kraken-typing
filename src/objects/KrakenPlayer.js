@@ -1,7 +1,7 @@
 const KRAKEN_DIMENSIONS = { width: 56, height: 100 };
 const KRAKEN_BODY_DIMENSIONS = { width: 40, height: 40, offsetY: -12 }
 const LIFE_ICON_DIMENSIONS = { width: 16, height: 16 };
-const LIFE_ICON_MARGIN = { right: 10, bottom: 10, between: 2 };
+const LIFE_ICON_MARGIN = { right: 10, bottom: 13, between: 2 };
 const INITIAL_LIVES = 3;
 
 export default class KrakenPlayer {
