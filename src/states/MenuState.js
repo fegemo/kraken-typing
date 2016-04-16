@@ -13,7 +13,7 @@ export default class MenuState extends Phaser.State {
 
     this.logo = this.game.add.text(
       this.game.world.centerX, this.game.world.centerY * 0.8,
-      'Krack-the-\nTerminal');
+      'Kraken\nTyping');
     this.logo.anchor.setTo(0.5, 0.5);
     this.logo.fontSize = 42;
     this.logo.lineSpacing = -33;
