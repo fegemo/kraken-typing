@@ -25,6 +25,8 @@ export default class GameState extends Phaser.State {
     this.hud = new HUD(this.game, this);
     this.hud.preload();
 
+    this.game.load.audio('sfx', 'sounds/audio-sprite.ogg');
+
     this.currentLevel = 1;
   }
 
@@ -62,6 +64,11 @@ export default class GameState extends Phaser.State {
 
     // resets the gkui
     gkui.reset();
+
+    // sound effects
+    this.fx = this.game.add.audio('sfx');
+    this.fx.allowMultiple = true;
+    this.fx.addMarker('error', 0, 0.4);
   }
 
   render() {
@@ -159,7 +166,20 @@ export default class GameState extends Phaser.State {
         if (killed) {
           spawner.currentEnemy = null;
         }
+      } else {
+        this.wrongKeyPressed();
       }
+    } else {
+      this.wrongKeyPressed();
+    }
+  }
+
+  wrongKeyPressed() {
+    this.fx.play('error');
+    this.player.wrongKeyPressed();
+    if (this.spawner.currentEnemy) {
+      console.log('called wrongkeupress on enemy')
+      this.spawner.currentEnemy.wrongKeyPressed();
     }
   }
 

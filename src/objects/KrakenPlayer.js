@@ -112,6 +112,18 @@ export default class KrakenPlayer {
     }
     return false;
   }
+
+  wrongKeyPressed() {
+    this.sprite.colorBlendStep = 0;
+    this.sprite.tint = 0xff3366;
+    this.game.add.tween(this.sprite)
+      .to({ colorBlendStep: 100 }, 200, Phaser.Easing.Linear.None, false)
+      .onUpdateCallback(() => {
+           this.sprite.tint = Phaser.Color.interpolateColor(
+             0xff3366, 0xffffff, 100, this.sprite.colorBlendStep, 1);
+       })
+       .start();
+  }
 }
 
 

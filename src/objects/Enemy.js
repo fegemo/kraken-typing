@@ -53,6 +53,12 @@ export default class Enemy {
     return 'null';
   }
 
+  wrongKeyPressed() {
+    this.game.add.tween(this.textContent.scale)
+      .from({ x: 1.45, y: 1.45 }, 100, Phaser.Easing.Quadratic.Out, 0)
+      .start();
+  }
+
   get hasMoreChars() {
     return this._indexOffirstAliveChar < this.originalText.length;
   }

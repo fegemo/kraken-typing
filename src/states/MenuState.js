@@ -2,6 +2,7 @@ export default class MenuState extends Phaser.State {
   preload() {
     this.game.load.image('bubble-bg', 'imgs/bubble-bg.png');
     this.game.load.image('bubble-bg-smaller', 'imgs/bubble-bg-smaller.png');
+    this.game.load.audio('sfx', 'sounds/audio-sprite.ogg');
   }
 
   create() {
@@ -38,6 +39,11 @@ export default class MenuState extends Phaser.State {
     this.playGameText = this.createMenuItem('play', this.game.world.centerY * 1.2, this.startGame);
     // this.optionsText = this.createMenuItem('options', this.game.world.centerY * 1.4, this.options);
     // this.creditsText = this.createMenuItem('credits', this.game.world.centerY * 1.6, this.credits);
+
+    // sound effects
+    this.fx = this.game.add.audio('sfx');
+    this.fx.allowMultiple = true;
+    this.fx.addMarker('error', 0, 0.4);
   }
 
   render() {
