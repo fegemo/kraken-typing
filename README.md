@@ -1,5 +1,7 @@
 # Kraken Typing, the game
 
+Play the game here: http://fegemo.github.io/kraken-typing/
+
 This project uses some good HTML5, a few bits of CSS3 and lotsa EcmaScript6
 features to build the Kraken Typing game.
 
