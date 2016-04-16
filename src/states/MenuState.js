@@ -36,8 +36,8 @@ export default class MenuState extends Phaser.State {
     // bmd.alphaMask(this.bubbleField2, this.logo);
     // this.game.add.image(this.logo.x, this.logo.y+100, bmd).anchor.setTo(0.5, 0.5);
     this.playGameText = this.createMenuItem('play', this.game.world.centerY * 1.2, this.startGame);
-    this.optionsText = this.createMenuItem('options', this.game.world.centerY * 1.4, this.options);
-    this.creditsText = this.createMenuItem('credits', this.game.world.centerY * 1.6, this.credits);
+    // this.optionsText = this.createMenuItem('options', this.game.world.centerY * 1.4, this.options);
+    // this.creditsText = this.createMenuItem('credits', this.game.world.centerY * 1.6, this.credits);
   }
 
   render() {
