@@ -125,8 +125,11 @@ h3:not(:first-of-type) {
   position: relative;
 }
 #team > .box {
-  min-height: 250px;
+  min-height: 286px;
   background-color: #fff;
+}
+#team > .box iframe {
+  margin: 0 !important;
 }
 #team .note {
   cursor: pointer;
