@@ -15,10 +15,7 @@ export default class EnemySpawner {
   }
 
   preload() {
-    this.game.load.image('enemy-console', 'imgs/enemy-console.png');
-    this.game.load.image('enemy-instruction', 'imgs/enemy-instruction.png');
-    this.game.load.image('enemy-git', 'imgs/enemy-git.png');
-    this.game.load.spritesheet('star-particles', 'imgs/star-particles.png', 20, 24);
+    Enemy.preload(this.game);
   }
 
   create() {

@@ -18,7 +18,16 @@ export default class Enemy {
     this.uponDeath = function() {};
   }
 
-  preload() {
+  static preload(game) {
+    // console & instruction enemy
+    game.load.image('enemy-console', 'imgs/enemy-console.png');
+    game.load.image('enemy-instruction', 'imgs/enemy-instruction.png');
+    game.load.image('flare', 'imgs/flare.png');
+    game.load.image('console-piece', 'imgs/console-piece.png');
+    // git enemy
+    game.load.image('enemy-git', 'imgs/enemy-git.png');
+    game.load.spritesheet('star-particles', 'imgs/star-particles.png', 20, 24);
+    game.load.image('git-piece', 'imgs/git-piece.png');
   }
 
   create() {
@@ -46,6 +55,14 @@ export default class Enemy {
 
   defineSpeed() {
     // abstract method
+  }
+
+  deathAnimation() {
+    // abstract method
+  }
+
+  hitAnimation() {
+    // abstract method;
   }
 
   get spriteImage() {
@@ -99,23 +116,39 @@ export default class Enemy {
     }
     this.textContent.destroy();
 
-    // the enemy might have something to do upon its death
-    this.uponDeath();
+    // calls the anim for death - leaves for child classes to implement
+    this.deathAnimation(() => {
+      // the enemy might have something to do upon its death
+      this.uponDeath();
 
-    // wanted to call this.sprite.destroy() instead of .kill(),
-    // but it was raising an exception
-    this.sprite.parent.remove(this.sprite, false);
-    this.sprite.kill();
+      // wanted to call this.sprite.destroy() instead of .kill(),
+      // but it was raising an exception
+      this.sprite.parent.remove(this.sprite, false);
+      this.sprite.kill();
+    }, this);
   }
 
   hitByTorpedo(destroyedCallback, context) {
     this.lives--;
+    this.hitAnimation();
     return this.lives <= 0;
   }
 }
 
 
 export class InstructionEnemy extends Enemy {
+
+  create() {
+    super.create();
+    this.flare = this.game.add.emitter(0, 0, 10);
+    this.flare.makeParticles('flare', 0);
+    this.flare.gravity = 150;
+    this.flare.y = -this.sprite.height/2;
+    this.flare.setAlpha(0.4, 0, 800);
+    this.flare.minParticleSpeed = new Phaser.Point(-300, -50);
+    this.flare.maxParticleSpeed = new Phaser.Point(+300, +50);
+  }
+
   defineSpeed() {
     this.sprite.body.velocity.x = 0;
     this.sprite.body.velocity.y = CONSTANT_SPEED_INSTRUCTION_ENEMY*4;
@@ -126,6 +159,22 @@ export class InstructionEnemy extends Enemy {
     if (this.sprite.body.velocity.y > CONSTANT_SPEED_INSTRUCTION_ENEMY) {
       this.sprite.body.velocity.y--;
     }
+  }
+
+  deathAnimation(onCompleteCallback, context) {
+    var expandTween = this.game.add.tween(this.sprite.scale);
+    var contractTween = this.game.add.tween(this.sprite.scale);
+
+    expandTween.to({ x: 2, y: 0.25 }, 150, Phaser.Easing.Quadratic.Out);
+    contractTween.to({ x: 0.1, y: 1.5 }, 75, Phaser.Easing.Quadratic.Out);
+    contractTween.onComplete.addOnce(() => {
+      this.flare.start(true, 800, null, 10);
+      onCompleteCallback.call(context);
+    });
+
+    this.flare.x = this.sprite.x;
+    this.flare.y = this.sprite.y;
+    expandTween.chain(contractTween).start();
   }
 
   get spriteImage() {
@@ -150,6 +199,19 @@ export class InstructionEnemy extends Enemy {
 }
 
 export class ConsoleEnemy extends Enemy {
+
+  create() {
+    super.create();
+    // console pieces emitter
+    this.flare = this.game.add.emitter(0, 0, this.lives*2+15);
+    this.flare.makeParticles(this.explosionSpriteImage, 0);
+    this.flare.gravity = 150;
+    this.flare.y = -this.sprite.height/2;
+    this.flare.setAlpha(1.0, 0, 800);
+    this.flare.minParticleSpeed = new Phaser.Point(-120, -150);
+    this.flare.maxParticleSpeed = new Phaser.Point(+120, -50);
+  }
+
   defineSpeed() {
     // speed towards player
     let xDistanceToPlayer = this.state.player.sprite.x - this.position.x;
@@ -162,6 +224,21 @@ export class ConsoleEnemy extends Enemy {
     this.sprite.body.velocity.y = ySpeed;
   }
 
+  deathAnimation(onCompleteCallback, context) {
+    this.flare.x = this.sprite.x;
+    this.flare.y = this.sprite.y;
+    this.flare.start(true, 800, null, 10);
+    if (onCompleteCallback) {
+      onCompleteCallback.call(context);
+    }
+  }
+
+  hitAnimation() {
+    for (let i = this.game.rnd.between(1,2); i > 0; i--) {
+      this.flare.emitParticle(this.sprite.x, this.sprite.y - this.sprite.height/2);
+    }
+  }
+
   get spriteImage() {
     return 'enemy-console';
   }
@@ -172,6 +249,10 @@ export class ConsoleEnemy extends Enemy {
 
   get torpedoType() {
     return 'torpedo';
+  }
+
+  get explosionSpriteImage() {
+    return 'console-piece';
   }
 
   get torpedoSoundSprite() {
@@ -194,6 +275,7 @@ export class ConsoleEnemy extends Enemy {
 export class GitEnemy extends ConsoleEnemy {
 
   create() {
+    this.baseYSpeed = BASE_Y_SPEED / 2;
     super.create();
     this.sprite.scale.setTo(1.25, 1.25);
     this.stars = this.game.add.emitter(0, 0, 30);
@@ -223,6 +305,10 @@ export class GitEnemy extends ConsoleEnemy {
   get explosionSoundSprite() {
     // abstract
     return 'star';
+  }
+
+  get explosionSpriteImage() {
+    return 'git-piece';
   }
 
   get speedMultiplier() {

@@ -84,17 +84,17 @@ export default class KrakenPlayer {
     tween2.to({ y: -0.5*this.sprite.height }, duration/4, Phaser.Easing.Quadratic.Out, false);
     tween3.to({ y: this.game.world.height - 50 }, duration/5, Phaser.Easing.Quadratic.Out, false);
 
-    tween2.onComplete.addOnce(() => {
+    tween2.onComplete.add(() => {
       this.sprite.y = this.game.world.height + this.sprite.height/2;
     }, this);
-    tween3.onComplete.addOnce(() => {
+    tween3.onComplete.add(() => {
       this.floatingTween.resume();
     }, this);
     tween1.chain(tween2.chain(tween3));
 
     // animation - playing 3 anims in sequence
     let emitter = this.emitter;
-    this.sprite.animations.play('goingToSwim').onComplete.addOnce(sprite => {
+    this.sprite.animations.play('goingToSwim').onComplete.add(sprite => {
       sprite.animations.play('swimming').onLoop.add(sprite => {
         let timeNow = this.game.time.time;
         if (timeNow >= timeBegin + duration) {

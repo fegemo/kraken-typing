@@ -131,19 +131,10 @@ var level1 = {
   waves: [
     {
       type: 'instructions',
-      delayAfter: 200,
+      delayAfter: 0,
       enemies: {
         exactly: [
-          'type', 'each', 'word', 'to', 'shoot', 'at', 'us'
-        ]
-      }
-    },
-    {
-      type: 'instructions',
-      delayAfter: 100,
-      enemies: {
-        exactly: [
-          'foes', 'are', 'coming...', 'kill', 'them', 'all!'
+          'type', 'to', 'shoot', 'at', 'us'
         ]
       }
     },
@@ -454,7 +445,7 @@ var level5 = {
 
 export default [
   // level0,
-  level1,
+  // level1,
   level2,
   level3,
   level4,
