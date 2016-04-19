@@ -1,3 +1,5 @@
+import BigKraken from 'objects/BigKraken';
+
 export default class MenuState extends Phaser.State {
   preload() {
     this.game.load.image('bubble-bg', 'imgs/bubble-bg.png');
@@ -6,6 +8,9 @@ export default class MenuState extends Phaser.State {
     this.game.load.audio('sweet-water', 'sounds/sweet-water-by-david-szesztay.ogg');
     this.game.load.image('displacement-texture', 'imgs/displacement-texture.png');
     this.game.load.script('filter', 'scripts/DisplacementFilter.js');
+
+    this.bigKraken = new BigKraken(this.game);
+    this.bigKraken.preload();
   }
 
   create() {
@@ -35,6 +40,10 @@ export default class MenuState extends Phaser.State {
     this.logo.stroke = '#111';
     this.logo.margin = new Phaser.Point(0,20);
 
+    // big kraken
+    this.bigKraken.create();
+    this.game.time.events.add(this.game.rnd.between(3000, 4000), this.spawnBigKraken, this);
+
     // tried to make the logo be a mask for the bubbles, but it didnt show up
     // let bmd = this.game.make.bitmapData(this.logo.width, this.logo.height);
     // bmd.alphaMask(this.bubbleField2, this.logo);
@@ -50,6 +59,7 @@ export default class MenuState extends Phaser.State {
       this.bubbleField1.filters = [this.displacementFilter];
       this.bubbleField2.filters = [this.displacementFilter];
       this.logo.filters = [this.displacementFilter];
+      this.bigKraken.sprite.filters = [this.displacementFilter];
       this.displacementOffset = 0;
     }
 
@@ -82,6 +92,12 @@ export default class MenuState extends Phaser.State {
       this.displacementFilter.offset.x = this.displacementOffset*5;
       this.displacementFilter.offset.y = this.displacementOffset*5;
     }
+  }
+
+  spawnBigKraken() {
+    var from = this.game.rnd.pick(['bottom left', 'bottom right']);
+    this.bigKraken.appear(from);
+    this.game.time.events.add(this.game.rnd.between(13000, 14000), this.spawnBigKraken, this);
   }
 
   createMenuItem(text, y, actionCallback) {
