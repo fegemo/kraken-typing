@@ -4,6 +4,8 @@ export default class MenuState extends Phaser.State {
     this.game.load.image('bubble-bg-smaller', 'imgs/bubble-bg-smaller.png');
     this.game.load.audio('sfx', 'sounds/audio-sprite.ogg');
     this.game.load.audio('sweet-water', 'sounds/sweet-water-by-david-szesztay.ogg');
+    this.game.load.image('displacement-texture', 'imgs/displacement-texture.png');
+    this.game.load.script('filter', 'scripts/DisplacementFilter.js');
   }
 
   create() {
@@ -41,6 +43,16 @@ export default class MenuState extends Phaser.State {
     // this.optionsText = this.createMenuItem('options', this.game.world.centerY * 1.4, this.options);
     // this.creditsText = this.createMenuItem('credits', this.game.world.centerY * 1.6, this.credits);
 
+    // water effect (filter)
+    if (this.game.renderType === Phaser.WEBGL) {
+      this.displacementTexture = this.game.make.sprite(0, 0, 'displacement-texture').texture;
+      this.displacementFilter = new PIXI.DisplacementFilter(this.displacementTexture);
+      this.bubbleField1.filters = [this.displacementFilter];
+      this.bubbleField2.filters = [this.displacementFilter];
+      this.logo.filters = [this.displacementFilter];
+      this.displacementOffset = 0;
+    }
+
     // sound effects
     this.fx = this.game.add.audio('sfx');
     this.fx = this.game.add.audio('sfx');
@@ -61,8 +73,15 @@ export default class MenuState extends Phaser.State {
     this.bubbleField1.tilePosition.y -= .1;
     this.bubbleField1.tilePosition.x += Math.sin(this.bgAngle) * 0.1;
 
-    this.bubbleField2.tilePosition.y -= .5;
-    this.bubbleField2.tilePosition.x += Math.sin(this.bgAngle) * 0.5;
+    // this.bubbleField2.tilePosition.y -= .5;
+    // this.bubbleField2.tilePosition.x += Math.sin(this.bgAngle) * 0.5;
+
+    // water effect
+    if (this.game.renderType === Phaser.WEBGL) {
+      this.displacementOffset += 0.1;
+      this.displacementFilter.offset.x = this.displacementOffset*5;
+      this.displacementFilter.offset.y = this.displacementOffset*5;
+    }
   }
 
   createMenuItem(text, y, actionCallback) {
