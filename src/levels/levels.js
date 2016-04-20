@@ -71,7 +71,7 @@ var level0 = {
         quantity: 2,
         git: {
           name: 'git-show',
-          cmd: 'git show HEAD~4',
+          cmd: 'git show HEAD',
           atProgress: 0.4
         }
       }
