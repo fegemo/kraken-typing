@@ -19,7 +19,7 @@ export default class BigKraken {
     this.sprite.anchor.setTo(0.5, 0.5);
     this.sprite.tint = 0xbbbbbb;
     this.bubbles = this.game.add.emitter(0, 0, 8);
-    this.bubbles.setAlpha(0.7, 0, 1500);
+    this.bubbles.setAlpha(0.7, 0, 1000);
     this.bubbles.minParticleScale = 0.4;
     this.bubbles.maxParticleScale = 1.0;
   }
@@ -117,6 +117,6 @@ export default class BigKraken {
     let baseBubbleSpeedY = targetPositionY - initialPositionY;
     this.bubbles.minParticleSpeed.setTo(baseBubbleSpeedX/2, baseBubbleSpeedY/2);
     this.bubbles.maxParticleSpeed.setTo(baseBubbleSpeedX, baseBubbleSpeedY);
-    this.bubbles.start(false, 1500, 45, 30);
+    this.bubbles.start(false, 1000, 45, 30);
   }
 }
