@@ -1,12 +1,12 @@
-.container {
+.flip-card-container {
   position: relative;
   -webkit-perspective: 800px;
   perspective: 800px;
 }
 .card {
+  position: absolute;
   width: 100%;
   height: 100%;
-  position: absolute;
   transition: -webkit-transform 1s;
   transition: transform 1s;
   transition: transform 1s, -webkit-transform 1s;
@@ -21,6 +21,10 @@
   position: absolute;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+}
+.card .front {
+  -webkit-transform: rotateY(0deg);
+  transform: rotateY(0deg);
 }
 .card .back {
   -webkit-transform: rotateY(180deg);
