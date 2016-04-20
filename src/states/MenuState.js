@@ -83,21 +83,21 @@ export default class MenuState extends Phaser.State {
     this.bubbleField1.tilePosition.y -= .1;
     this.bubbleField1.tilePosition.x += Math.sin(this.bgAngle) * 0.1;
 
-    // this.bubbleField2.tilePosition.y -= .5;
-    // this.bubbleField2.tilePosition.x += Math.sin(this.bgAngle) * 0.5;
-
     // water effect
     if (this.game.renderType === Phaser.WEBGL) {
       this.displacementOffset += 0.1;
       this.displacementFilter.offset.x = this.displacementOffset*5;
       this.displacementFilter.offset.y = this.displacementOffset*5;
+    } else {
+      this.bubbleField2.tilePosition.y -= .5;
+      this.bubbleField2.tilePosition.x += Math.sin(this.bgAngle) * 0.5;
     }
   }
 
   spawnBigKraken() {
-    var from = this.game.rnd.pick(['bottom left', 'bottom right']);
+    var from = this.game.rnd.pick(['top ', 'bottom ']) + this.game.rnd.pick(['left', 'right']);
     this.bigKraken.appear(from);
-    this.game.time.events.add(this.game.rnd.between(13000, 14000), this.spawnBigKraken, this);
+    this.game.time.events.add(this.game.rnd.between(13000, 17000), this.spawnBigKraken, this);
   }
 
   createMenuItem(text, y, actionCallback) {
