@@ -1,25 +1,27 @@
-.container {
-    position: relative;
-    perspective: 800px;
-}
-.card {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    transition: transform 1s;
-    transform-style: preserve-3d;
-    -webkit-transform-origin: 50% 50%;
-}
-.card div {
-display: block;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    backface-visibility: hidden;
-}
-.card .back {
-    transform: rotateY( 180deg );
-}
-.card.flipped {
-    transform: rotateY( 180deg );
-}
+.flip-card-container
+    position relative
+    perspective 800px
+
+.card
+  position absolute
+  width 100%
+  height 100%
+  transition transform 1s
+  transform-style preserve-3d
+  -webkit-transform-origin 50% 50%
+
+.card div
+  display block
+  height 100%
+  width 100%
+  position absolute
+  backface-visibility hidden
+
+.card .front
+  transform rotateY(0deg)
+
+.card .back
+  transform: rotateY(180deg)
+
+.card.flipped
+  transform rotateY(180deg)
