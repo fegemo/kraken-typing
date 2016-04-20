@@ -40,13 +40,9 @@ export default class SplashState extends Phaser.State {
 
 
   preload() {
+    this.game.load.image('preload-bar', 'imgs/preload-bar.png');
+    this.game.load.image('preload-bar-border', 'imgs/preload-bar-border.png');
     this.game.load.image('logo-text', 'imgs/trio-ternura-studios.png');
-
-    this.animLogoText = new TweenParams(200, 200, Phaser.Easing.Quadratic.Out);
-    this.animLogoBall1 = new TweenParams(800, 750, Phaser.Easing.Bounce.Out);
-    this.animLogoBall2 = new TweenParams(950, 750, Phaser.Easing.Bounce.Out);
-    this.animLogoBall3 = new TweenParams(1100, 750, Phaser.Easing.Bounce.Out);
-
     this.game.load.image('logo-ball1', 'imgs/logo-ball1.png');
     this.game.load.image('logo-ball2', 'imgs/logo-ball2.png');
     this.game.load.image('logo-ball3', 'imgs/logo-ball3.png');
@@ -55,6 +51,10 @@ export default class SplashState extends Phaser.State {
   create() {
     this.game.stage.backgroundColor = '#fff';
 
+    this.animLogoText = new TweenParams(200, 200, Phaser.Easing.Quadratic.Out);
+    this.animLogoBall1 = new TweenParams(800, 750, Phaser.Easing.Bounce.Out);
+    this.animLogoBall2 = new TweenParams(950, 750, Phaser.Easing.Bounce.Out);
+    this.animLogoBall3 = new TweenParams(1100, 750, Phaser.Easing.Bounce.Out);
     let logoTextSprite = this.game.add.sprite(
       this.game.world.width / 2,
       this.game.world.height,
@@ -90,6 +90,6 @@ export default class SplashState extends Phaser.State {
   }
 
   goToMenu() {
-    this.game.state.start('menu');
+    this.game.state.start('loading');
   }
 };
