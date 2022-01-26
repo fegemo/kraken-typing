@@ -5,6 +5,12 @@ html {
   padding: 0;
   overflow-x: hidden;
   font-family: 'Overlock', sans-serif;
+  --piece-width: 352px;
+  --title-height: 51px;
+  --title-margin-top: 0.5rem;
+  --title-margin-bottom: 1rem;
+  --game-height: 600px;
+  --main-height: calc(var(--game-height) + var(--title-margin-top) + var(--title-height) + var(--title-margin-bottom));
 }
 body {
   height: inherit;
@@ -12,39 +18,35 @@ body {
   margin: 0;
 }
 #container {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-justify-content: space-around;
-  -ms-flex-pack: distribute;
-  justify-content: space-around;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  background-image: linear-gradient(to bottom right, #c5cae9, #9e9e9e);
-  height: auto;
-  padding-bottom: 3em;
+  display: grid;
+  grid-template-rows: 1fr calc(0.5 * var(--main-height)) calc(0.5 * var(--main-height)) 1fr;
+  grid-template-columns: 1fr var(--piece-width) minmax(2rem, 1fr) var(--piece-width) 1fr;
+  grid-template-areas: ". . . . ." ". game . top-right ." ". game . bot-right ." ". . . . .";
+  height: 100vh;
+  justify-items: center;
+  align-items: center;
+  background-image: url("https://www.transparenttextures.com/patterns/bedge-grunge.png"), linear-gradient(to right bottom, #e7e7e7, #002552 60%);
+  background-size: auto, cover;
+  background-position: 0% 0%, left top;
+  animation: moving-bg 30s linear 0s infinite;
   box-shadow: 0 3px 5px rgba(0,0,0,0.25);
   border-bottom: 1px solid rgba(0,0,0,0.25);
 }
 #game {
   height: 602px;
 }
-#lateral {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  height: 100%;
-}
 .piece {
   width: 352px;
   box-sizing: border-box;
+}
+main {
+  grid-area: game;
+}
+#git-kraken-ui {
+  grid-area: top-right;
+}
+#team {
+  grid-area: bot-right;
 }
 .box {
   border: 1px solid #000;
@@ -54,35 +56,32 @@ body {
 h1,
 h2 {
   font-family: 'Chango', sans-serif;
-  margin-bottom: 1rem;
+  margin-top: var(--title-margin-top);
+  margin-bottom: var(--title-margin-bottom);
   height: 3rem;
   box-sizing: border-box;
   text-align: center;
   background-image: -webkit-linear-gradient(#2ac2ff, #b200ff 90%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 2px #111;
+  -webkit-text-stroke: 1px #111;
   padding: 0em 0 1.6em;
 }
 h1 {
   font-size: 2rem;
-  margin-top: 0.5rem;
 }
 h2 {
   font-size: 1.5rem;
-  margin-top: 1rem;
 }
-h1#game-title {
+h1#game-title,
+h2#your-gk-title {
   line-height: 0.7em;
 }
 h2#your-gk-title {
   font-size: 2rem;
-  margin-top: 0.5rem;
-  line-height: 0.8em;
-  background-image: -webkit-linear-gradient(#02f13d, #ddd 60%, #f06980 90%);
+  background-image: linear-gradient(#02f13d, #ddd 60%, #f06980 90%);
 }
 h3 {
-  margin-top: 0.25em;
   margin-bottom: 0.25em;
 }
 h3:not(:first-of-type) {
@@ -101,6 +100,7 @@ h3:not(:first-of-type) {
   width: 100%;
 }
 .git-kraken-images {
+  display: flex;
   position: relative;
   border-bottom: 1px solid #808080;
   min-height: 200px;
@@ -111,6 +111,9 @@ h3:not(:first-of-type) {
   position: absolute;
   top: 0;
   left: 0;
+}
+.git-kraken-image:first-of-type {
+  position: static;
 }
 #git-kraken-log {
   max-height: 5em;
@@ -130,16 +133,6 @@ h3:not(:first-of-type) {
 }
 #team > .box iframe {
   margin: 0 !important;
-}
-#team .note {
-  cursor: pointer;
-  transition: all 200ms ease-out;
-  text-align: right;
-  margin-right: 1em;
-  font-size: 75%;
-}
-#team .note:hover {
-  color: #639;
 }
 #team .back {
   padding: 1em;
@@ -197,14 +190,8 @@ h3:not(:first-of-type) {
   */
 }
 #frameworks-footer> ul {
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-justify-content: space-around;
-  -ms-flex-pack: distribute;
   justify-content: space-around;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
   align-items: center;
   margin: 0;
   padding: 0;
@@ -232,6 +219,50 @@ h3:not(:first-of-type) {
 }
 .preload-ubuntu-mono {
   font-family: 'Ubuntu Mono';
+}
+.twitter-tweet {
+  max-width: auto !important;
+  margin: 0 !important;
+}
+@media screen and (max-width: 800px) {
+  #container {
+    height: auto;
+    grid-template-rows: minmax(100vh, auto) auto auto;
+    grid-template-columns: 1fr;
+    grid-template-areas: "game" "top-right" "bot-right";
+    gap: 2rem;
+    padding-bottom: 2rem;
+  }
+  main {
+    align-self: flex-start;
+  }
+  #game,
+  #game > canvas {
+    max-width: 100vw;
+    aspect-ratio: 350/600;
+    height: auto !important;
+  }
+  .piece {
+    max-width: 100vw;
+  }
+  .git-kraken-images {
+    min-height: auto;
+  }
+}
+@media screen and (max-width: 640px) {
+  #frameworks-footer {
+    box-sizing: border-box;
+    padding-right: 1em;
+  }
+  #frameworks-footer ul {
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+}
+@media screen and (max-width: 530px) {
+  #frameworks-footer h2 {
+    line-height: 0.7em;
+  }
 }
 .git-kraken-image {
   transition: all 1s linear;
@@ -276,7 +307,6 @@ h3:not(:first-of-type) {
   left: -7em;
   top: -1em;
   opacity: 1;
-  -webkit-animation: yoyo 2s ease-in-out 0s 3 alternate-reverse;
   animation: yoyo 2s ease-in-out 0s 3 alternate-reverse;
 }
 #git-kraken-figure.git-init #gkui-topbar,
@@ -399,39 +429,22 @@ h3:not(:first-of-type) {
   background-color: #b7a224;
   border-color: #b7a224;
 }
-@-webkit-keyframes yoyo {
-  0% {
-    -webkit-transform: translate3d(0.5, 0, 0);
-    transform: translate3d(0.5, 0, 0);
-  }
-  100% {
-    -webkit-transform: translate3d(-0.5em, 0, 0);
-    transform: translate3d(-0.5em, 0, 0);
-  }
-}
 @keyframes yoyo {
   0% {
-    -webkit-transform: translate3d(0.5, 0, 0);
     transform: translate3d(0.5, 0, 0);
   }
   100% {
-    -webkit-transform: translate3d(-0.5em, 0, 0);
     transform: translate3d(-0.5em, 0, 0);
   }
 }
 .flip-card-container {
   position: relative;
-  -webkit-perspective: 800px;
   perspective: 800px;
 }
 .card {
-  position: absolute;
   width: 100%;
   height: 100%;
-  transition: -webkit-transform 1s;
   transition: transform 1s;
-  transition: transform 1s, -webkit-transform 1s;
-  -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   -webkit-transform-origin: 50% 50%;
 }
@@ -441,17 +454,45 @@ h3:not(:first-of-type) {
   width: 100%;
   position: absolute;
   -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
+          backface-visibility: hidden;
 }
 .card .front {
-  -webkit-transform: rotateY(0deg);
   transform: rotateY(0deg);
+  overflow-y: auto;
 }
 .card .back {
-  -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg);
 }
 .card.flipped {
-  -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg);
+}
+.card::after {
+  content: ">>";
+  display: block;
+  cursor: pointer;
+  width: calc(40px * var(--multiplicador-largura, 1));
+  opacity: 0.5;
+  border-radius: 0 5px 5px 0;
+  text-align: center;
+  position: absolute;
+  bottom: -1px;
+  left: 100%;
+  padding: 0.5em;
+  background-color: rgba(0,0,0,0.2);
+  box-sizing: border-box;
+  color: #fff;
+  border: 1px solid rgba(0,0,0,0.533);
+  transition: all 200ms ease-out;
+}
+.card:hover::after {
+  opacity: 1;
+  --multiplicador-largura: 1.5;
+}
+@keyframes moving-bg {
+  from {
+    background-position: 0 0, left top;
+  }
+  to {
+    background-position: 588px 375px, left top;
+  }
 }

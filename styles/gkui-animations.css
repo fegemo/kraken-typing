@@ -41,7 +41,6 @@
   left: -7em;
   top: -1em;
   opacity: 1;
-  -webkit-animation: yoyo 2s ease-in-out 0s 3 alternate-reverse;
   animation: yoyo 2s ease-in-out 0s 3 alternate-reverse;
 }
 #git-kraken-figure.git-init #gkui-topbar,
@@ -164,23 +163,11 @@
   background-color: #b7a224;
   border-color: #b7a224;
 }
-@-webkit-keyframes yoyo {
-  0% {
-    -webkit-transform: translate3d(0.5, 0, 0);
-    transform: translate3d(0.5, 0, 0);
-  }
-  100% {
-    -webkit-transform: translate3d(-0.5em, 0, 0);
-    transform: translate3d(-0.5em, 0, 0);
-  }
-}
 @keyframes yoyo {
   0% {
-    -webkit-transform: translate3d(0.5, 0, 0);
     transform: translate3d(0.5, 0, 0);
   }
   100% {
-    -webkit-transform: translate3d(-0.5em, 0, 0);
     transform: translate3d(-0.5em, 0, 0);
   }
 }
