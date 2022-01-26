@@ -5,6 +5,12 @@ html
   padding 0
   overflow-x hidden
   font-family 'Overlock', sans-serif
+  --piece-width 352px
+  --title-height 51px
+  --title-margin-top .5rem
+  --title-margin-bottom 1rem
+  --game-height 600px
+  --main-height calc(var(--game-height) + var(--title-margin-top) + var(--title-height) + var(--title-margin-bottom))
 
 body
   height inherit
@@ -12,27 +18,44 @@ body
   margin 0
 
 #container
-  display flex
-  justify-content space-around
-  align-items flex-start
-  background-image linear-gradient(to bottom right, #C5CAE9, #9E9E9E)
-  height auto
-  padding-bottom 3em
+  display grid
+  grid-template-rows 1fr calc(0.5 * var(--main-height)) calc(0.5 * var(--main-height)) 1fr
+  grid-template-columns 1fr var(--piece-width) minmax(2rem, 1fr) var(--piece-width) 1fr
+  grid-template-areas ". . . . ." ". game . top-right ." ". game . bot-right ." ". . . . ."
+  height 100vh
+
+  justify-items center
+  align-items center
+  
+  background-image url(https://www.transparenttextures.com/patterns/bedge-grunge.png), linear-gradient(to right bottom, #e7e7e7, #002552 60%)
+  background-size auto, cover
+  background-position 0% 0%, left top
+  animation moving-bg 30s linear 0s infinite
   box-shadow 0 3px 5px rgba(0,0,0,0.25)
   border-bottom 1px solid rgba(0,0,0,0.25)
+
+@keyframes moving-bg
+  from
+    background-position 0 0, left top
+  to
+    background-position 588px 375px, left top
 
 #game
   height 602px
 
-#lateral
-  display flex
-  flex-direction column
-  justify-content space-between
-  height 100%
-
 .piece
   width 352px
   box-sizing border-box
+
+main
+  grid-area game
+
+#git-kraken-ui
+  grid-area top-right
+
+#team
+  grid-area bot-right
+
 
 .box
   border 1px solid black
@@ -41,39 +64,36 @@ body
 
 h1, h2
   font-family 'Chango', sans-serif
-  margin-bottom 1rem
+  margin-top var(--title-margin-top)
+  margin-bottom var(--title-margin-bottom)
   height 3rem
   box-sizing border-box
   text-align center
   background-image -webkit-linear-gradient(#2AC2FF, #B200FF 90%)
   -webkit-background-clip text
   -webkit-text-fill-color transparent
-  -webkit-text-stroke: 2px #111
+  -webkit-text-stroke 1px #111
   padding: 0em 0 1.6em
 
 h1
   font-size 2rem
-  margin-top 0.5rem
 h2
   font-size 1.5rem
-  margin-top 1.0rem
-h1#game-title
+
+h1#game-title,
+h2#your-gk-title
   line-height 0.7em
 h2#your-gk-title
   font-size 2rem
-  margin-top 0.5rem
-  line-height 0.8em
-  background-image -webkit-linear-gradient(#02F13D, #ddd 60%, #F06980 90%)
+  background-image linear-gradient(#02F13D, #ddd 60%, #F06980 90%)
 
 h3
-  margin-top 0.25em
   margin-bottom 0.25em
   &:not(:first-of-type)
     margin-top 0.75em
     border-top 1px dashed gray
 
 #frameworks-footer
-  //background-color #52636B
   background-color white
   color #fff
   margin-top 0.5em
@@ -86,6 +106,7 @@ h3
   width 100%
 
 .git-kraken-images
+  display flex
   position relative
   border-bottom 1px solid gray
   min-height 200px
@@ -97,6 +118,10 @@ h3
   top 0
   left 0
 
+.git-kraken-image:first-of-type
+  position static
+
+
 #git-kraken-log
   max-height 5em
   line-height 1em
@@ -107,20 +132,12 @@ h3
   background-color darken(white, 10%)
 
 #team
-  position: relative;
+  position relative
   > .box
     min-height 286px
-    background-color: white
+    background-color white
     iframe
       margin 0 !important
-  .note
-    cursor: pointer;
-    transition all 200ms ease-out
-    text-align right
-    margin-right 1em
-    font-size 75%
-    &:hover
-      color rebeccapurple
   .back
     padding 1em
     box-sizing: border-box;
@@ -200,6 +217,47 @@ h3
 .preload-ubuntu-mono
   font-family 'Ubuntu Mono'
 
+
+.twitter-tweet
+  max-width auto !important
+  margin 0 !important
+
+
+@media screen and (max-width: 800px)
+  #container
+    height auto
+    grid-template-rows minmax(100vh, auto) auto auto
+    grid-template-columns 1fr
+    grid-template-areas "game" "top-right" "bot-right"
+    gap 2rem
+    padding-bottom 2rem
+
+  main
+    align-self flex-start
+
+  #game, #game > canvas
+    max-width 100vw
+    aspect-ratio 350 / 600
+    height auto !important
+
+  .piece
+    max-width 100vw
+
+  .git-kraken-images
+    min-height auto
+
+@media screen and (max-width: 640px)
+  #frameworks-footer
+    box-sizing border-box
+    padding-right 1em
+
+    ul
+      flex-wrap wrap
+      gap 2rem
+
+@media screen and (max-width: 530px)
+  #frameworks-footer h2
+    line-height: 0.7em
 
 @import gkui-animations
 @import flip-card

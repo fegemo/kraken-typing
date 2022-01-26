@@ -21,7 +21,7 @@
     "del": "^2.2.0",
     "exorcist": "^0.4.0",
     "gulp": "^3.9.0",
-    "gulp-autoprefixer": "^3.1.0",
+    "gulp-autoprefixer": "^8.0.0",
     "gulp-buffer": "0.0.2",
     "gulp-gh-pages": "^0.5.4",
     "gulp-if": "^2.0.0",
@@ -34,5 +34,6 @@
   },
   "dependencies": {
     "phaser": "^2.4.6"
-  }
+  },
+  "browserslist": "> .5% and last 2 versions, not ie >= 0"
 }

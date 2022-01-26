@@ -3,7 +3,6 @@
     perspective 800px
 
 .card
-  position absolute
   width 100%
   height 100%
   transition transform 1s
@@ -19,9 +18,32 @@
 
 .card .front
   transform rotateY(0deg)
+  overflow-y auto
 
 .card .back
   transform: rotateY(180deg)
 
 .card.flipped
   transform rotateY(180deg)
+
+.card::after
+  content ">>"
+  display block
+  cursor pointer
+  width calc(40px * var(--multiplicador-largura, 1))
+  opacity 0.5
+  border-radius 0 5px 5px 0
+  text-align center
+  position absolute
+  bottom -1px
+  left 100%
+  padding 0.5em
+  background-color #0003
+  box-sizing border-box
+  color white
+  border 1px solid #00000088
+  transition all 200ms ease-out
+
+.card:hover::after
+  opacity 1
+  --multiplicador-largura 1.5

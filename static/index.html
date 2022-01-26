@@ -9,11 +9,11 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chango&family=Chewy&family=Overlock&family=Ubuntu+Mono&display=swap">
   <link rel="stylesheet" href="styles/main.css">
   <link rel="shortcut icon" href="imgs/site/favicon.ico" type="image/x-icon">
-  
+
   <script src="scripts/phaser.min.js" defer></script>
   <script src="scripts/phaser_modals.js" defer></script>
   <script src="scripts/game.js" defer></script>
-  
+
   <meta name="twitter:card" content="summary">
   <meta name="twitter:site" content="@fegemo">
   <meta name="twitter:title" content="Kraken Typing, the game">
@@ -28,7 +28,7 @@
   <span class="preload-ubuntu-mono">c</span>
 
   <!-- github ribbon -->
-  <a href="https://github.com/fegemo/kraken-typing" class="github-corner"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/fegemo/kraken-typing" class="github-corner"><svg width="80" height="80" viewBox="0 0 250 250" style="filter: drop-shadow(-2px -2px 2px #000a); fill:#FD6C6C; color:#fff; position: absolute; top: 0; border: 0; right: 0;"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
   <style>
     .github-corner:hover .octo-arm {
       animation: octocat-wave 560ms ease-in-out
@@ -65,66 +65,63 @@
       <h1 id="game-title">Kraken<br>Typing</h1>
       <div id="game" class="box"></div>
     </main>
-    <div id="lateral">
-      <section id="git-kraken-ui" class="piece">
-        <h2 id="your-gk-title">Your<br>GitKraken</h2>
-        <div class="box" id="git-kraken-figure">
-          <div class="git-kraken-images">
-            <img src="imgs/gkui/empty.png" class="git-kraken-image base" alt="GitKraken's empty user interface">
-            <img src="imgs/gkui/top-bar.png" id="gkui-topbar" class="git-kraken-image" alt="GitKraken's top bar">
-            <img src="imgs/gkui/init.png" id="gkui-init" class="git-kraken-image" alt="GitKraken's init">
-            <img src="imgs/gkui/clone.png" id="gkui-clone" class="git-kraken-image" alt="GitKraken's clone">
-            <img src="imgs/gkui/tag.png" id="gkui-tag" class="git-kraken-image" alt="GitKraken's tag">
-            <img src="imgs/gkui/checkout.png" id="gkui-checkout" class="git-kraken-image" alt="GitKraken's checkout">
-            <img src="imgs/gkui/show.png" id="gkui-show" class="git-kraken-image" alt="GitKraken's commit show">
-            <img src="imgs/gkui/add-commit.png" id="gkui-commit" class="git-kraken-image" alt="GitKraken's add and commit">
-            <img src="imgs/gkui/remote.png" id="gkui-remote" class="git-kraken-image" alt="GitKraken's remote">
-            <img src="imgs/gkui/log.png" id="gkui-log" class="git-kraken-image" alt="GitKraken's log">
-            <div id="gkui-arrow-1" class="gkui-arrow"></div>
-            <div id="gkui-arrow-2" class="gkui-arrow"></div>
-          </div>
-          <div id="git-kraken-log">
-            <p>Kill git commands to unlock GitKraken</p>
-          </div>
+    <section id="git-kraken-ui" class="piece">
+      <h2 id="your-gk-title">Your<br>GitKraken</h2>
+      <div class="box" id="git-kraken-figure">
+        <div class="git-kraken-images">
+          <img src="imgs/gkui/empty.png" class="git-kraken-image base" alt="GitKraken's empty user interface">
+          <img src="imgs/gkui/top-bar.png" id="gkui-topbar" class="git-kraken-image" alt="GitKraken's top bar">
+          <img src="imgs/gkui/init.png" id="gkui-init" class="git-kraken-image" alt="GitKraken's init">
+          <img src="imgs/gkui/clone.png" id="gkui-clone" class="git-kraken-image" alt="GitKraken's clone">
+          <img src="imgs/gkui/tag.png" id="gkui-tag" class="git-kraken-image" alt="GitKraken's tag">
+          <img src="imgs/gkui/checkout.png" id="gkui-checkout" class="git-kraken-image" alt="GitKraken's checkout">
+          <img src="imgs/gkui/show.png" id="gkui-show" class="git-kraken-image" alt="GitKraken's commit show">
+          <img src="imgs/gkui/add-commit.png" id="gkui-commit" class="git-kraken-image" alt="GitKraken's add and commit">
+          <img src="imgs/gkui/remote.png" id="gkui-remote" class="git-kraken-image" alt="GitKraken's remote">
+          <img src="imgs/gkui/log.png" id="gkui-log" class="git-kraken-image" alt="GitKraken's log">
+          <div id="gkui-arrow-1" class="gkui-arrow"></div>
+          <div id="gkui-arrow-2" class="gkui-arrow"></div>
         </div>
-      </section>
-      <section id="team" class="piece flip-card-container">
-        <h2>Credits</h2>
-        <div class="box card" onclick="this.classList.toggle('flipped')">
-          <div class="front">
-            <blockquote class="twitter-tweet" data-lang="en">
-              <p lang="en" dir="ltr"><a href="https://twitter.com/GitKraken">@GitKraken</a>, here comes a new challenger: Kraken Typing, destroying all commands in its way: <a href="https://t.co/3wOswjuzEU">https://t.co/3wOswjuzEU</a> <a href="https://twitter.com/hashtag/GKContest?src=hash">#GKContest</a></p>&mdash;
-              Flávio Coutinho (@fegemo) <a href="https://twitter.com/fegemo/status/721230054378835970">April 16, 2016</a></blockquote>
-            <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-            <p class="note">Click to flip » ;)</p>
-          </div>
-          <div class="back">
-            <h3>Team</h3>
-            <dl class="clearfix">
-              <dt><a href="mailto:fegemo@gmail.com">Flávio Coutinho</a></dt>
-              <dd><span class="tag orange">Programmer</span><span class="tag oceanblue">Game Designer</span></dd>
-              <dt><a href="mailto:marcelleturismo@gmail.com">Marcelle Silva</a></dt>
-              <dd><span class="tag golden">Sound Fx Designer</span></dd>
-              <dt><a href="mailto:coutinho.elder@gmail.com">Elder Coutinho</a></dt>
-              <dd><span class="tag weakred">Playtester</span><span class="tag hotpink">Music Picker</span></dd>
-              <dt><a href="mailto:ismasantana@gmail.com">Ismael Silva</a></dt>
-              <dd><span class="tag oceanblue">Programmer</span><span class="tag weakred">Playtester</span></dd>
-              <dt><a href="mailto:gliviaangelica@gmail.com">Glivia Barbosa</a></dt>
-              <dd><span class="tag lightgreen">GUI Analyst</span><span class="tag weakred">Playtester</span></dd>
-            </dl>
-            <h3>Attributions</h3>
-            <dl class="clearfix">
-              <dt>Silver Ocean, by <a href="http://freemusicarchive.org/music/mathgrant/30s30d_A_Months_Worth_of_Composing/">mathgrant</a></dt>
-              <dd><span class="tag orange">Game Song</span></dd>
-              <dt>Sweet Water, by <a href="http://freemusicarchive.org/music/David_Szesztay/Commercial/Sweet_Water">David Szesztay</a></dt>
-              <dd><span class="tag orange">Menu Song</span></dd>
-              <dt>Typing concept, by <a href="http://zty.pe/">Z-Type</a></dt>
-              <dd><span class="tag orange">Awesome concept</span></dd>
-            </dl>
-          </div>
+        <div id="git-kraken-log">
+          <p>Kill git commands to unlock GitKraken</p>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
+    <section id="team" class="piece flip-card-container">
+      <h2>Credits</h2>
+      <div class="box card" onclick="this.classList.toggle('flipped')">
+        <div class="front">
+          <blockquote class="twitter-tweet" data-lang="en">
+            <p lang="en" dir="ltr"><a href="https://twitter.com/GitKraken">@GitKraken</a>, here comes a new challenger: Kraken Typing, destroying all commands in its way: <a href="https://t.co/3wOswjuzEU">https://t.co/3wOswjuzEU</a> <a href="https://twitter.com/hashtag/GKContest?src=hash">#GKContest</a></p>&mdash;
+            Flávio Coutinho (@fegemo) <a href="https://twitter.com/fegemo/status/721230054378835970">April 16, 2016</a></blockquote>
+          <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+        <div class="back">
+          <h3>Team</h3>
+          <dl class="clearfix">
+            <dt><a href="mailto:fegemo@gmail.com">Flávio Coutinho</a></dt>
+            <dd><span class="tag orange">Programmer</span><span class="tag oceanblue">Game Designer</span></dd>
+            <dt><a href="mailto:marcelleturismo@gmail.com">Marcelle Silva</a></dt>
+            <dd><span class="tag golden">Sound Fx Designer</span></dd>
+            <dt><a href="mailto:coutinho.elder@gmail.com">Elder Coutinho</a></dt>
+            <dd><span class="tag weakred">Playtester</span><span class="tag hotpink">Music Picker</span></dd>
+            <dt><a href="mailto:ismasantana@gmail.com">Ismael Silva</a></dt>
+            <dd><span class="tag oceanblue">Programmer</span><span class="tag weakred">Playtester</span></dd>
+            <dt><a href="mailto:gliviaangelica@gmail.com">Glivia Barbosa</a></dt>
+            <dd><span class="tag lightgreen">GUI Analyst</span><span class="tag weakred">Playtester</span></dd>
+          </dl>
+          <h3>Attributions</h3>
+          <dl class="clearfix">
+            <dt>Silver Ocean, by <a href="https://freemusicarchive.org/music/mathgrant/30s30d_A_Months_Worth_of_Composing/">mathgrant</a></dt>
+            <dd><span class="tag orange">Game Song</span></dd>
+            <dt>Sweet Water, by <a href="https://freemusicarchive.org/music/David_Szesztay/Commercial/Sweet_Water">David Szesztay</a></dt>
+            <dd><span class="tag orange">Menu Song</span></dd>
+            <dt>Typing concept, by <a href="https://zty.pe/">Z-Type</a></dt>
+            <dd><span class="tag orange">Awesome concept</span></dd>
+          </dl>
+        </div>
+      </div>
+    </section>
   </div>
   <footer id="frameworks-footer">
     <h2>Thanks to these awesome guys:</h2>
@@ -133,12 +130,12 @@
       <li><img src="imgs/site/logo-css3.svg" alt="Logo of CSS3"></li>
       <li><img src="imgs/site/logo-es6.png" alt="Logo of EcmaScript6"></li>
       <li>
-        <a href="http://phaser.io">
+        <a href="https://phaser.io" target="_blank">
           <img src="imgs/site/logo-phaser.png" alt="Logo of the game framework Phaser">
         </a>
       </li>
       <li>
-        <a href="http://gitkraken.com">
+        <a href="https://gitkraken.com" target="_blank">
           <img src="imgs/site/logo-gitkraken.png" alt="Logo of GitKraken">
         </a>
       </li>
