@@ -80,7 +80,7 @@ export default class GameStateButtons {
           offsetY: 40,
           offsetX: -70,
           stroke: '0x000000',
-          strokeThickness: 9,
+          strokeThickness: 4,
           callback: replayCallback.bind(context)
         },
         {
@@ -92,7 +92,7 @@ export default class GameStateButtons {
           offsetY: 40,
           offsetX: 70,
           stroke: '0x000000',
-          strokeThickness: 9,
+          strokeThickness: 4,
           callback: menuCallback.bind(context)
         }
       ]
@@ -129,7 +129,7 @@ export default class GameStateButtons {
           offsetY: 40,
           offsetX: -70,
           stroke: '0x000000',
-          strokeThickness: 9,
+          strokeThickness: 4,
           callback: resumeCallback.bind(context)
         },
         {
@@ -141,7 +141,7 @@ export default class GameStateButtons {
           offsetY: 40,
           offsetX: 70,
           stroke: '0x000000',
-          strokeThickness: 9,
+          strokeThickness: 4,
           callback: menuCallback.bind(context)
         }
       ]
@@ -172,7 +172,7 @@ export default class GameStateButtons {
           offsetY: -80,
           color: '0x9A22FF',
           stroke: '0x000000',
-          strokeThickness: 9
+          strokeThickness: 4
         },
         {
           type: 'text',
@@ -183,7 +183,7 @@ export default class GameStateButtons {
           offsetY: 40,
           offsetX: -70,
           stroke: '0x000000',
-          strokeThickness: 9,
+          strokeThickness: 4,
           callback: replayCallback.bind(context)
         },
         {
@@ -195,7 +195,7 @@ export default class GameStateButtons {
           offsetY: 40,
           offsetX: 70,
           stroke: '0x000000',
-          strokeThickness: 9,
+          strokeThickness: 4,
           callback: menuCallback.bind(context)
         }
       ]

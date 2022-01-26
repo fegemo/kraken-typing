@@ -36,7 +36,7 @@ export default class MenuState extends Phaser.State {
     grd.addColorStop(1, '#B200FF');
 
     this.logo.fill = grd;
-    this.logo.strokeThickness = 15;
+    this.logo.strokeThickness = 8;
     this.logo.stroke = '#111';
     this.logo.margin = new Phaser.Point(0,20);
 
@@ -107,7 +107,7 @@ export default class MenuState extends Phaser.State {
     t.fontSize = 28;
     t.fill = '#FEFF49';
     t.stroke = '#000000';
-    t.strokeThickness = 9;
+    t.strokeThickness = 4;
     t.inputEnabled = true;
     t.events.onInputDown.add(actionCallback, this);
     t.events.onInputOver.add(() => {
