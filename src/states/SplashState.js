@@ -77,6 +77,9 @@ export default class SplashState extends Phaser.State {
     this.game.make.text(-100, -100, 'c', { font: 'Ubuntu Mono' });
 
     this.game.time.events.add(5000, this.goToMenu, this);
+    this.game.input.keyboard.addCallbacks(this, null, null, this.goToMenu);
+    this.game.input.keyboard.addCallbacks(this, null, null, this.goToMenu);
+    this.game.input.mouse.capture = true;
   }
 
   render() {
@@ -87,9 +90,16 @@ export default class SplashState extends Phaser.State {
     this.balls.forEach(ball => {
       ball.update();
     });
+
+    if (this.game.input.activePointer.leftButton.isDown) {
+      this.goToMenu();
+    }
   }
 
   goToMenu() {
-    this.game.state.start('loading');
+    if (!this.goingToMenu) {
+      this.game.state.start('loading');
+      this.goingToMenu = true
+    }
   }
 };
