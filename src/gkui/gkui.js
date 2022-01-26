@@ -14,6 +14,7 @@ function insertNewDescriptionInLog(logEl, html) {
 
 function tutorial(gameState) {
   gameState.pauseGame();
+  document.querySelector('#git-kraken-ui').scrollIntoView({ block: 'end', behavior: 'smooth' })
   tutorialAppeared = true;
 }
 
