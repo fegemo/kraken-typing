@@ -151,7 +151,7 @@ var level1 = {
       delayAfter: 0,
       enemies: {
         exactly: [
-          'see', 'how', 'easy', 'that', 'was?'
+          'easy', 'huh?'
         ]
       }
     },
@@ -190,7 +190,7 @@ var level2 = {
       delayAfter: 200,
       enemies: {
         exactly: [
-          'kill', 'git', 'cmds', 'for', 'prizes'
+          'git', 'cmds', '==', 'prizes'
         ]
       }
     },
@@ -212,7 +212,7 @@ var level2 = {
       delayAfter: 200,
       enemies: {
         exactly: [
-          'keep', 'it', 'going', 'till', 'the', 'end'
+          'keep', 'on!'
         ]
       }
     },
@@ -256,7 +256,7 @@ var level3 = {
       delayAfter: 0,
       enemies: {
         exactly: [
-          'good', 'job', 'over', 'there'
+          'nice', 'job!'
         ]
       }
     },
@@ -385,7 +385,7 @@ var level5 = {
       delayAfter: 10,
       enemies: {
         exactly: [
-          'you', 'are', 'almost', 'there...'
+          'almost', 'there...'
         ]
       }
     },
