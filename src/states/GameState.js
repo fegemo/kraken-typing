@@ -172,6 +172,10 @@ export default class GameState extends Phaser.State {
   keyPressed(key, e) {
     var spawner = this.spawner;
 
+    if (key === ' ') {
+      e.preventDefault();
+    }
+
     // if there is not a this.currentEnemy, look for one
     if (!spawner.currentEnemy) {
       // iterate over alive enemies,
