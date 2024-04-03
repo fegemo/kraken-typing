@@ -14,8 +14,7 @@
   height: 100%;
   width: 100%;
   position: absolute;
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 .card .front {
   transform: rotateY(0deg);
