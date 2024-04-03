@@ -11,6 +11,10 @@
     "type": "git",
     "url": "https://bitbucket.org/fegemo/krakening-console"
   },
+  "engines": {
+    "node": ">=8.0.0 <9.0.0",
+    "npm": ">=6.0.0 <7.0.0"
+  },
   "author": "Flávio Coutinho",
   "license": "MIT",
   "devDependencies": {
